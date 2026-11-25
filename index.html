@@ -1502,12 +1502,16 @@
                 <div>
                     <h3 class="text-sm font-extrabold leading-tight flex items-center gap-1.5">
                         HKDSE Chem AI Tutor
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                        <span id="aiStatusDot" class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
                     </h3>
-                    <p class="text-[11px] text-teal-200">Topics 1–4 • English &amp; 中文</p>
+                    <p id="aiModeSubtitle" class="text-[11px] text-teal-200">Topics 1–4 • English &amp; 中文</p>
                 </div>
             </div>
             <div class="flex items-center gap-1">
+                <button id="aiKeyToggleBtn" type="button" title="Configure Gemini API Key for GitHub Pages"
+                        class="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 hover:text-white transition text-xs font-bold">
+                    🔑 Key
+                </button>
                 <button id="aiClearBtn" type="button" title="Clear conversation"
                         class="p-2 rounded-xl hover:bg-white/15 text-slate-200 hover:text-white transition text-xs font-semibold">
                     ↺ Reset
@@ -1517,6 +1521,24 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
+        </div>
+
+        <!-- Optional Gemini API Key Drawer for GitHub Pages Deployment -->
+        <div id="aiKeyDrawer" class="hidden px-4 py-3 bg-slate-900/95 border-b border-amber-400/25 text-xs text-slate-200 space-y-2 shrink-0">
+            <div class="flex items-center justify-between gap-2">
+                <span class="font-bold text-amber-300">GitHub Pages Live Gemini Key (Optional)</span>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-[11px] text-teal-300 underline hover:text-teal-200">Get Free Key ↗</a>
+            </div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+                GitHub Pages hosts static files without a server proxy. Paste a free Google AI Studio key below (saved only in your browser) for full Live Gemini AI, or leave blank to use the built-in HKDSE Chemistry Knowledge Engine.
+            </p>
+            <div class="flex items-center gap-1.5">
+                <input id="aiKeyInput" type="password" placeholder="Paste Gemini API key (AIza...)"
+                       class="flex-1 px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400">
+                <button id="aiKeySaveBtn" type="button" class="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs transition">Save</button>
+                <button id="aiKeyRemoveBtn" type="button" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition">Clear</button>
+            </div>
+            <div id="aiKeyFeedback" class="hidden text-[11px] font-semibold text-emerald-400"></div>
         </div>
 
         <div id="aiMessages" class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/70 dark:bg-slate-950/60 text-xs sm:text-sm"></div>
@@ -2781,9 +2803,154 @@ Follow these rules strictly:
             sendAiMessage(prompt);
         });
 
+        // Optional API Key management for static hosting (GitHub Pages)
+        const AI_KEY_STORAGE = 'hkdseChemGeminiApiKey';
+        const aiKeyDrawer = document.getElementById('aiKeyDrawer');
+        const aiKeyInput = document.getElementById('aiKeyInput');
+        const aiKeyFeedback = document.getElementById('aiKeyFeedback');
+        const aiModeSubtitle = document.getElementById('aiModeSubtitle');
+
+        function getStoredGeminiKey() {
+            try {
+                return (localStorage.getItem(AI_KEY_STORAGE) || '').trim();
+            } catch (e) {
+                return '';
+            }
+        }
+
+        function refreshAiModeBadge() {
+            const hasCustomKey = Boolean(getStoredGeminiKey());
+            if (aiModeSubtitle) {
+                aiModeSubtitle.textContent = hasCustomKey
+                    ? 'Live Gemini AI Connected • English & 中文'
+                    : 'Topics 1–4 • Hybrid Live + Built-in Tutor';
+            }
+        }
+        refreshAiModeBadge();
+
+        document.getElementById('aiKeyToggleBtn').addEventListener('click', () => {
+            aiKeyDrawer.classList.toggle('hidden');
+            if (!aiKeyDrawer.classList.contains('hidden')) {
+                aiKeyInput.value = getStoredGeminiKey();
+                aiKeyInput.focus();
+            }
+        });
+
+        document.getElementById('aiKeySaveBtn').addEventListener('click', () => {
+            const val = aiKeyInput.value.trim();
+            try {
+                if (val) localStorage.setItem(AI_KEY_STORAGE, val);
+                else localStorage.removeItem(AI_KEY_STORAGE);
+            } catch (e) {}
+            refreshAiModeBadge();
+            aiKeyFeedback.textContent = val
+                ? '✓ API key saved locally! Live Gemini AI is now active on GitHub Pages.'
+                : '✓ Cleared custom key. Using built-in HKDSE Chemistry Engine.';
+            aiKeyFeedback.classList.remove('hidden');
+            setTimeout(() => aiKeyFeedback.classList.add('hidden'), 3500);
+        });
+
+        document.getElementById('aiKeyRemoveBtn').addEventListener('click', () => {
+            aiKeyInput.value = '';
+            try { localStorage.removeItem(AI_KEY_STORAGE); } catch (e) {}
+            refreshAiModeBadge();
+            aiKeyFeedback.textContent = '✓ Key removed.';
+            aiKeyFeedback.classList.remove('hidden');
+            setTimeout(() => aiKeyFeedback.classList.add('hidden'), 2500);
+        });
+
+        // Smart Local HKDSE Chemistry Knowledge Engine (works 100% offline on GitHub Pages without an API key)
+        function generateOfflineChemReply(userQuery) {
+            const qLower = userQuery.toLowerCase();
+
+            // Bilingual synonym expansion so Chinese & English queries match accurately
+            const zhMap = [
+                [/還原|氧化|鋅|zno/g, 'reduce reduction zno hydrogen carbon'],
+                [/共價|配位|離子鍵|金屬鍵/g, 'dative covalent ionic metallic bond'],
+                [/滴定|返滴定|指示劑|甲基橙|酚酞/g, 'titration back indicator methyl orange phenolphthalein'],
+                [/濃|強酸|弱酸|ph/g, 'strong weak concentrated acid ph ionization'],
+                [/沉澱|氫氧化鈉|氨水|陽離子/g, 'precipitate naoh nh3 cation'],
+                [/同位素|相對原子質量|電子排布/g, 'isotope relative atomic mass electronic arrangement'],
+                [/生鏽|鍍鋅|犧牲性保護/g, 'rusting galvanising sacrificial protection'],
+                [/摩爾|實驗式|限量反應物|產率/g, 'mole empirical formula limiting reactant yield'],
+                [/分餾|空氣|電解|鹽水|石灰石/g, 'fractional distillation air brine electrolysis limestone']
+            ];
+            let expanded = qLower;
+            zhMap.forEach(([regex, extra]) => {
+                if (regex.test(qLower)) expanded += ' ' + extra;
+            });
+
+            const stopWords = new Set(['what', 'why', 'how', 'is', 'are', 'the', 'a', 'an', 'in', 'of', 'to', 'for', 'and', 'or', 'explain', 'this', 'hkdse', 'question', 'help', 'me', 'understand', 'can', 'does', 'with', 'from', 'on', 'between']);
+            const tokens = expanded
+                .replace(/[^a-z0-9₂₃₄⁺⁻]+/g, ' ')
+                .split(/\s+/)
+                .filter(w => w.length > 1 && !stopWords.has(w));
+
+            const scored = [];
+
+            // 1. Search 48 Flashcards
+            flashcardsData.forEach(fc => {
+                const hay = `${fc.cat} ${fc.front} ${fc.back} ${fc.tip}`.toLowerCase();
+                let score = 0;
+                tokens.forEach(t => { if (hay.includes(t)) score += (fc.front.toLowerCase().includes(t) ? 3 : 2); });
+                if (score > 0) {
+                    scored.push({
+                        score,
+                        title: `${fc.cat} — ${fc.front}`,
+                        body: `${fc.back}\n**💡 Exam Tip:** ${fc.tip}`
+                    });
+                }
+            });
+
+            // 2. Search 52 Quiz Questions & Official Marking Schemes
+            quizQuestions.forEach(qq => {
+                const bodyText = qq.type === 'mc'
+                    ? `**Correct Answer:** ${qq.options[qq.ans]}\n**Explanation:** ${qq.exp}`
+                    : `**Marking Scheme:**\n• ${qq.scheme.join('\n• ')}`;
+                const hay = `topic ${qq.topic} ${qq.q} ${bodyText}`.toLowerCase();
+                let score = 0;
+                tokens.forEach(t => { if (hay.includes(t)) score += (qq.q.toLowerCase().includes(t) ? 3 : 1.5); });
+                if (score > 0) {
+                    scored.push({
+                        score,
+                        title: `Topic ${qq.topic} Exam Question`,
+                        body: `**Q:** ${qq.q.split('\n')[0]}\n${bodyText}`
+                    });
+                }
+            });
+
+            // 3. Search 16 Study Note Sections
+            document.querySelectorAll('#notesContent .study-card').forEach(card => {
+                const heading = card.querySelector('h3')?.textContent?.trim() || 'Study Note';
+                const bodyEl = card.querySelector('.acc-body');
+                const text = bodyEl ? bodyEl.textContent.replace(/\s+/g, ' ').trim() : '';
+                const hay = `${heading} ${text}`.toLowerCase();
+                let score = 0;
+                tokens.forEach(t => { if (hay.includes(t)) score += (heading.toLowerCase().includes(t) ? 4 : 1); });
+                if (score > 0) {
+                    scored.push({
+                        score,
+                        title: `Study Notes §${heading}`,
+                        body: text.length > 360 ? text.slice(0, 357) + '...' : text
+                    });
+                }
+            });
+
+            scored.sort((a, b) => b.score - a.score);
+            const top = scored.slice(0, 2);
+
+            if (top.length === 0) {
+                return `Here is a quick guide from your **HKDSE F.4 Chemistry Syllabus (Topics 1–4)**:\n• Try asking about specific concepts like **dative covalent bonds**, **ZnO reduction**, **cation precipitation (NaOH vs NH₃)**, **strong vs concentrated acids**, **salt preparation**, or **back titration**.\n• *Tip for GitHub Pages:* Click **🔑 Key** at the top of this chat to paste a free Google AI Studio API key if you want full generative AI answers!`;
+            }
+
+            const formattedMatches = top.map(item => `**${item.title}**\n${item.body}`).join('\n\n');
+            return `${formattedMatches}\n\n— *Answered via Built-in HKDSE Syllabus Engine (click **🔑 Key** above to connect a free Gemini API key for full live AI on GitHub).*`;
+        }
+
         async function callGeminiWithBackoff(contentsPayload) {
             const apiKey = "";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            const effectiveKey = getStoredGeminiKey() || apiKey;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${encodeURIComponent(effectiveKey)}`;
             const payload = {
                 contents: contentsPayload,
                 systemInstruction: {
@@ -2791,7 +2958,7 @@ Follow these rules strictly:
                 }
             };
 
-            const delays = [1000, 2000, 4000, 8000];
+            const delays = [800, 1600];
             for (let attempt = 0; attempt <= delays.length; attempt++) {
                 try {
                     const response = await fetch(apiUrl, {
@@ -2800,14 +2967,17 @@ Follow these rules strictly:
                         body: JSON.stringify(payload)
                     });
                     if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
+                        const err = new Error(`HTTP ${response.status}`);
+                        err.status = response.status;
+                        throw err;
                     }
                     const result = await response.json();
                     const reply = result?.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (!reply) throw new Error('Empty candidate');
                     return reply;
                 } catch (err) {
-                    if (attempt === delays.length) {
+                    // Fail fast on missing/invalid API key (e.g. GitHub Pages without a custom key)
+                    if (err.status === 400 || err.status === 401 || err.status === 403 || attempt === delays.length) {
                         throw err;
                     }
                     await new Promise(res => setTimeout(res, delays[attempt]));
@@ -2845,9 +3015,11 @@ Follow these rules strictly:
                 aiHistory.push({ role: 'model', parts: [{ text: reply }] });
                 appendAiBubble('model', reply);
             } catch (e) {
+                // Seamless fallback to Built-in HKDSE Chemistry Knowledge Engine on GitHub Pages
                 typingEl.remove();
-                aiHistory.pop();
-                appendAiBubble('model', 'Sorry, I encountered a temporary connection issue. Please try sending your question again.');
+                const fallbackReply = generateOfflineChemReply(clean);
+                aiHistory.push({ role: 'model', parts: [{ text: fallbackReply }] });
+                appendAiBubble('model', fallbackReply);
             } finally {
                 aiBusy = false;
                 aiSendBtn.disabled = false;
