@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,7 +95,11 @@
         #notesContent.notes-sm .acc-body { font-size: 0.875rem; line-height: 1.6; }
         #notesContent.notes-md .acc-body { font-size: 0.965rem; line-height: 1.72; }
         #notesContent.notes-lg .acc-body { font-size: 1.075rem; line-height: 1.8; }
-        #notesContent .study-card { scroll-margin-top: 8.5rem; }
+        #notesContent .study-card {
+            scroll-margin-top: 8.5rem;
+            content-visibility: auto;
+            contain-intrinsic-size: auto 230px;
+        }
         #notesContent .topic-block { scroll-margin-top: 8.5rem; }
 
         /* Luxury Quiz Styling */
@@ -148,6 +152,8 @@
                 radial-gradient(circle at 0% 100%, rgba(20, 184, 166, 0.14), transparent 48%),
                 linear-gradient(165deg, #0b1120 0%, #0f172a 58%, #131c31 100%);
             box-shadow: 0 22px 44px -20px rgba(2, 6, 23, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transform: translateZ(0);
+            will-change: transform;
         }
         .lux-toc-grid {
             background-image:
@@ -177,7 +183,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased transition-colors duration-200 selection:bg-teal-200 dark:selection:bg-teal-800">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-teal-200 dark:selection:bg-teal-800">
 
     <!-- ==================== STICKY HEADER ==================== -->
     <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
@@ -992,15 +998,175 @@
         <!-- ============================================================ -->
         <section id="lab" class="topic-panel hidden space-y-6">
             <div class="rounded-2xl bg-gradient-to-r from-indigo-600 via-blue-600 to-teal-600 p-5 sm:p-6 text-white shadow-md">
-                <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full">Interactive Lab</span>
-                <h2 class="text-xl sm:text-2xl font-extrabold mt-2">HKDSE Chemistry Calculators &amp; Simulators</h2>
-                <p class="text-blue-50 text-xs sm:text-sm mt-1">Verify pH, molarity/dilution, salt solubility &amp; preparation, cation precipitates, and titration indicators instantly.</p>
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full">Interactive Lab • Topics 1–4</span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold mt-2">HKDSE Virtual Lab &amp; Calculation Suite</h2>
+                        <p class="text-blue-50 text-xs sm:text-sm mt-1">Simulate flame tests, electron shells, limiting reactants, cation precipitates, pH, dilution, solubility &amp; titration end-points.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lab Topic Filter Bar -->
+            <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3.5 shadow-sm flex flex-wrap items-center justify-between gap-2">
+                <div class="flex flex-wrap gap-1.5" id="labFilterPills">
+                    <button type="button" data-lfilter="all" class="lfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition">All Lab Tools (8)</button>
+                    <button type="button" data-lfilter="lab-t1" class="lfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 1: Flame &amp; Ion Tests</button>
+                    <button type="button" data-lfilter="lab-t2" class="lfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 2: Bohr Atom Builder</button>
+                    <button type="button" data-lfilter="lab-t3" class="lfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 3: Mole &amp; Limiting Reactant</button>
+                    <button type="button" data-lfilter="lab-t4" class="lfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 4: Acids, Bases &amp; Titration</button>
+                </div>
+                <span class="text-[11px] font-medium text-slate-400">Live SVG Apparatus &amp; Instant Exam Checks</span>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                <!-- Tool 1: pH & [H+] Converter -->
-                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧪</span> 1. pH &amp; [H<sup>+</sup>] Converter (25 °C)</h3>
+                <!-- Tool A (Topic 1): Virtual Flame Test & Qualitative Chemical Test Bench -->
+                <div data-labtopic="lab-t1" class="lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🔥</span> 1. Virtual Flame &amp; Gas/Ion Test Bench</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">Topic 1</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                        <div class="sm:col-span-5 flex flex-col items-center justify-center p-3 rounded-xl bg-slate-950 border border-slate-800">
+                            <svg class="w-28 h-28" viewBox="0 0 120 120" aria-label="Bunsen burner flame test simulator">
+                                <!-- Outer Flame -->
+                                <path id="flameSvgGlow" d="M60 12 C42 40, 38 62, 60 80 C82 62, 78 40, 60 12 Z" fill="#facc15" opacity="0.92"/>
+                                <!-- Inner Non-luminous Cone -->
+                                <path id="flameInnerCore" d="M60 36 C50 52, 49 66, 60 78 C71 66, 70 52, 60 36 Z" fill="#38bdf8" opacity="0.85"/>
+                                <!-- Nichrome Wire & Loop -->
+                                <line x1="8" y1="54" x2="54" y2="54" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+                                <circle cx="58" cy="54" r="4" fill="none" stroke="#e2e8f0" stroke-width="2"/>
+                                <!-- Bunsen Chimney & Base -->
+                                <rect x="53" y="80" width="14" height="28" rx="2" fill="#475569"/>
+                                <rect x="36" y="108" width="48" height="7" rx="3" fill="#334155"/>
+                            </svg>
+                            <span class="text-[10px] font-mono text-slate-400 mt-1">Non-Luminous Flame</span>
+                        </div>
+                        <div class="sm:col-span-7 space-y-2.5">
+                            <div>
+                                <label for="flameIonSelect" class="block text-xs font-bold text-slate-500 mb-1">Select Cation for Flame Test</label>
+                                <select id="flameIonSelect" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                                    <option value="Na">Na⁺ (Sodium compound)</option>
+                                    <option value="K">K⁺ (Potassium compound)</option>
+                                    <option value="Ca">Ca²⁺ (Calcium compound)</option>
+                                    <option value="Cu">Cu²⁺ (Copper(II) compound)</option>
+                                    <option value="None">NH₄⁺ / Mg²⁺ (No characteristic colour)</option>
+                                </select>
+                            </div>
+                            <div id="flameTestReadout" class="p-2.5 rounded-xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 text-xs text-slate-700 dark:text-slate-200"></div>
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                        <label for="gasTestSelect" class="block text-xs font-bold text-slate-500">Quick Chemical Test Reference (Topic 1)</label>
+                        <select id="gasTestSelect" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                            <option value="Cl">Chloride ion, Cl⁻(aq)</option>
+                            <option value="CO3">Carbonate ion, CO₃²⁻(s/aq)</option>
+                            <option value="H2O">Presence of Water, H₂O(l)</option>
+                            <option value="O2">Oxygen gas, O₂(g)</option>
+                            <option value="H2">Hydrogen gas, H₂(g)</option>
+                            <option value="CO2">Carbon dioxide gas, CO₂(g)</option>
+                        </select>
+                        <div id="gasTestReadout" class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs text-slate-700 dark:text-slate-200"></div>
+                    </div>
+                </div>
+
+                <!-- Tool B (Topic 2): Interactive Bohr Atom & Electronic Arrangement Builder -->
+                <div data-labtopic="lab-t2" class="lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>⚛️</span> 2. Bohr Atom &amp; Electronic Structure Lab</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">Topic 2</span>
+                    </div>
+                    <div>
+                        <label for="bohrElementSelect" class="block text-xs font-bold text-slate-500 mb-1">Select Element (Atomic Number Z = 1 to 20)</label>
+                        <select id="bohrElementSelect" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                            <option value="1">Z = 1 • Hydrogen (H)</option>
+                            <option value="2">Z = 2 • Helium (He)</option>
+                            <option value="3">Z = 3 • Lithium (Li)</option>
+                            <option value="6">Z = 6 • Carbon (C)</option>
+                            <option value="7">Z = 7 • Nitrogen (N)</option>
+                            <option value="8">Z = 8 • Oxygen (O)</option>
+                            <option value="9">Z = 9 • Fluorine (F)</option>
+                            <option value="10">Z = 10 • Neon (Ne)</option>
+                            <option value="11">Z = 11 • Sodium (Na)</option>
+                            <option value="12">Z = 12 • Magnesium (Mg)</option>
+                            <option value="13">Z = 13 • Aluminium (Al)</option>
+                            <option value="14">Z = 14 • Silicon (Si)</option>
+                            <option value="16">Z = 16 • Sulphur (S)</option>
+                            <option value="17">Z = 17 • Chlorine (Cl)</option>
+                            <option value="18">Z = 18 • Argon (Ar)</option>
+                            <option value="19" selected>Z = 19 • Potassium (K) — 5** Shell Trap!</option>
+                            <option value="20">Z = 20 • Calcium (Ca) — 5** Shell Trap!</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                        <div class="sm:col-span-5 flex items-center justify-center p-2 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                            <svg id="bohrSvg" class="w-36 h-36" viewBox="0 0 160 160" aria-label="Bohr electron shell diagram"></svg>
+                        </div>
+                        <div id="bohrReadout" class="sm:col-span-7 p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-xs text-slate-700 dark:text-slate-200 space-y-1.5"></div>
+                    </div>
+                </div>
+
+                <!-- Tool C (Topic 3): Mole, Limiting Reactant & % Yield Calculator -->
+                <div data-labtopic="lab-t3" class="lg:col-span-2 lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>⚖️</span> 3. Mole Converter, Limiting Reactant &amp; % Yield Solver</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">Topic 3</span>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                        <!-- Quick Mole & Avogadro Converter -->
+                        <div class="lg:col-span-4 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-2.5">
+                            <div class="text-xs font-extrabold uppercase tracking-wider text-amber-700 dark:text-amber-300">Quick Mole Converter</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label for="moleMassInput" class="block text-[11px] font-bold text-slate-500 mb-1">Mass m (g)</label>
+                                    <input id="moleMassInput" type="number" step="0.1" value="8.8" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                                </div>
+                                <div>
+                                    <label for="moleMolarMassInput" class="block text-[11px] font-bold text-slate-500 mb-1">Molar Mass M</label>
+                                    <input id="moleMolarMassInput" type="number" step="0.1" value="44.0" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                                </div>
+                            </div>
+                            <div id="moleConvertResult" class="text-xs text-slate-700 dark:text-slate-200 space-y-1 pt-1"></div>
+                        </div>
+
+                        <!-- Limiting Reactant & % Yield Simulator -->
+                        <div class="lg:col-span-8 p-3.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/25 border border-amber-200 dark:border-amber-800/70 space-y-2.5">
+                            <div class="text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300">Limiting Reactant &amp; % Yield Simulator</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                                <div class="sm:col-span-4">
+                                    <select id="limRxnSelect" class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                                        <option value="mg">2Mg(s) + O₂(g) → 2MgO(s) &nbsp;[M: Mg=24.3, O₂=32.0, MgO=40.3]</option>
+                                        <option value="fe">Fe₂O₃(s) + 3CO(g) → 2Fe(s) + 3CO₂(g) &nbsp;[M: Fe₂O₃=159.6, CO=28.0, Fe=55.8]</option>
+                                        <option value="caco3">CaCO₃(s) + 2HCl(aq) → CaCl₂(aq) + CO₂(g) + H₂O(l) &nbsp;[M: CaCO₃=100.1, HCl=36.5, CO₂=44.0]</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="limMassA" id="limLabelA" class="block text-[11px] font-bold text-slate-500 mb-1">Mass Mg (g)</label>
+                                    <input id="limMassA" type="number" step="0.1" value="4.0" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                                </div>
+                                <div>
+                                    <label for="limMassB" id="limLabelB" class="block text-[11px] font-bold text-slate-500 mb-1">Mass O₂ (g)</label>
+                                    <input id="limMassB" type="number" step="0.1" value="3.2" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                                </div>
+                                <div>
+                                    <label for="limActualYield" id="limLabelProd" class="block text-[11px] font-bold text-slate-500 mb-1">Actual MgO (g)</label>
+                                    <input id="limActualYield" type="number" step="0.1" value="6.0" class="w-full px-2.5 py-1.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                                </div>
+                                <div class="flex items-end">
+                                    <span class="w-full text-center py-1.5 px-2 rounded-lg bg-amber-200/70 dark:bg-amber-900/50 text-[11px] font-extrabold text-amber-900 dark:text-amber-200">Auto-Solved ✓</span>
+                                </div>
+                            </div>
+                            <div id="limRxnResult" class="text-xs text-slate-800 dark:text-slate-100 space-y-1 pt-1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 1 (Topic 4): pH & [H+] Converter -->
+                <div data-labtopic="lab-t4" class="lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧪</span> 4. pH &amp; [H<sup>+</sup>] Converter (25 °C)</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">Topic 4</span>
+                    </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label for="phInput" class="block text-xs font-bold text-slate-500 mb-1">pH Value (0–14)</label>
@@ -1018,9 +1184,12 @@
                     <div id="phReadout" class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-200"></div>
                 </div>
 
-                <!-- Tool 2: Molarity & Dilution Calculator -->
-                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>⚗️</span> 2. Dilution Calculator (M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub>)</h3>
+                <!-- Tool 2 (Topic 4): Molarity & Dilution Calculator -->
+                <div data-labtopic="lab-t4" class="lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>⚗️</span> 5. Dilution Calculator (M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub>)</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">Topic 4</span>
+                    </div>
                     <div class="grid grid-cols-3 gap-2.5">
                         <div>
                             <label for="dilM1" class="block text-[11px] font-bold text-slate-500 mb-1">Initial M<sub>1</sub> (M)</label>
@@ -1038,9 +1207,12 @@
                     <div id="dilResult" class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-xs text-indigo-950 dark:text-indigo-200 space-y-1"></div>
                 </div>
 
-                <!-- Tool 3: Solubility & Salt Prep Checker -->
-                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧂</span> 3. Solubility &amp; Salt Prep Checker</h3>
+                <!-- Tool 3 (Topic 4): Solubility & Salt Prep Checker -->
+                <div data-labtopic="lab-t4" class="lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧂</span> 6. Solubility &amp; Salt Prep Checker</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">Topic 4</span>
+                    </div>
                     <div class="grid grid-cols-2 gap-3">
                         <select id="solCation" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
                             <option value="Na">Na⁺ (Sodium)</option>
@@ -1065,9 +1237,12 @@
                     <div id="solResult" class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs space-y-1.5"></div>
                 </div>
 
-                <!-- Tool 4: Cation Precipitate Simulator -->
-                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧫</span> 4. Cation Precipitate Test (NaOH vs. NH<sub>3</sub>)</h3>
+                <!-- Tool 4 (Topic 4): Cation Precipitate Simulator with Live Test-Tube Visual -->
+                <div data-labtopic="lab-t4" class="lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧫</span> 7. Cation Precipitate Test (NaOH vs. NH<sub>3</sub>)</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">Topic 4</span>
+                    </div>
                     <select id="catSimSelect" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
                         <option value="Ca">Ca²⁺ (Colourless)</option>
                         <option value="Mg">Mg²⁺ (Colourless)</option>
@@ -1076,15 +1251,35 @@
                         <option value="Pb">Pb²⁺ (Colourless)</option>
                         <option value="Fe2">Fe²⁺ (Green)</option>
                         <option value="Fe3">Fe³⁺ (Yellow/Brown)</option>
-                        <option value="Cu">Cu²⁺ (Blue)</option>
+                        <option value="Cu" selected>Cu²⁺ (Blue)</option>
                         <option value="Ag">Ag⁺ (Colourless)</option>
                     </select>
-                    <div id="catSimResult" class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs space-y-1.5"></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                        <!-- Twin Test Tubes SVG -->
+                        <div class="sm:col-span-4 flex items-center justify-center p-2.5 rounded-xl bg-slate-950 border border-slate-800">
+                            <svg class="w-28 h-24" viewBox="0 0 120 100" aria-label="Test tubes with NaOH and NH3">
+                                <!-- Tube 1: Excess NaOH -->
+                                <rect x="20" y="12" width="24" height="68" rx="12" fill="none" stroke="#94a3b8" stroke-width="2"/>
+                                <path id="catTubeNaohLiquid" d="M22 36 H42 V68 A10 10 0 0 1 22 68 Z" fill="#e2e8f0" opacity="0.35"/>
+                                <path id="catTubeNaohPpt" d="M23 58 H41 V68 A9 9 0 0 1 23 68 Z" fill="#38bdf8" opacity="0.95"/>
+                                <text x="32" y="93" text-anchor="middle" fill="#cbd5e1" font-size="9" font-family="monospace">+ex.NaOH</text>
+                                <!-- Tube 2: Excess NH3 -->
+                                <rect x="76" y="12" width="24" height="68" rx="12" fill="none" stroke="#94a3b8" stroke-width="2"/>
+                                <path id="catTubeNh3Liquid" d="M78 36 H98 V68 A10 10 0 0 1 78 68 Z" fill="#1d4ed8" opacity="0.9"/>
+                                <path id="catTubeNh3Ppt" d="M79 58 H97 V68 A9 9 0 0 1 79 68 Z" fill="#38bdf8" opacity="0"/>
+                                <text x="88" y="93" text-anchor="middle" fill="#cbd5e1" font-size="9" font-family="monospace">+ex.NH₃</text>
+                            </svg>
+                        </div>
+                        <div id="catSimResult" class="sm:col-span-8 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs space-y-1.5"></div>
+                    </div>
                 </div>
 
-                <!-- Tool 5: Titration Indicator Selector -->
-                <div class="lg:col-span-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
-                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🎯</span> 5. Titration Indicator &amp; End-Point Selector</h3>
+                <!-- Tool 5 (Topic 4): Titration Indicator Selector -->
+                <div data-labtopic="lab-t4" class="lg:col-span-2 lab-tool-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🎯</span> 8. Titration Indicator &amp; End-Point Selector</h3>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">Topic 4</span>
+                    </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <select id="titPairSelect" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
                             <option value="SASB">Strong Acid + Strong Alkali (e.g., HCl + NaOH)</option>
@@ -1571,272 +1766,328 @@
     <!-- ==================== JAVASCRIPT LOGIC ==================== -->
     <script>
         // ============================================================
-        // 1. GLOBAL STATE, THEME & NAVIGATION
+        // 1. CORE NAVIGATION, THEME & BACK-TO-TOP
         // ============================================================
         let currentTab = 'home';
 
-        const themeToggle = document.getElementById('themeToggle');
-        if (localStorage.getItem('hkdseChemTheme') === 'dark') {
-            document.documentElement.classList.add('dark');
-        }
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            try {
-                localStorage.setItem('hkdseChemTheme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-            } catch (e) {}
-        });
-
-        function activateTab(tabId, scrollTop = true) {
+        function activateTab(tabId) {
             currentTab = tabId;
-            document.querySelectorAll('.topic-panel').forEach(p => {
-                p.classList.toggle('hidden', p.id !== tabId);
+            document.querySelectorAll('.topic-panel').forEach(panel => {
+                panel.classList.toggle('hidden', panel.id !== tabId);
             });
+
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                const isActive = btn.dataset.tab === tabId;
-                if (isActive) {
+                const isTarget = btn.dataset.tab === tabId;
+                if (isTarget) {
                     btn.className = 'tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-teal-600 text-white shadow-sm';
+                } else if (btn.dataset.tab === 'lab') {
+                    btn.className = 'tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900';
+                } else if (btn.dataset.tab === 'quiz') {
+                    btn.className = 'tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 hover:bg-rose-100 dark:hover:bg-rose-900';
+                } else if (btn.dataset.tab === 'flashcards') {
+                    btn.className = 'tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900';
                 } else {
                     btn.className = 'tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700';
                 }
             });
-            if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (tabId === 'notes') {
+                initNotesScrollSpy();
+            }
+        }
+
+        function openNotesTopic(topicId) {
+            activateTab('notes');
+            setNotesFilter(topicId);
         }
 
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => activateTab(btn.dataset.tab));
         });
 
-        // ============================================================
-        // 2. STUDY NOTES CONTROLS, SYLLABUS INDEX & ACCORDIONS
-        // ============================================================
-        let notesDone = {};
+        const htmlEl = document.documentElement;
         try {
-            const savedDone = localStorage.getItem('hkdseChemNotesDone');
-            if (savedDone) notesDone = JSON.parse(savedDone);
-        } catch (e) { notesDone = {}; }
+            if (localStorage.getItem('hkdseChemTheme') === 'dark' ||
+                (!localStorage.getItem('hkdseChemTheme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                htmlEl.classList.add('dark');
+            }
+        } catch (e) {}
 
-        function setNotesFilter(filterVal) {
-            document.querySelectorAll('.nfilter-btn').forEach(btn => {
-                const active = btn.dataset.nfilter === filterVal;
-                btn.className = active
-                    ? 'nfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white shadow-sm transition'
-                    : 'nfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition';
-            });
-            document.querySelectorAll('.topic-block').forEach(block => {
-                block.classList.toggle('hidden', filterVal !== 'all' && block.id !== filterVal);
-            });
-        }
-
-        document.querySelectorAll('.nfilter-btn').forEach(btn => {
-            btn.addEventListener('click', () => setNotesFilter(btn.dataset.nfilter));
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            htmlEl.classList.toggle('dark');
+            try {
+                localStorage.setItem('hkdseChemTheme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+            } catch (e) {}
         });
 
-        function openNotesAt(topicFilter = 'all', sectionId = null) {
-            activateTab('notes', !sectionId);
-            setNotesFilter(topicFilter);
-            if (sectionId) {
-                setTimeout(() => jumpToSection(sectionId), 60);
-            }
-        }
+        // ============================================================
+        // 2. STUDY NOTES, SYLLABUS INDEX & PROGRESS SYNC (OPTIMIZED)
+        // ============================================================
+        const ALL_SECTION_IDS = [
+            'sec-1-1', 'sec-1-2', 'sec-1-3', 'sec-1-4',
+            'sec-2-1', 'sec-2-2', 'sec-2-3', 'sec-2-4',
+            'sec-3-1', 'sec-3-2', 'sec-3-3', 'sec-3-5',
+            'sec-4-1', 'sec-4-2', 'sec-4-3', 'sec-4-7'
+        ];
 
-        function openNotesTopic(topicFilter) {
-            const norm = typeof topicFilter === 'number' || /^[1-4]$/.test(String(topicFilter))
-                ? `topic${topicFilter}`
-                : (topicFilter || 'all');
-            openNotesAt(norm);
-        }
-
-        function setActiveTocItem(sectionId) {
-            const tocScrollArea = document.getElementById('tocScrollArea');
-            document.querySelectorAll('.toc-item').forEach(btn => {
-                const isMatch = btn.dataset.tocId === sectionId;
-                btn.classList.toggle('is-active', isMatch);
-                if (isMatch && tocScrollArea) {
-                    const itemTop = btn.offsetTop;
-                    const itemBottom = itemTop + btn.offsetHeight;
-                    const viewTop = tocScrollArea.scrollTop;
-                    const viewBottom = viewTop + tocScrollArea.clientHeight;
-                    if (itemTop < viewTop + 12 || itemBottom > viewBottom - 12) {
-                        tocScrollArea.scrollTo({
-                            top: Math.max(0, itemTop - tocScrollArea.clientHeight / 2 + btn.offsetHeight / 2),
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        }
-
-        function jumpToSection(sectionId) {
-            const target = document.getElementById(sectionId);
-            if (!target) return;
-            // Ensure parent topic-block is visible even if user had filtered to a single topic pill
-            const parentTopic = target.closest('.topic-block');
-            if (parentTopic && parentTopic.classList.contains('hidden')) {
-                setNotesFilter('all');
-            }
-            target.classList.remove('hidden');
-            const btn = target.querySelector('.acc-btn');
-            const body = target.querySelector('.acc-body');
-            if (btn && body) {
-                btn.setAttribute('aria-expanded', 'true');
-                body.classList.remove('hidden');
-            }
-            setActiveTocItem(sectionId);
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function setNotesSize(sizeClass) {
-            const nc = document.getElementById('notesContent');
-            nc.classList.remove('notes-sm', 'notes-md', 'notes-lg');
-            nc.classList.add(sizeClass);
-        }
-
-        function toggleAllAccordions(expand) {
-            document.querySelectorAll('#notesContent .study-card').forEach(card => {
-                const btn = card.querySelector('.acc-btn');
-                const body = card.querySelector('.acc-body');
-                if (btn && body) {
-                    btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
-                    body.classList.toggle('hidden', !expand);
-                }
-            });
-        }
-
-        document.querySelectorAll('.acc-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const expanded = btn.getAttribute('aria-expanded') === 'true';
-                btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-                const body = btn.closest('.study-card').querySelector('.acc-body');
-                if (body) body.classList.toggle('hidden', expanded);
+        // Cache DOM nodes once to avoid repeated querySelectorAll scans
+        const tocItemMap = new Map();
+        document.querySelectorAll('.toc-item').forEach(item => {
+            tocItemMap.set(item.dataset.tocId, {
+                el: item,
+                badge: item.querySelector('.toc-status')
             });
         });
+
+        const doneBtnMap = new Map();
+        document.querySelectorAll('.mark-done-btn').forEach(btn => {
+            doneBtnMap.set(btn.dataset.doneId, btn);
+        });
+
+        const studyCardList = Array.from(document.querySelectorAll('#notesContent .study-card'));
+        const topicBlockList = Array.from(document.querySelectorAll('#notesContent .topic-block'));
+        const notesFilterBtns = Array.from(document.querySelectorAll('.nfilter-btn'));
+
+        let completedSections = new Set();
+        try {
+            const savedDone = localStorage.getItem('hkdseChemCompletedSections');
+            if (savedDone) completedSections = new Set(JSON.parse(savedDone));
+        } catch (e) { completedSections = new Set(); }
 
         function updateNotesProgressUI() {
-            const allCards = document.querySelectorAll('#notesContent .study-card');
-            const total = allCards.length || 16;
-            const doneCount = Object.values(notesDone).filter(Boolean).length;
+            const total = ALL_SECTION_IDS.length;
+            const doneCount = ALL_SECTION_IDS.filter(id => completedSections.has(id)).length;
             const pct = Math.round((doneCount / total) * 100);
 
-            document.getElementById('notesProgressLabel').textContent = `${doneCount} / ${total}`;
-            document.getElementById('notesProgressBar').style.width = `${pct}%`;
-            document.getElementById('homeNotesStat').textContent = `${doneCount} / ${total}`;
+            const progressLabel = document.getElementById('notesProgressLabel');
+            const progressBar = document.getElementById('notesProgressBar');
+            const homeStat = document.getElementById('homeNotesStat');
+            const tocCount = document.getElementById('tocProgressCount');
+            const tocPct = document.getElementById('tocProgressPct');
+            const tocBar = document.getElementById('tocProgressBar');
 
-            // Sync Luxury Technical Syllabus Index telemetry
-            const tocCountEl = document.getElementById('tocProgressCount');
-            const tocPctEl = document.getElementById('tocProgressPct');
-            const tocBarEl = document.getElementById('tocProgressBar');
-            if (tocCountEl) tocCountEl.textContent = `${String(doneCount).padStart(2, '0')}/${total}`;
-            if (tocPctEl) tocPctEl.textContent = `${pct}% SYNCED`;
-            if (tocBarEl) tocBarEl.style.width = `${pct}%`;
+            if (progressLabel) progressLabel.textContent = `${doneCount} / ${total}`;
+            if (progressBar) progressBar.style.width = `${pct}%`;
+            if (homeStat) homeStat.textContent = `${doneCount} / ${total}`;
+            if (tocCount) tocCount.textContent = `${String(doneCount).padStart(2, '0')}/${total}`;
+            if (tocPct) tocPct.textContent = `${pct}% SYNCED`;
+            if (tocBar) tocBar.style.width = `${pct}%`;
 
-            // Update per-module counts
-            const modules = {
-                1: ['sec-1-1', 'sec-1-2', 'sec-1-3', 'sec-1-4'],
-                2: ['sec-2-1', 'sec-2-2', 'sec-2-3', 'sec-2-4'],
-                3: ['sec-3-1', 'sec-3-2', 'sec-3-3', 'sec-3-5'],
-                4: ['sec-4-1', 'sec-4-2', 'sec-4-3', 'sec-4-7']
-            };
-            Object.entries(modules).forEach(([mIdx, ids]) => {
-                const mDone = ids.filter(id => Boolean(notesDone[id])).length;
-                const el = document.getElementById(`tocModCount${mIdx}`);
-                if (el) el.textContent = `${mDone}/${ids.length}`;
+            // Update module counters (MOD 01 - MOD 04)
+            [1, 2, 3, 4].forEach(modNum => {
+                const modIds = ALL_SECTION_IDS.filter(id => id.startsWith(`sec-${modNum}-`));
+                const modDone = modIds.filter(id => completedSections.has(id)).length;
+                const modEl = document.getElementById(`tocModCount${modNum}`);
+                if (modEl) modEl.textContent = `${modDone}/${modIds.length}`;
             });
 
-            // Update Mark Done buttons & TOC status checkmarks
-            document.querySelectorAll('.mark-done-btn').forEach(btn => {
-                const id = btn.dataset.doneId;
-                const isDone = Boolean(notesDone[id]);
-                btn.textContent = isDone ? '✓ Done' : 'Mark Done';
-                btn.className = isDone
-                    ? 'mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-sm transition shrink-0'
-                    : 'mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-teal-900 transition shrink-0';
-            });
-
-            document.querySelectorAll('.toc-item').forEach(item => {
-                const id = item.dataset.tocId;
-                const isDone = Boolean(notesDone[id]);
-                const badge = item.querySelector('.toc-status');
-                if (badge) {
-                    if (isDone) {
-                        badge.className = 'toc-status w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-[9px] text-emerald-300 shrink-0 transition shadow-[0_0_8px_rgba(52,211,153,0.45)]';
-                    } else {
-                        badge.className = 'toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition';
-                    }
+            // Sync "Mark Done" buttons & Syllabus Index badges via cached maps
+            ALL_SECTION_IDS.forEach(id => {
+                const isDone = completedSections.has(id);
+                const btn = doneBtnMap.get(id);
+                if (btn) {
+                    btn.textContent = isDone ? '✓ Completed' : 'Mark Done';
+                    btn.className = isDone
+                        ? 'mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-sm transition shrink-0'
+                        : 'mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-teal-900 transition shrink-0';
+                }
+                const tocEntry = tocItemMap.get(id);
+                if (tocEntry?.badge) {
+                    tocEntry.badge.className = isDone
+                        ? 'toc-status w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-[9px] text-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.5)] shrink-0 transition'
+                        : 'toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition';
                 }
             });
         }
 
-        document.querySelectorAll('.mark-done-btn').forEach(btn => {
+        doneBtnMap.forEach((btn, id) => {
             btn.addEventListener('click', () => {
-                const id = btn.dataset.doneId;
-                notesDone[id] = !notesDone[id];
-                try { localStorage.setItem('hkdseChemNotesDone', JSON.stringify(notesDone)); } catch (e) {}
+                if (completedSections.has(id)) completedSections.delete(id);
+                else completedSections.add(id);
+                try {
+                    localStorage.setItem('hkdseChemCompletedSections', JSON.stringify([...completedSections]));
+                } catch (e) {}
                 updateNotesProgressUI();
             });
         });
 
-        // Scroll spy for Syllabus Index + Back-to-Top button
-        window.addEventListener('scroll', () => {
-            const backBtn = document.getElementById('backToTopBtn');
-            if (backBtn) backBtn.classList.toggle('hidden', window.scrollY < 320);
+        // Accordion expand/collapse
+        document.querySelectorAll('.acc-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', String(!expanded));
+                const body = btn.closest('.study-card')?.querySelector('.acc-body');
+                if (body) body.classList.toggle('hidden', expanded);
+            });
+        });
 
-            if (currentTab === 'notes') {
-                const cards = Array.from(document.querySelectorAll('#notesContent .study-card')).filter(c => !c.classList.contains('hidden'));
-                let activeId = cards[0]?.id || 'sec-1-1';
-                for (const card of cards) {
-                    const rect = card.getBoundingClientRect();
-                    if (rect.top <= 190) {
-                        activeId = card.id;
+        function toggleAllAccordions(expand) {
+            studyCardList.forEach(card => {
+                const btn = card.querySelector('.acc-btn');
+                const body = card.querySelector('.acc-body');
+                if (btn) btn.setAttribute('aria-expanded', String(expand));
+                if (body) body.classList.toggle('hidden', !expand);
+            });
+        }
+
+        function setNotesFilter(filterTopic) {
+            notesFilterBtns.forEach(btn => {
+                const active = btn.dataset.nfilter === filterTopic;
+                btn.className = active
+                    ? 'nfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white shadow-sm transition'
+                    : 'nfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+            });
+
+            topicBlockList.forEach(block => {
+                block.classList.toggle('hidden', filterTopic !== 'all' && block.id !== filterTopic);
+            });
+        }
+
+        notesFilterBtns.forEach(btn => {
+            btn.addEventListener('click', () => setNotesFilter(btn.dataset.nfilter));
+        });
+
+        function setNotesSize(sizeClass) {
+            const notesContent = document.getElementById('notesContent');
+            if (!notesContent) return;
+            notesContent.classList.remove('notes-sm', 'notes-md', 'notes-lg');
+            notesContent.classList.add(sizeClass);
+
+            document.querySelectorAll('[onclick^="setNotesSize"]').forEach(btn => {
+                const active = btn.getAttribute('onclick')?.includes(sizeClass);
+                btn.className = active
+                    ? 'px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-slate-700 shadow-sm transition'
+                    : 'px-2.5 py-1 rounded-lg font-bold hover:bg-white dark:hover:bg-slate-700 transition';
+            });
+        }
+
+        let currentActiveTocId = null;
+        function setActiveTocItem(secId, forceCenter = false) {
+            if (!secId || (currentActiveTocId === secId && !forceCenter)) return;
+
+            if (currentActiveTocId && tocItemMap.has(currentActiveTocId)) {
+                tocItemMap.get(currentActiveTocId).el.classList.remove('is-active');
+            }
+            currentActiveTocId = secId;
+
+            const entry = tocItemMap.get(secId);
+            if (!entry) return;
+            entry.el.classList.add('is-active');
+
+            // Only scroll the sidebar if the active item is outside its visible viewport
+            const scrollArea = document.getElementById('tocScrollArea');
+            if (scrollArea && scrollArea.offsetParent !== null) {
+                const itemTop = entry.el.offsetTop;
+                const itemBottom = itemTop + entry.el.offsetHeight;
+                const viewTop = scrollArea.scrollTop;
+                const viewBottom = viewTop + scrollArea.clientHeight;
+                if (forceCenter || itemTop < viewTop + 12 || itemBottom > viewBottom - 12) {
+                    const targetScroll = itemTop - scrollArea.clientHeight / 2 + entry.el.offsetHeight / 2;
+                    scrollArea.scrollTop = Math.max(0, targetScroll);
+                }
+            }
+        }
+
+        function jumpToSection(secId) {
+            if (currentTab !== 'notes') {
+                activateTab('notes');
+            }
+            const card = document.getElementById(secId);
+            if (!card) return;
+
+            const parentTopic = card.closest('.topic-block');
+            if (parentTopic && parentTopic.classList.contains('hidden')) {
+                setNotesFilter('all');
+            }
+
+            const accBtn = card.querySelector('.acc-btn');
+            const accBody = card.querySelector('.acc-body');
+            if (accBtn) accBtn.setAttribute('aria-expanded', 'true');
+            if (accBody) accBody.classList.remove('hidden');
+
+            const mobileDrawer = document.querySelector('#notes details');
+            if (mobileDrawer) mobileDrawer.open = false;
+
+            setActiveTocItem(secId, true);
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Zero-reflow IntersectionObserver Scrollspy for Study Notes
+        let notesObserver = null;
+        function initNotesScrollSpy() {
+            if (notesObserver) return;
+            if (!('IntersectionObserver' in window)) return;
+            notesObserver = new IntersectionObserver((entries) => {
+                if (currentTab !== 'notes') return;
+                for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                        setActiveTocItem(entry.target.id, false);
+                        break;
                     }
                 }
-                setActiveTocItem(activeId);
+            }, {
+                rootMargin: '-140px 0px -65% 0px',
+                threshold: 0
+            });
+            studyCardList.forEach(card => notesObserver.observe(card));
+        }
+        initNotesScrollSpy();
+
+        // Lightweight Back-to-Top toggle (no forced layout reads)
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        let lastBackTopVisible = false;
+        window.addEventListener('scroll', () => {
+            const shouldShow = window.scrollY >= 320;
+            if (shouldShow !== lastBackTopVisible && backToTopBtn) {
+                lastBackTopVisible = shouldShow;
+                backToTopBtn.classList.toggle('hidden', !shouldShow);
             }
         }, { passive: true });
 
         // ============================================================
-        // 3. SAFE GLOBAL SEARCH (DOM TEXT-NODE HIGHLIGHTING)
+        // 3. SAFE DOM GLOBAL SEARCH ACROSS STUDY NOTES
         // ============================================================
-        const globalSearch = document.getElementById('globalSearch');
+        const globalSearchInput = document.getElementById('globalSearch');
         const clearSearchBtn = document.getElementById('clearSearchBtn');
-        const searchCount = document.getElementById('searchCount');
+        const searchCountBadge = document.getElementById('searchCount');
         const searchBanner = document.getElementById('searchBanner');
         const searchBannerText = document.getElementById('searchBannerText');
 
         function removeSearchHighlights(root) {
             root.querySelectorAll('mark.search-hl').forEach(mark => {
                 const parent = mark.parentNode;
-                if (parent) {
-                    parent.replaceChild(document.createTextNode(mark.textContent), mark);
-                    parent.normalize();
-                }
+                if (!parent) return;
+                parent.replaceChild(document.createTextNode(mark.textContent), mark);
+                parent.normalize();
             });
         }
 
-        function highlightTextNodes(root, query) {
-            if (!query) return;
-            const lowerQ = query.toLowerCase();
+        function highlightTextNodes(root, term) {
+            if (!term) return 0;
+            const lowerTerm = term.toLowerCase();
+            let hits = 0;
             const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
                 acceptNode(node) {
-                    if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-                    const tag = node.parentElement?.tagName;
-                    if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK' || tag === 'BUTTON') {
+                    const parentTag = node.parentElement?.tagName;
+                    if (!parentTag || ['SCRIPT', 'STYLE', 'BUTTON', 'SVG', 'MARK'].includes(parentTag)) {
                         return NodeFilter.FILTER_REJECT;
                     }
-                    return node.nodeValue.toLowerCase().includes(lowerQ)
+                    return node.nodeValue.toLowerCase().includes(lowerTerm)
                         ? NodeFilter.FILTER_ACCEPT
                         : NodeFilter.FILTER_SKIP;
                 }
             });
 
-            const nodes = [];
+            const nodesToProcess = [];
             let current;
-            while ((current = walker.nextNode())) nodes.push(current);
+            while ((current = walker.nextNode())) nodesToProcess.push(current);
 
-            nodes.forEach(textNode => {
+            nodesToProcess.forEach(textNode => {
                 const text = textNode.nodeValue;
                 const lowerText = text.toLowerCase();
                 let startIdx = 0;
-                let matchIdx = lowerText.indexOf(lowerQ, startIdx);
+                let matchIdx = lowerText.indexOf(lowerTerm, startIdx);
                 if (matchIdx === -1) return;
 
                 const frag = document.createDocumentFragment();
@@ -1846,75 +2097,261 @@
                     }
                     const mark = document.createElement('mark');
                     mark.className = 'search-hl';
-                    mark.textContent = text.slice(matchIdx, matchIdx + query.length);
+                    mark.textContent = text.slice(matchIdx, matchIdx + term.length);
                     frag.appendChild(mark);
-                    startIdx = matchIdx + query.length;
-                    matchIdx = lowerText.indexOf(lowerQ, startIdx);
+                    hits++;
+                    startIdx = matchIdx + term.length;
+                    matchIdx = lowerText.indexOf(lowerTerm, startIdx);
                 }
                 if (startIdx < text.length) {
                     frag.appendChild(document.createTextNode(text.slice(startIdx)));
                 }
                 textNode.parentNode.replaceChild(frag, textNode);
             });
+
+            return hits;
         }
 
-        function clearGlobalSearch() {
-            globalSearch.value = '';
-            clearSearchBtn.classList.add('hidden');
-            searchCount.classList.add('hidden');
-            searchBanner.classList.add('hidden');
-            const notesContainer = document.getElementById('notesContent');
-            removeSearchHighlights(notesContainer);
-            document.querySelectorAll('#notesContent .study-card').forEach(c => c.classList.remove('hidden'));
-            setNotesFilter('all');
-        }
+        let lastSearchQuery = '';
+        function runGlobalSearch(rawQuery) {
+            const query = rawQuery.trim();
+            if (query === lastSearchQuery && query !== '') return;
+            lastSearchQuery = query;
 
-        clearSearchBtn.addEventListener('click', clearGlobalSearch);
-
-        globalSearch.addEventListener('input', () => {
-            const q = globalSearch.value.trim();
             const notesContainer = document.getElementById('notesContent');
+            if (!notesContainer) return;
+
             removeSearchHighlights(notesContainer);
 
-            if (!q) {
-                clearGlobalSearch();
+            if (!query) {
+                clearSearchBtn.classList.add('hidden');
+                searchCountBadge.classList.add('hidden');
+                searchBanner.classList.add('hidden');
+                studyCardList.forEach(el => el.classList.remove('hidden'));
+                topicBlockList.forEach(el => el.classList.remove('hidden'));
                 return;
             }
 
             if (currentTab !== 'notes') {
-                activateTab('notes', false);
+                activateTab('notes');
             }
             setNotesFilter('all');
-            clearSearchBtn.classList.remove('hidden');
+            toggleAllAccordions(true);
 
-            let matchedCards = 0;
-            const lowerQ = q.toLowerCase();
-            document.querySelectorAll('#notesContent .study-card').forEach(card => {
-                const isMatch = card.textContent.toLowerCase().includes(lowerQ);
-                card.classList.toggle('hidden', !isMatch);
-                if (isMatch) {
-                    matchedCards++;
-                    const body = card.querySelector('.acc-body');
-                    const btn = card.querySelector('.acc-btn');
-                    if (body && btn) {
-                        body.classList.remove('hidden');
-                        btn.setAttribute('aria-expanded', 'true');
+            clearSearchBtn.classList.remove('hidden');
+            let matchedSections = 0;
+            let totalHits = 0;
+
+            document.querySelectorAll('#notesContent .topic-block').forEach(block => {
+                let blockHasMatch = false;
+                block.querySelectorAll('.study-card').forEach(card => {
+                    const cardText = card.textContent.toLowerCase();
+                    if (cardText.includes(query.toLowerCase())) {
+                        card.classList.remove('hidden');
+                        blockHasMatch = true;
+                        matchedSections++;
+                        totalHits += highlightTextNodes(card, query);
+                    } else {
+                        card.classList.add('hidden');
                     }
-                    highlightTextNodes(card, q);
-                }
+                });
+                block.classList.toggle('hidden', !blockHasMatch);
             });
 
-            searchCount.textContent = `${matchedCards}`;
-            searchCount.classList.remove('hidden');
+            searchCountBadge.textContent = `${totalHits} hit${totalHits === 1 ? '' : 's'}`;
+            searchCountBadge.classList.remove('hidden');
+            searchBannerText.textContent = `Found ${totalHits} match${totalHits === 1 ? '' : 'es'} across ${matchedSections} section${matchedSections === 1 ? '' : 's'} for "${query}".`;
             searchBanner.classList.remove('hidden');
-            searchBannerText.textContent = matchedCards > 0
-                ? `Found "${q}" in ${matchedCards} study note section${matchedCards === 1 ? '' : 's'}.`
-                : `No study note sections matched "${q}". Try another keyword or ask the AI Tutor!`;
+        }
+
+        function clearGlobalSearch() {
+            globalSearchInput.value = '';
+            runGlobalSearch('');
+        }
+
+        let searchDebounceTimer = null;
+        globalSearchInput.addEventListener('input', () => {
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(() => runGlobalSearch(globalSearchInput.value), 160);
         });
+        clearSearchBtn.addEventListener('click', clearGlobalSearch);
 
         // ============================================================
-        // 4. INTERACTIVE LAB TOOLS (5 CALCULATORS & SIMULATORS)
+        // 4. INTERACTIVE LAB TOOLS (TOPICS 1–4 VIRTUAL LAB SUITE)
         // ============================================================
+        // Lab Topic Filter Pills
+        document.querySelectorAll('.lfilter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetFilter = btn.dataset.lfilter;
+                document.querySelectorAll('.lfilter-btn').forEach(b => {
+                    const active = b.dataset.lfilter === targetFilter;
+                    b.className = active
+                        ? 'lfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition'
+                        : 'lfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+                });
+                document.querySelectorAll('.lab-tool-card').forEach(card => {
+                    card.classList.toggle('hidden', targetFilter !== 'all' && card.dataset.labtopic !== targetFilter);
+                });
+            });
+        });
+
+        // Tool A (Topic 1): Virtual Flame & Chemical Test Bench
+        const flameData = {
+            Na: { colour: 'Golden yellow', hex: '#facc15', tip: 'Intense golden yellow flame masks lilac K⁺ if both are present (view through blue cobalt glass to filter out Na⁺).' },
+            K: { colour: 'Lilac', hex: '#c084fc', tip: 'Pale violet/lilac flame; easily masked by trace sodium impurities.' },
+            Ca: { colour: 'Brick-red', hex: '#f97316', tip: 'Brick-red (orange-red) flame confirms Ca²⁺ ions.' },
+            Cu: { colour: 'Bluish green', hex: '#2dd4bf', tip: 'Distinctive bluish-green flame confirms Cu²⁺ ions.' },
+            None: { colour: 'No characteristic flame colour', hex: '#38bdf8', tip: 'Cations like NH₄⁺, Mg²⁺, Al³⁺, Zn²⁺ do not produce a characteristic flame colour.' }
+        };
+        const gasTestData = {
+            Cl: 'Add excess dilute HNO₃(aq) (removes CO₃²⁻) followed by AgNO₃(aq) → white precipitate of AgCl(s).',
+            CO3: 'Add dilute HCl(aq) → effervescence of colourless gas (CO₂) that turns limewater milky.',
+            H2O: 'Dry cobalt(II) chloride paper turns blue → pink; anhydrous CuSO₄ turns white → blue.',
+            O2: 'Relights a glowing wooden splint (supports combustion; not flammable itself).',
+            H2: 'Gives a "pop" sound with a burning wooden splint (2H₂ + O₂ → 2H₂O).',
+            CO2: 'Turns limewater milky (CaCO₃ ppt); turns clear again with excess CO₂ (soluble Ca(HCO₃)₂).'
+        };
+
+        const flameIonSelect = document.getElementById('flameIonSelect');
+        const flameSvgGlow = document.getElementById('flameSvgGlow');
+        const flameTestReadout = document.getElementById('flameTestReadout');
+        function updateFlameLab() {
+            const d = flameData[flameIonSelect.value];
+            flameSvgGlow.setAttribute('fill', d.hex);
+            flameTestReadout.innerHTML = `<strong>Observed Flame:</strong> <span class="font-extrabold">${d.colour}</span><br><span class="text-slate-500 dark:text-slate-400">${d.tip}</span>`;
+        }
+        flameIonSelect.addEventListener('change', updateFlameLab);
+        updateFlameLab();
+
+        const gasTestSelect = document.getElementById('gasTestSelect');
+        const gasTestReadout = document.getElementById('gasTestReadout');
+        function updateGasTestLab() {
+            gasTestReadout.innerHTML = `<strong>Standard Procedure &amp; Result:</strong> ${gasTestData[gasTestSelect.value]}`;
+        }
+        gasTestSelect.addEventListener('change', updateGasTestLab);
+        updateGasTestLab();
+
+        // Tool B (Topic 2): Bohr Atom & Electronic Structure Builder
+        const bohrElements = {
+            1: { sym: 'H', name: 'Hydrogen', shells: [1], group: 'No group', period: 1, type: 'Non-metal', ion: 'H⁺ or H⁻', note: '1 proton, 0 neutrons (in ¹H). Forms 1 single covalent bond.' },
+            2: { sym: 'He', name: 'Helium', shells: [2], group: 'Group 0', period: 1, type: 'Noble gas', ion: 'None (inert)', note: 'Stable duplet structure (2 outer e⁻); monatomic gas.' },
+            3: { sym: 'Li', name: 'Lithium', shells: [2, 1], group: 'Group I', period: 2, type: 'Alkali metal', ion: 'Li⁺ (2)', note: 'Loses 1 outer e⁻ easily; floats on water.' },
+            6: { sym: 'C', name: 'Carbon', shells: [2, 4], group: 'Group IV', period: 2, type: 'Non-metal', ion: 'Shares 4 e⁻', note: 'Forms 4 covalent bonds; diamond & graphite are giant covalent.' },
+            7: { sym: 'N', name: 'Nitrogen', shells: [2, 5], group: 'Group V', period: 2, type: 'Non-metal', ion: 'N³⁻ (2,8)', note: 'Forms N≡N triple covalent bond; 1 lone pair in NH₃ for dative bonding.' },
+            8: { sym: 'O', name: 'Oxygen', shells: [2, 6], group: 'Group VI', period: 2, type: 'Non-metal', ion: 'O²⁻ (2,8)', note: 'Forms O=O double bond; gains 2 e⁻ to form oxide ion.' },
+            9: { sym: 'F', name: 'Fluorine', shells: [2, 7], group: 'Group VII', period: 2, type: 'Halogen', ion: 'F⁻ (2,8)', note: 'Most reactive halogen; pale yellow diatomic gas F₂.' },
+            10: { sym: 'Ne', name: 'Neon', shells: [2, 8], group: 'Group 0', period: 2, type: 'Noble gas', ion: 'None (inert)', note: 'Stable octet (2,8); used in red advertising signs.' },
+            11: { sym: 'Na', name: 'Sodium', shells: [2, 8, 1], group: 'Group I', period: 3, type: 'Alkali metal', ion: 'Na⁺ (2,8)', note: 'Stored under paraffin oil; golden yellow flame test.' },
+            12: { sym: 'Mg', name: 'Magnesium', shells: [2, 8, 2], group: 'Group II', period: 3, type: 'Alkaline earth metal', ion: 'Mg²⁺ (2,8)', note: 'Burns with bright white flame; reacts with steam → MgO + H₂.' },
+            13: { sym: 'Al', name: 'Aluminium', shells: [2, 8, 3], group: 'Group III', period: 3, type: 'Metal', ion: 'Al³⁺ (2,8)', note: 'Protected by impermeable Al₂O₃ layer; Al(OH)₃ dissolves in excess NaOH only.' },
+            14: { sym: 'Si', name: 'Silicon', shells: [2, 8, 4], group: 'Group IV', period: 3, type: 'Semi-metal', ion: 'Shares 4 e⁻', note: 'Giant covalent structure (high m.p., semiconductor).' },
+            16: { sym: 'S', name: 'Sulphur', shells: [2, 8, 6], group: 'Group VI', period: 3, type: 'Non-metal', ion: 'S²⁻ (2,8,8)', note: 'Simple molecular S₈ solid; burns in air to form SO₂.' },
+            17: { sym: 'Cl', name: 'Chlorine', shells: [2, 8, 7], group: 'Group VII', period: 3, type: 'Halogen', ion: 'Cl⁻ (2,8,8)', note: 'Yellowish-green toxic gas Cl₂; forms white AgCl ppt with Ag⁺.' },
+            18: { sym: 'Ar', name: 'Argon', shells: [2, 8, 8], group: 'Group 0', period: 3, type: 'Noble gas', ion: 'None (inert)', note: 'Stable octet (2,8,8); fills incandescent light bulbs.' },
+            19: { sym: 'K', name: 'Potassium', shells: [2, 8, 8, 1], group: 'Group I', period: 4, type: 'Alkali metal', ion: 'K⁺ (2,8,8)', note: '5** Trap: Arrangement is 2,8,8,1 (NOT 2,8,9)! Lilac flame.' },
+            20: { sym: 'Ca', name: 'Calcium', shells: [2, 8, 8, 2], group: 'Group II', period: 4, type: 'Alkaline earth metal', ion: 'Ca²⁺ (2,8,8)', note: '5** Trap: Arrangement is 2,8,8,2 (NOT 2,8,10)! Brick-red flame.' }
+        };
+
+        const bohrElementSelect = document.getElementById('bohrElementSelect');
+        const bohrSvg = document.getElementById('bohrSvg');
+        const bohrReadout = document.getElementById('bohrReadout');
+
+        function updateBohrLab() {
+            const z = parseInt(bohrElementSelect.value, 10);
+            const el = bohrElements[z];
+            const cx = 80, cy = 80;
+            const radii = [24, 39, 54, 69];
+
+            let svgHtml = `<circle cx="${cx}" cy="${cy}" r="13" fill="#4f46e5"/><text x="${cx}" y="${cy + 3.5}" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold" font-family="sans-serif">${el.sym}</text>`;
+            el.shells.forEach((count, sIdx) => {
+                const r = radii[sIdx];
+                svgHtml += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#64748b" stroke-width="1.2" stroke-dasharray="3 2"/>`;
+                for (let eIdx = 0; eIdx < count; eIdx++) {
+                    const angle = (2 * Math.PI * eIdx) / count - Math.PI / 2;
+                    const ex = cx + r * Math.cos(angle);
+                    const ey = cy + r * Math.sin(angle);
+                    svgHtml += `<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="3.1" fill="#14b8a6"/>`;
+                }
+            });
+            bohrSvg.innerHTML = svgHtml;
+
+            bohrReadout.innerHTML = `
+                <div><strong>${el.name} (${el.sym}, Z = ${z}):</strong> Arrangement = <span class="font-mono font-extrabold text-indigo-700 dark:text-indigo-300">${el.shells.join(', ')}</span></div>
+                <div><strong>Position &amp; Ion:</strong> ${el.group}, Period ${el.period} (${el.type}) • Stable ion: <strong>${el.ion}</strong></div>
+                <div class="text-slate-600 dark:text-slate-300">${el.note}</div>
+            `;
+        }
+        bohrElementSelect.addEventListener('change', updateBohrLab);
+        updateBohrLab();
+
+        // Tool C (Topic 3): Mole Converter & Limiting Reactant Solver
+        const moleMassInput = document.getElementById('moleMassInput');
+        const moleMolarMassInput = document.getElementById('moleMolarMassInput');
+        const moleConvertResult = document.getElementById('moleConvertResult');
+
+        function updateMoleConverter() {
+            const m = parseFloat(moleMassInput.value);
+            const M = parseFloat(moleMolarMassInput.value);
+            if (isNaN(m) || isNaN(M) || m < 0 || M <= 0) {
+                moleConvertResult.innerHTML = 'Enter valid mass (≥ 0) and molar mass (&gt; 0).';
+                return;
+            }
+            const n = m / M;
+            const particles = n * 6.02e23;
+            moleConvertResult.innerHTML = `
+                <div>Moles <strong>n</strong> = ${m} ÷ ${M} = <strong>${n.toFixed(4)} mol</strong></div>
+                <div>Particles = <strong>${particles.toExponential(2)}</strong> (L = 6.02 × 10²³)</div>
+            `;
+        }
+        [moleMassInput, moleMolarMassInput].forEach(el => el.addEventListener('input', updateMoleConverter));
+        updateMoleConverter();
+
+        const limRxnSpecs = {
+            mg: { nameA: 'Mg', nameB: 'O₂', nameP: 'MgO', coeffA: 2, coeffB: 1, coeffP: 2, mA: 24.3, mB: 32.0, mP: 40.3 },
+            fe: { nameA: 'Fe₂O₃', nameB: 'CO', nameP: 'Fe', coeffA: 1, coeffB: 3, coeffP: 2, mA: 159.6, mB: 28.0, mP: 55.8 },
+            caco3: { nameA: 'CaCO₃', nameB: 'HCl', nameP: 'CO₂', coeffA: 1, coeffB: 2, coeffP: 1, mA: 100.1, mB: 36.5, mP: 44.0 }
+        };
+        const limRxnSelect = document.getElementById('limRxnSelect');
+        const limMassA = document.getElementById('limMassA');
+        const limMassB = document.getElementById('limMassB');
+        const limActualYield = document.getElementById('limActualYield');
+        const limRxnResult = document.getElementById('limRxnResult');
+
+        function updateLimitingCalc() {
+            const spec = limRxnSpecs[limRxnSelect.value];
+            document.getElementById('limLabelA').textContent = `Mass ${spec.nameA} (g)`;
+            document.getElementById('limLabelB').textContent = `Mass ${spec.nameB} (g)`;
+            document.getElementById('limLabelProd').textContent = `Actual ${spec.nameP} (g)`;
+
+            const massA = parseFloat(limMassA.value);
+            const massB = parseFloat(limMassB.value);
+            const actualP = parseFloat(limActualYield.value);
+            if (isNaN(massA) || isNaN(massB) || massA <= 0 || massB <= 0) {
+                limRxnResult.innerHTML = 'Enter positive reactant masses to determine the limiting reactant.';
+                return;
+            }
+            const molA = massA / spec.mA;
+            const molB = massB / spec.mB;
+            const ratioA = molA / spec.coeffA;
+            const ratioB = molB / spec.coeffB;
+
+            const limName = ratioA <= ratioB ? spec.nameA : spec.nameB;
+            const exName = ratioA <= ratioB ? spec.nameB : spec.nameA;
+            const limUnit = Math.min(ratioA, ratioB);
+            const theoMolP = limUnit * spec.coeffP;
+            const theoMassP = theoMolP * spec.mP;
+            const pctYield = (!isNaN(actualP) && actualP >= 0 && theoMassP > 0) ? (actualP / theoMassP) * 100 : null;
+
+            limRxnResult.innerHTML = `
+                <div>n(${spec.nameA}) = <strong>${molA.toFixed(4)} mol</strong> (ratio ${ratioA.toFixed(4)}) &nbsp;|&nbsp; n(${spec.nameB}) = <strong>${molB.toFixed(4)} mol</strong> (ratio ${ratioB.toFixed(4)})</div>
+                <div><strong>Limiting Reactant:</strong> <span class="text-rose-600 dark:text-rose-400 font-extrabold">${limName}</span> (${exName} is in excess) &nbsp;→&nbsp; <strong>Theoretical ${spec.nameP}:</strong> ${theoMassP.toFixed(2)} g (${theoMolP.toFixed(4)} mol)</div>
+                ${pctYield !== null ? `<div><strong>Percentage Yield:</strong> (${actualP.toFixed(2)} ÷ ${theoMassP.toFixed(2)}) × 100% = <span class="font-extrabold text-emerald-700 dark:text-emerald-300">${pctYield.toFixed(1)}%</span></div>` : ''}
+            `;
+        }
+        limRxnSelect.addEventListener('change', updateLimitingCalc);
+        [limMassA, limMassB, limActualYield].forEach(el => el.addEventListener('input', updateLimitingCalc));
+        updateLimitingCalc();
+
         // Tool 1: pH & [H+] Converter
         const phInput = document.getElementById('phInput');
         const hConcInput = document.getElementById('hConcInput');
@@ -2033,15 +2470,15 @@
 
         // Tool 4: Cation Precipitate Simulator
         const catSimData = {
-            Ca: { naohDrop: 'White precipitate of Ca(OH)₂(s) (with concentrated Ca²⁺)', naohEx: 'Precipitate remains insoluble', nh3Drop: 'No observable change (NH₃ is too weak; [OH⁻] too low)', nh3Ex: 'No precipitate', eq: 'Ca²⁺(aq) + 2OH⁻(aq) → Ca(OH)₂(s)' },
-            Mg: { naohDrop: 'White precipitate of Mg(OH)₂(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'White precipitate of Mg(OH)₂(s)', nh3Ex: 'Insoluble in excess NH₃(aq)', eq: 'Mg²⁺(aq) + 2OH⁻(aq) → Mg(OH)₂(s)' },
-            Al: { naohDrop: 'White precipitate of Al(OH)₃(s)', naohEx: 'Dissolves to give a colourless solution: [Al(OH)₄]⁻(aq)', nh3Drop: 'White precipitate of Al(OH)₃(s)', nh3Ex: 'Insoluble in excess NH₃(aq) (distinguishes Al³⁺ from Zn²⁺!)', eq: 'Al(OH)₃(s) + OH⁻(aq) → [Al(OH)₄]⁻(aq)' },
-            Zn: { naohDrop: 'White precipitate of Zn(OH)₂(s)', naohEx: 'Dissolves to give a colourless solution: [Zn(OH)₄]²⁻(aq)', nh3Drop: 'White precipitate of Zn(OH)₂(s)', nh3Ex: 'Dissolves to give a colourless solution: [Zn(NH₃)₄]²⁺(aq)', eq: 'Zn(OH)₂(s) + 4NH₃(aq) → [Zn(NH₃)₄]²⁺(aq) + 2OH⁻(aq)' },
-            Pb: { naohDrop: 'White precipitate of Pb(OH)₂(s)', naohEx: 'Dissolves to give a colourless solution: [Pb(OH)₄]²⁻(aq)', nh3Drop: 'White precipitate of Pb(OH)₂(s)', nh3Ex: 'Insoluble in excess NH₃(aq)', eq: 'Pb(OH)₂(s) + 2OH⁻(aq) → [Pb(OH)₄]²⁻(aq)' },
-            Fe2: { naohDrop: 'Dirty green precipitate of Fe(OH)₂(s) (turns brown at surface on standing)', naohEx: 'Insoluble in excess', nh3Drop: 'Dirty green precipitate of Fe(OH)₂(s)', nh3Ex: 'Insoluble in excess', eq: 'Fe²⁺(aq) + 2OH⁻(aq) → Fe(OH)₂(s)' },
-            Fe3: { naohDrop: 'Reddish-brown precipitate of Fe(OH)₃(s)', naohEx: 'Insoluble in excess', nh3Drop: 'Reddish-brown precipitate of Fe(OH)₃(s)', nh3Ex: 'Insoluble in excess', eq: 'Fe³⁺(aq) + 3OH⁻(aq) → Fe(OH)₃(s)' },
-            Cu: { naohDrop: 'Pale blue precipitate of Cu(OH)₂(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'Pale blue precipitate of Cu(OH)₂(s)', nh3Ex: 'Dissolves to give a DEEP BLUE solution: [Cu(NH₃)₄]²⁺(aq)', eq: 'Cu(OH)₂(s) + 4NH₃(aq) → [Cu(NH₃)₄]²⁺(aq) + 2OH⁻(aq)' },
-            Ag: { naohDrop: 'Dark brown precipitate of Ag₂O(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'Dark brown precipitate of Ag₂O(s)', nh3Ex: 'Dissolves to give a colourless solution: [Ag(NH₃)₂]⁺(aq)', eq: '2Ag⁺(aq) + 2OH⁻(aq) → Ag₂O(s) + H₂O(l)' }
+            Ca: { naohDrop: 'White precipitate of Ca(OH)₂(s) (with concentrated Ca²⁺)', naohEx: 'Precipitate remains insoluble', nh3Drop: 'No observable change (NH₃ is too weak; [OH⁻] too low)', nh3Ex: 'No precipitate', eq: 'Ca²⁺(aq) + 2OH⁻(aq) → Ca(OH)₂(s)', tube: { naohLiq: '#e2e8f0', naohPpt: '#ffffff', naohPptOp: '0.95', nh3Liq: '#e2e8f0', nh3Ppt: '#ffffff', nh3PptOp: '0' } },
+            Mg: { naohDrop: 'White precipitate of Mg(OH)₂(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'White precipitate of Mg(OH)₂(s)', nh3Ex: 'Insoluble in excess NH₃(aq)', eq: 'Mg²⁺(aq) + 2OH⁻(aq) → Mg(OH)₂(s)', tube: { naohLiq: '#e2e8f0', naohPpt: '#ffffff', naohPptOp: '0.95', nh3Liq: '#e2e8f0', nh3Ppt: '#ffffff', nh3PptOp: '0.95' } },
+            Al: { naohDrop: 'White precipitate of Al(OH)₃(s)', naohEx: 'Dissolves to give a colourless solution: [Al(OH)₄]⁻(aq)', nh3Drop: 'White precipitate of Al(OH)₃(s)', nh3Ex: 'Insoluble in excess NH₃(aq) (distinguishes Al³⁺ from Zn²⁺!)', eq: 'Al(OH)₃(s) + OH⁻(aq) → [Al(OH)₄]⁻(aq)', tube: { naohLiq: '#e2e8f0', naohPpt: '#ffffff', naohPptOp: '0', nh3Liq: '#e2e8f0', nh3Ppt: '#ffffff', nh3PptOp: '0.95' } },
+            Zn: { naohDrop: 'White precipitate of Zn(OH)₂(s)', naohEx: 'Dissolves to give a colourless solution: [Zn(OH)₄]²⁻(aq)', nh3Drop: 'White precipitate of Zn(OH)₂(s)', nh3Ex: 'Dissolves to give a colourless solution: [Zn(NH₃)₄]²⁺(aq)', eq: 'Zn(OH)₂(s) + 4NH₃(aq) → [Zn(NH₃)₄]²⁺(aq) + 2OH⁻(aq)', tube: { naohLiq: '#e2e8f0', naohPpt: '#ffffff', naohPptOp: '0', nh3Liq: '#e2e8f0', nh3Ppt: '#ffffff', nh3PptOp: '0' } },
+            Pb: { naohDrop: 'White precipitate of Pb(OH)₂(s)', naohEx: 'Dissolves to give a colourless solution: [Pb(OH)₄]²⁻(aq)', nh3Drop: 'White precipitate of Pb(OH)₂(s)', nh3Ex: 'Insoluble in excess NH₃(aq)', eq: 'Pb(OH)₂(s) + 2OH⁻(aq) → [Pb(OH)₄]²⁻(aq)', tube: { naohLiq: '#e2e8f0', naohPpt: '#ffffff', naohPptOp: '0', nh3Liq: '#e2e8f0', nh3Ppt: '#ffffff', nh3PptOp: '0.95' } },
+            Fe2: { naohDrop: 'Dirty green precipitate of Fe(OH)₂(s) (turns brown at surface on standing)', naohEx: 'Insoluble in excess', nh3Drop: 'Dirty green precipitate of Fe(OH)₂(s)', nh3Ex: 'Insoluble in excess', eq: 'Fe²⁺(aq) + 2OH⁻(aq) → Fe(OH)₂(s)', tube: { naohLiq: '#bbf7d0', naohPpt: '#15803d', naohPptOp: '0.95', nh3Liq: '#bbf7d0', nh3Ppt: '#15803d', nh3PptOp: '0.95' } },
+            Fe3: { naohDrop: 'Reddish-brown precipitate of Fe(OH)₃(s)', naohEx: 'Insoluble in excess', nh3Drop: 'Reddish-brown precipitate of Fe(OH)₃(s)', nh3Ex: 'Insoluble in excess', eq: 'Fe³⁺(aq) + 3OH⁻(aq) → Fe(OH)₃(s)', tube: { naohLiq: '#fde68a', naohPpt: '#9a3412', naohPptOp: '0.95', nh3Liq: '#fde68a', nh3Ppt: '#9a3412', nh3PptOp: '0.95' } },
+            Cu: { naohDrop: 'Pale blue precipitate of Cu(OH)₂(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'Pale blue precipitate of Cu(OH)₂(s)', nh3Ex: 'Dissolves to give a DEEP BLUE solution: [Cu(NH₃)₄]²⁺(aq)', eq: 'Cu(OH)₂(s) + 4NH₃(aq) → [Cu(NH₃)₄]²⁺(aq) + 2OH⁻(aq)', tube: { naohLiq: '#bae6fd', naohPpt: '#38bdf8', naohPptOp: '0.95', nh3Liq: '#1d4ed8', nh3Ppt: '#38bdf8', nh3PptOp: '0' } },
+            Ag: { naohDrop: 'Dark brown precipitate of Ag₂O(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'Dark brown precipitate of Ag₂O(s)', nh3Ex: 'Dissolves to give a colourless solution: [Ag(NH₃)₂]⁺(aq)', eq: '2Ag⁺(aq) + 2OH⁻(aq) → Ag₂O(s) + H₂O(l)', tube: { naohLiq: '#e2e8f0', naohPpt: '#78350f', naohPptOp: '0.95', nh3Liq: '#e2e8f0', nh3Ppt: '#78350f', nh3PptOp: '0' } }
         };
 
         const catSimSelect = document.getElementById('catSimSelect');
@@ -2049,6 +2486,13 @@
 
         function updateCatSim() {
             const d = catSimData[catSimSelect.value];
+            document.getElementById('catTubeNaohLiquid').setAttribute('fill', d.tube.naohLiq);
+            document.getElementById('catTubeNaohPpt').setAttribute('fill', d.tube.naohPpt);
+            document.getElementById('catTubeNaohPpt').setAttribute('opacity', d.tube.naohPptOp);
+            document.getElementById('catTubeNh3Liquid').setAttribute('fill', d.tube.nh3Liq);
+            document.getElementById('catTubeNh3Ppt').setAttribute('fill', d.tube.nh3Ppt);
+            document.getElementById('catTubeNh3Ppt').setAttribute('opacity', d.tube.nh3PptOp);
+
             catSimResult.innerHTML = `
                 <div><strong>+ NaOH(aq):</strong> ${d.naohDrop} → <em>${d.naohEx}</em></div>
                 <div><strong>+ NH₃(aq):</strong> ${d.nh3Drop} → <em>${d.nh3Ex}</em></div>
