@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HKDSE Form 4 Chemistry Complete Study Hub (Topics 1–4 + AI Tutor)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom subtle scrollbar for mobile horizontal nav & tables */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Chemical equation typography */
+        .chem-eq {
+            font-family: 'Cambria Math', Georgia, 'Times New Roman', serif;
+            letter-spacing: 0.01em;
+        }
+        sub, sup { font-size: 0.72em; line-height: 0; }
+        
+        /* Search highlight */
+        mark.search-hl {
+            background-color: #fde047;
+            color: #0f172a;
+            padding: 0 2px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        .dark mark.search-hl {
+            background-color: #eab308;
+            color: #0f172a;
+        }
+
+        /* Accordion smooth icon rotation */
+        .acc-btn[aria-expanded="false"] .acc-chevron {
+            transform: rotate(-90deg);
+        }
+        .acc-chevron {
+            transition: transform 0.2s ease;
+        }
+
+        /* pH gradient bar */
+        .ph-gradient {
+            background: linear-gradient(90deg, 
+                #dc2626 0%, #ea580c 14%, #f59e0b 28%, #eab308 38%, 
+                #22c55e 50%, #14b8a6 62%, #0ea5e9 74%, #3b82f6 86%, #7e22ce 100%);
+        }
+
+        /* 3D Flashcard Flip */
+        .flip-scene {
+            perspective: 1200px;
+        }
+        .flip-card {
+            position: relative;
+            width: 100%;
+            min-height: 290px;
+            transform-style: preserve-3d;
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+        }
+        .flip-card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .flip-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .flip-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Comfortable Notes Reading Scale */
+        #notesContent.notes-sm .acc-body { font-size: 0.875rem; line-height: 1.6; }
+        #notesContent.notes-md .acc-body { font-size: 0.965rem; line-height: 1.72; }
+        #notesContent.notes-lg .acc-body { font-size: 1.075rem; line-height: 1.8; }
+        #notesContent .study-card { scroll-margin-top: 8.5rem; }
+        #notesContent .topic-block { scroll-margin-top: 8.5rem; }
+
+        /* Luxury Quiz Styling */
+        .lux-quiz-hero {
+            background: radial-gradient(circle at 85% 15%, rgba(217, 179, 108, 0.22), transparent 45%),
+                        radial-gradient(circle at 12% 90%, rgba(20, 184, 166, 0.18), transparent 45%),
+                        linear-gradient(135deg, #0b1120 0%, #151e32 52%, #1e1b2e 100%);
+        }
+        .lux-gold-text {
+            background: linear-gradient(135deg, #f6e2b3 0%, #d4af37 50%, #f3d58d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .lux-option-btn {
+            transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+        .lux-option-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px -10px rgba(212, 175, 55, 0.35);
+        }
+        .lux-ring-progress {
+            transition: stroke-dashoffset 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* AI Assistant Typing Indicator Animation */
+        @keyframes aiBounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        .ai-dot {
+            animation: aiBounce 1.2s infinite ease-in-out both;
+        }
+        .ai-dot:nth-child(1) { animation-delay: -0.24s; }
+        .ai-dot:nth-child(2) { animation-delay: -0.12s; }
+        .ai-dot:nth-child(3) { animation-delay: 0s; }
+
+        /* Smooth AI Panel Entrance */
+        @keyframes aiSlideUp {
+            from { opacity: 0; transform: translateY(14px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .ai-panel-anim {
+            animation: aiSlideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Luxury Technical TOC Sidebar */
+        .lux-toc-panel {
+            background:
+                radial-gradient(circle at 100% 0%, rgba(212, 175, 55, 0.14), transparent 42%),
+                radial-gradient(circle at 0% 100%, rgba(20, 184, 166, 0.12), transparent 46%),
+                linear-gradient(165deg, #0b1120 0%, #0f172a 58%, #131c31 100%);
+            box-shadow: 0 22px 44px -20px rgba(2, 6, 23, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+        .lux-toc-grid {
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+        .lux-toc-scroll::-webkit-scrollbar { width: 4px; }
+        .lux-toc-scroll::-webkit-scrollbar-track { background: transparent; }
+        .lux-toc-scroll::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.28);
+            border-radius: 9999px;
+        }
+        .toc-item.is-active {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.16), rgba(20, 184, 166, 0.06));
+            border-color: rgba(212, 175, 55, 0.45);
+            color: #fef3c7;
+            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15);
+        }
+        .toc-item.is-active .toc-code {
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.45);
+            background: rgba(251, 191, 36, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased transition-colors duration-200 selection:bg-teal-200 dark:selection:bg-teal-800">
+
+    <!-- ==================== STICKY HEADER ==================== -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6">
+            <!-- Top Row: Brand, Search, Dark Mode -->
+            <div class="flex flex-wrap items-center justify-between gap-2.5 py-2.5 sm:py-3">
+                <!-- Brand (Click to return Home) -->
+                <button type="button" onclick="activateTab('home')" class="flex items-center gap-2.5 text-left group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-500 to-indigo-600 flex items-center justify-center text-white shadow-md shrink-0 group-hover:scale-105 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">HKDSE F.4 Chemistry</h1>
+                        <p class="text-[11px] font-medium text-teal-600 dark:text-teal-400">Complete Study Hub • Topics 1–4</p>
+                    </div>
+                </button>
+
+                <!-- Search Bar + Theme Toggle -->
+                <div class="flex items-center gap-2 w-full sm:w-auto sm:flex-1 sm:max-w-md justify-end">
+                    <div class="relative flex-1">
+                        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                        </svg>
+                        <input id="globalSearch" type="text" placeholder="Search notes: equations, ions, traps, tests..." 
+                               class="w-full pl-9 pr-16 py-2 text-xs sm:text-sm rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 dark:text-slate-100 placeholder-slate-400">
+                        <span id="searchCount" class="hidden absolute right-8 top-1/2 -translate-y-1/2 text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300"></span>
+                        <button id="clearSearchBtn" type="button" aria-label="Clear search" class="hidden absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <button id="themeToggle" type="button" aria-label="Toggle Dark Mode"
+                            class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-amber-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition shrink-0">
+                        <svg id="sunIcon" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+                        <svg id="moonIcon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Navigation Tabs -->
+            <nav aria-label="Main Navigation" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2.5">
+                <button data-tab="home" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-teal-600 text-white shadow-sm">
+                    <span>🏠</span> Home
+                </button>
+                <button data-tab="notes" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">
+                    <span>📖</span> Study Notes (Topics 1–4)
+                </button>
+                <button data-tab="lab" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900">
+                    <span>🧮</span> Interactive Lab
+                </button>
+                <button data-tab="quiz" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 hover:bg-rose-100 dark:hover:bg-rose-900">
+                    <span>📝</span> HKDSE Quiz
+                </button>
+                <button data-tab="flashcards" class="tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900">
+                    <span>🗂️</span> Flashcards
+                </button>
+                <!-- Quick-Open AI Tutor Button in Nav -->
+                <button type="button" onclick="openAiTutor()" class="ml-auto px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition flex items-center gap-1.5 bg-gradient-to-r from-violet-600 to-teal-500 text-white shadow-sm hover:opacity-95 shrink-0">
+                    <span>✨</span> AI Tutor
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Search Banner (shown when searching across all topics) -->
+    <div id="searchBanner" class="hidden max-w-7xl mx-auto px-3 sm:px-6 pt-4">
+        <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
+            <span class="font-medium text-amber-900 dark:text-amber-200" id="searchBannerText">Showing matching sections across all topics.</span>
+            <button type="button" onclick="clearGlobalSearch()" class="px-3 py-1 rounded-lg bg-amber-200 dark:bg-amber-800 text-amber-900 dark:text-amber-100 font-semibold hover:opacity-90">Exit Search</button>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 py-5 sm:py-7 space-y-8">
+
+        <!-- ============================================================ -->
+        <!-- TAB 1: HOME (MAIN LANDING DASHBOARD)                         -->
+        <!-- ============================================================ -->
+        <section id="home" class="topic-panel space-y-6">
+            <!-- Hero Banner -->
+            <div class="rounded-3xl bg-gradient-to-br from-slate-900 via-teal-950 to-indigo-950 p-6 sm:p-9 text-white shadow-xl border border-teal-500/20 relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl space-y-3">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-400/15 border border-teal-300/30 text-teal-200 text-xs font-bold uppercase tracking-wider">
+                        🧪 HKDSE Form 4 Chemistry • Topics 1–4 + AI Tutor
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Master HKDSE Chemistry with Structured Notes, Labs, Exam Practice &amp; 24/7 AI Help
+                    </h2>
+                    <p class="text-slate-300 text-xs sm:text-base leading-relaxed">
+                        All core concepts, chemical equations, ion colours, solubility rules, 5** exam traps, interactive calculators, 52 MC/Short/Long exam questions, 48 active-recall flashcards, and an instant AI Chemistry Tutor in one hub.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button type="button" onclick="activateTab('notes')" class="px-5 py-3 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-950 font-extrabold text-sm shadow-lg transition">
+                            📖 Start Reading Notes
+                        </button>
+                        <button type="button" onclick="activateTab('quiz')" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-300 to-yellow-500 hover:opacity-95 text-slate-950 font-extrabold text-sm shadow-lg transition">
+                            ✦ Enter Exam Studio
+                        </button>
+                        <button type="button" onclick="openAiTutor()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-500 hover:opacity-95 text-white font-extrabold text-sm shadow-lg transition">
+                            ✨ Ask AI Chemistry Tutor
+                        </button>
+                        <button type="button" onclick="activateTab('lab')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/15 font-bold text-sm transition">
+                            🧮 Open Lab Tools
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Progress Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Notes Reviewed</p>
+                        <p id="homeNotesStat" class="text-2xl font-extrabold text-teal-600 dark:text-teal-400 mt-1">0 / 16</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Sections marked complete</p>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl bg-teal-50 dark:bg-teal-950/60 flex items-center justify-center text-xl">📖</div>
+                </div>
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Flashcards Mastered</p>
+                        <p id="homeFcStat" class="text-2xl font-extrabold text-amber-600 dark:text-amber-400 mt-1">0 / 48</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Active recall deck</p>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-xl">🗂️</div>
+                </div>
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Best Quiz Score</p>
+                        <p id="homeQuizStat" class="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">—</p>
+                        <p class="text-xs text-slate-500 mt-0.5">MC, Short &amp; Long papers</p>
+                    </div>
+                    <div class="w-11 h-11 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-xl">🏆</div>
+                </div>
+            </div>
+
+            <!-- Syllabus Topic Jump Cards -->
+            <div class="space-y-3">
+                <h3 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">Syllabus Topics (Jump Straight to Notes)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button type="button" onclick="openNotesTopic('topic1')" class="text-left p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-teal-400 dark:hover:border-teal-500 shadow-sm hover:shadow-md transition group">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 text-xs font-extrabold">Topic 1</span>
+                            <span class="text-xs font-bold text-teal-600 group-hover:translate-x-1 transition">Open →</span>
+                        </div>
+                        <h4 class="text-base font-extrabold text-slate-900 dark:text-white mt-2.5">Planet Earth &amp; Fundamentals</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Elements/compounds/mixtures, lab safety, air fractional distillation, sea water extraction, ion tests, brine electrolysis &amp; lime cycle.</p>
+                    </button>
+
+                    <button type="button" onclick="openNotesTopic('topic2')" class="text-left p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition group">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 text-xs font-extrabold">Topic 2</span>
+                            <span class="text-xs font-bold text-indigo-600 group-hover:translate-x-1 transition">Open →</span>
+                        </div>
+                        <h4 class="text-base font-extrabold text-slate-900 dark:text-white mt-2.5">The Microscopic World I</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Atomic structure, isotopes, R.A.M., Periodic Table trends, ionic/covalent/dative/metallic bonds, 4 structure types &amp; DSE frameworks.</p>
+                    </button>
+
+                    <button type="button" onclick="openNotesTopic('topic3')" class="text-left p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500 shadow-sm hover:shadow-md transition group">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-xs font-extrabold">Topic 3</span>
+                            <span class="text-xs font-bold text-amber-600 group-hover:translate-x-1 transition">Open →</span>
+                        </div>
+                        <h4 class="text-base font-extrabold text-slate-900 dark:text-white mt-2.5">Metals &amp; Mole Calculations</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Metal extraction, reactivity series, displacement, rusting &amp; prevention, Avogadro's constant, empirical formula, limiting reactant &amp; % yield.</p>
+                    </button>
+
+                    <button type="button" onclick="openNotesTopic('topic4')" class="text-left p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-rose-400 dark:hover:border-rose-500 shadow-sm hover:shadow-md transition group">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2.5 py-1 rounded-lg bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 text-xs font-extrabold">Topic 4</span>
+                            <span class="text-xs font-bold text-rose-600 group-hover:translate-x-1 transition">Open →</span>
+                        </div>
+                        <h4 class="text-base font-extrabold text-slate-900 dark:text-white mt-2.5">Acids and Alkalis (Parts 1–3)</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Role of water, basicity, conc. acids, cation precipitation, molarity, pH scale, strength, neutralization, salt prep &amp; back titration.</p>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 2: UNIFIED COMFORTABLE STUDY NOTES (TOPICS 1–4)          -->
+        <!-- ============================================================ -->
+        <section id="notes" class="topic-panel hidden space-y-5">
+            <!-- Comfortable Reading Control Bar -->
+            <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 shadow-sm space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap gap-1.5" id="notesTopicPills">
+                        <button type="button" data-nfilter="all" class="nfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white shadow-sm transition">All Topics</button>
+                        <button type="button" data-nfilter="topic1" class="nfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 1</button>
+                        <button type="button" data-nfilter="topic2" class="nfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 2</button>
+                        <button type="button" data-nfilter="topic3" class="nfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 3</button>
+                        <button type="button" data-nfilter="topic4" class="nfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">Topic 4</button>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-xs">
+                        <div class="inline-flex rounded-xl bg-slate-100 dark:bg-slate-800 p-0.5 border border-slate-200 dark:border-slate-700">
+                            <button type="button" onclick="setNotesSize('notes-sm')" class="px-2.5 py-1 rounded-lg font-bold hover:bg-white dark:hover:bg-slate-700 transition">A-</button>
+                            <button type="button" onclick="setNotesSize('notes-md')" class="px-2.5 py-1 rounded-lg font-bold bg-white dark:bg-slate-700 shadow-sm transition">A</button>
+                            <button type="button" onclick="setNotesSize('notes-lg')" class="px-2.5 py-1 rounded-lg font-bold hover:bg-white dark:hover:bg-slate-700 transition">A+</button>
+                        </div>
+                        <button type="button" onclick="toggleAllAccordions(true)" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold transition">Expand All</button>
+                        <button type="button" onclick="toggleAllAccordions(false)" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold transition">Collapse All</button>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 pt-1">
+                    <span class="text-xs font-bold text-slate-500 dark:text-slate-400 whitespace-nowrap">Revision Progress: <strong id="notesProgressLabel" class="text-teal-600 dark:text-teal-400">0 / 16</strong></span>
+                    <div class="flex-1 h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                        <div id="notesProgressBar" class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-300" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2-Column Layout: Sticky TOC + Comfortable Reading Stream -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Compact Mobile/Tablet Syllabus Index Drawer (< lg) -->
+                <details class="lg:hidden rounded-2xl lux-toc-panel border border-amber-400/20 overflow-hidden text-xs">
+                    <summary class="px-4 py-3 cursor-pointer flex items-center justify-between text-amber-200 font-extrabold uppercase tracking-wider select-none">
+                        <span class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="lux-gold-text">Syllabus Index (1.1 – 4.7)</span>
+                        </span>
+                        <span class="font-mono text-[10px] text-teal-300">Tap to Jump ▾</span>
+                    </summary>
+                    <div class="p-3.5 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button type="button" onclick="jumpToSection('sec-1-1')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">1.1 Matter &amp; Safety</button>
+                        <button type="button" onclick="jumpToSection('sec-1-2')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">1.2 Atmosphere</button>
+                        <button type="button" onclick="jumpToSection('sec-1-3')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">1.3 Ocean &amp; Tests</button>
+                        <button type="button" onclick="jumpToSection('sec-1-4')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">1.4 Lime Cycle</button>
+                        <button type="button" onclick="jumpToSection('sec-2-1')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">2.1 Atoms &amp; R.A.M.</button>
+                        <button type="button" onclick="jumpToSection('sec-2-2')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">2.2 Periodic Table</button>
+                        <button type="button" onclick="jumpToSection('sec-2-3')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">2.3 Bonding &amp; Ions</button>
+                        <button type="button" onclick="jumpToSection('sec-2-4')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">2.4 Structures</button>
+                        <button type="button" onclick="jumpToSection('sec-3-1')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">3.1 Extraction</button>
+                        <button type="button" onclick="jumpToSection('sec-3-2')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">3.2 Reactivity</button>
+                        <button type="button" onclick="jumpToSection('sec-3-3')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">3.3 Rusting</button>
+                        <button type="button" onclick="jumpToSection('sec-3-5')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-slate-200 font-mono text-[11px] truncate">3.5 Mole Calcs</button>
+                        <button type="button" onclick="jumpToSection('sec-4-1')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-rose-200 font-mono text-[11px] truncate">4.1 Acids &amp; Conc.</button>
+                        <button type="button" onclick="jumpToSection('sec-4-2')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-rose-200 font-mono text-[11px] truncate">4.2 Alkalis &amp; Ppts</button>
+                        <button type="button" onclick="jumpToSection('sec-4-3')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-rose-200 font-mono text-[11px] truncate">4.3 pH &amp; Salts</button>
+                        <button type="button" onclick="jumpToSection('sec-4-7')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-left text-rose-200 font-mono text-[11px] truncate">4.7 Titration</button>
+                    </div>
+                </details>
+
+                <!-- Sticky Desktop Sidebar TOC (Luxury Technical Console) -->
+                <aside id="notesTocSidebar" class="hidden lg:flex lg:col-span-3 sticky top-32 rounded-2xl lux-toc-panel border border-amber-400/20 overflow-hidden max-h-[calc(100vh-9rem)] flex-col">
+                    <!-- Top Champagne-Gold to Teal Precision Accent Line -->
+                    <div class="h-1 w-full bg-gradient-to-r from-amber-300 via-yellow-500 to-teal-400 shrink-0"></div>
+
+                    <!-- Technical Telemetry Header -->
+                    <div class="p-4 border-b border-white/10 lux-toc-grid space-y-2.5 shrink-0">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse"></span>
+                                <span class="text-[10px] font-extrabold uppercase tracking-[0.2em] lux-gold-text">Syllabus Index</span>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 font-mono text-[10px] font-bold text-amber-200/90" id="tocProgressCount">00/16</span>
+                        </div>
+                        <div class="flex items-center justify-between text-[10px] font-mono text-slate-400">
+                            <span>HKDSE // F.4 CHEM</span>
+                            <span id="tocProgressPct" class="text-teal-300 font-bold">0% SYNCED</span>
+                        </div>
+                        <div class="h-1.5 w-full rounded-full bg-slate-800/90 overflow-hidden border border-white/5">
+                            <div id="tocProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-yellow-400 to-teal-400 transition-all duration-500" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Scrollable Module Tree -->
+                    <div id="tocScrollArea" class="p-3.5 flex-1 min-h-0 overflow-y-auto lux-toc-scroll space-y-4 text-xs">
+                        <!-- Module 01 -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between px-1">
+                                <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-teal-300">
+                                    <span class="font-mono text-teal-400/80">MOD 01</span>
+                                    <span class="text-slate-600">•</span>
+                                    <span>Planet Earth</span>
+                                </span>
+                                <span id="tocModCount1" class="font-mono text-[10px] text-slate-400">0/4</span>
+                            </div>
+                            <div class="pl-2.5 ml-1 border-l border-teal-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-1-1" onclick="jumpToSection('sec-1-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.1</span>
+                                        <span class="truncate font-medium">Matter &amp; Lab Safety</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-1-2" onclick="jumpToSection('sec-1-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.2</span>
+                                        <span class="truncate font-medium">Atmosphere &amp; Air</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-1-3" onclick="jumpToSection('sec-1-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.3</span>
+                                        <span class="truncate font-medium">Ocean, Tests &amp; Brine</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-1-4" onclick="jumpToSection('sec-1-4')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.4</span>
+                                        <span class="truncate font-medium">Rocks &amp; Lime Cycle</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module 02 -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between px-1">
+                                <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-indigo-300">
+                                    <span class="font-mono text-indigo-400/80">MOD 02</span>
+                                    <span class="text-slate-600">•</span>
+                                    <span>Microscopic I</span>
+                                </span>
+                                <span id="tocModCount2" class="font-mono text-[10px] text-slate-400">0/4</span>
+                            </div>
+                            <div class="pl-2.5 ml-1 border-l border-indigo-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-2-1" onclick="jumpToSection('sec-2-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.1</span>
+                                        <span class="truncate font-medium">Atoms, Isotopes &amp; R.A.M.</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-2-2" onclick="jumpToSection('sec-2-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.2</span>
+                                        <span class="truncate font-medium">Periodic Table Trends</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-2-3" onclick="jumpToSection('sec-2-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.3</span>
+                                        <span class="truncate font-medium">Chemical Bonding &amp; Ions</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-2-4" onclick="jumpToSection('sec-2-4')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.4</span>
+                                        <span class="truncate font-medium">Structures &amp; Frameworks</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module 03 -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between px-1">
+                                <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-300">
+                                    <span class="font-mono text-amber-400/80">MOD 03</span>
+                                    <span class="text-slate-600">•</span>
+                                    <span>Metals &amp; Moles</span>
+                                </span>
+                                <span id="tocModCount3" class="font-mono text-[10px] text-slate-400">0/4</span>
+                            </div>
+                            <div class="pl-2.5 ml-1 border-l border-amber-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-3-1" onclick="jumpToSection('sec-3-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.1</span>
+                                        <span class="truncate font-medium">Metal Extraction</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-3-2" onclick="jumpToSection('sec-3-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.2</span>
+                                        <span class="truncate font-medium">Reactivity &amp; Displacement</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-3-3" onclick="jumpToSection('sec-3-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.3</span>
+                                        <span class="truncate font-medium">Rusting &amp; Prevention</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-3-5" onclick="jumpToSection('sec-3-5')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.5</span>
+                                        <span class="truncate font-medium">Mole Calculations</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Module 04 -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center justify-between px-1">
+                                <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-rose-300">
+                                    <span class="font-mono text-rose-400/80">MOD 04</span>
+                                    <span class="text-slate-600">•</span>
+                                    <span>Acids &amp; Alkalis</span>
+                                </span>
+                                <span id="tocModCount4" class="font-mono text-[10px] text-slate-400">0/4</span>
+                            </div>
+                            <div class="pl-2.5 ml-1 border-l border-rose-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-4-1" onclick="jumpToSection('sec-4-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.1</span>
+                                        <span class="truncate font-medium">Acids, Basicity &amp; Conc.</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-4-2" onclick="jumpToSection('sec-4-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.2</span>
+                                        <span class="truncate font-medium">Alkalis &amp; Precipitates</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-4-3" onclick="jumpToSection('sec-4-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.3</span>
+                                        <span class="truncate font-medium">Molarity, pH &amp; Salts</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                                <button type="button" data-toc-id="sec-4-7" onclick="jumpToSection('sec-4-7')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                    <span class="flex items-center gap-2 min-w-0">
+                                        <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.7</span>
+                                        <span class="truncate font-medium">Volumetric &amp; Back Titration</span>
+                                    </span>
+                                    <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Notes Content Stream -->
+                <div id="notesContent" class="lg:col-span-9 notes-md space-y-6">
+
+                    <!-- ========== TOPIC 1 BLOCK ========== -->
+                    <div id="topic1" class="topic-block space-y-4">
+                        <div class="rounded-2xl bg-gradient-to-r from-teal-600 to-emerald-600 p-5 text-white shadow-sm">
+                            <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">Topic 1</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold mt-1">Fundamentals of Chemistry &amp; Planet Earth</h2>
+                        </div>
+
+                        <!-- 1.1 -->
+                        <article id="sec-1-1" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-teal-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">1.1 Classification of Matter, Elements &amp; Lab Safety</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-1-1" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-teal-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Element:</strong> Pure substance that cannot be broken down into anything simpler by chemical methods (1 kind of atom, e.g., Na, He, O<sub>2</sub>, Br<sub>2</sub>). Water (H<sub>2</sub>O) and Ag<sub>2</sub>O are compounds, NOT elements.</li>
+                                    <li><strong>Compound vs. Mixture:</strong> Compounds have <strong>fixed</strong> composition by mass, <strong>sharp</strong> m.p./b.p., entirely different properties from constituent elements, and are separated only by chemical methods. Mixtures have <strong>variable</strong> composition, melt/boil over a range, retain constituent properties, and can be separated physically.</li>
+                                    <li><strong>Abundance (Memorize Order):</strong> Earth's crust by mass: <strong>O (50%) &gt; Si (26%) &gt; Al (7%) &gt; Fe (4%)</strong>. Atmosphere by volume: <strong>N<sub>2</sub> (78%) &gt; O<sub>2</sub> (21%) &gt; Ar (0.93%) &gt; CO<sub>2</sub> (0.03%)</strong>.</li>
+                                    <li><strong>States at r.t.p. (25 °C, 1 atm):</strong> Only 2 liquids (<strong>Hg, Br<sub>2</sub></strong>), 11 gases (6 noble gases + H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>); all others are solids.</li>
+                                    <li><strong>Bunsen Burner:</strong> Always close air hole before lighting to prevent <em>striking back</em>. Open air hole → hotter, non-luminous blue flame.</li>
+                                </ul>
+                                <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs">
+                                    <strong>⚠️ Hazard Labels:</strong> <em>Explosive</em> (NH<sub>4</sub>NO<sub>3</sub>), <em>Flammable</em> (H<sub>2</sub>, CH<sub>4</sub>, ethanol, Na/K), <em>Oxidizing</em> (conc. HNO<sub>3</sub>/H<sub>2</sub>SO<sub>4</sub>, KMnO<sub>4</sub>, K<sub>2</sub>Cr<sub>2</sub>O<sub>7</sub>), <em>Toxic</em> (Cl<sub>2</sub>, Br<sub>2</sub>, CO, NO<sub>2</sub>, SO<sub>2</sub>, Pb, Hg), <em>Corrosive</em> (conc. acids/alkalis), <em>Irritant</em> (dilute acids/alkalis).
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- 1.2 -->
+                        <article id="sec-1-2" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-teal-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">1.2 The Atmosphere: Fractional Distillation &amp; Uses of Gases</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-1-2" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-teal-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <p><strong>Fractional Distillation of Liquefied Air:</strong> (1) Purify air (filter dust; remove CO<sub>2</sub> and H<sub>2</sub>O vapour as solids). (2) Liquefy at <strong>−200 °C</strong> via repeated compression and rapid expansion. (3) Warm slowly in fractionating column: <strong>N<sub>2</sub> (−196 °C)</strong> boils off first → <strong>Ar (−186 °C)</strong> → <strong>O<sub>2</sub> (−183 °C)</strong>.</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li><strong>Test for O<sub>2</sub>:</strong> Relights a glowing wooden splint. (<em>Exam Trap:</em> O<sub>2</sub> is oxidizing/supports burning, NOT flammable; exhaled air is still mainly N<sub>2</sub>!)</li>
+                                    <li><strong>Noble Gas Uses:</strong> <strong>He</strong> (balloons/airships: inert &amp; lighter than air; H<sub>2</sub> is explosive); <strong>Ne</strong> (red advertising signs); <strong>Ar</strong> (fills light bulbs to prevent tungsten filament oxidation).</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 1.3 -->
+                        <article id="sec-1-3" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-teal-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">1.3 The Ocean: Extraction, Distillation, Ion Tests &amp; Brine Electrolysis</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-1-3" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-teal-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Extracting Pure NaCl Crystals:</strong> Filter sea water → heat filtrate to obtain a <strong>saturated solution</strong> (dip glass rod to check for small crystals) → <strong>cool slowly</strong> at room temp → filter, wash with a little <strong>cold distilled water</strong>, dry on filter paper. (Evaporation to dryness leaves impure powder!)</li>
+                                    <li><strong>Simple Distillation of Sea Water:</strong> Add <strong>anti-bumping granules</strong> (smooth boiling); cooling water enters condenser at the <strong>bottom</strong> and exits at the <strong>top</strong>; keep receiver open to prevent explosion.</li>
+                                    <li><strong>Flame Tests:</strong> Na<sup>+</sup> (<strong>Golden yellow</strong>), K<sup>+</sup> (<strong>Lilac</strong>), Ca<sup>2+</sup> (<strong>Brick-red</strong>), Cu<sup>2+</sup> (<strong>Bluish green</strong>).</li>
+                                    <li><strong>Chloride Test:</strong> Add excess <strong>dilute HNO<sub>3</sub>(aq)</strong> (removes CO<sub>3</sub><sup>2−</sup>) then AgNO<sub>3</sub>(aq) → <strong>white ppt AgCl(s)</strong>.</li>
+                                    <li><strong>Water Test:</strong> Dry CoCl<sub>2</sub> paper turns <strong>blue → pink</strong>; white anhydrous CuSO<sub>4</sub> turns <strong>white → blue</strong>.</li>
+                                    <li><strong>Brine Electrolysis:</strong> Cathode (−) → <strong>H<sub>2</sub>(g)</strong> (fuel, NH<sub>3</sub>); Anode (+) → <strong>Cl<sub>2</sub>(g)</strong> (sterilizing water); Solution → <strong>NaOH(aq)</strong> (soap, waste treatment). NaOH + Cl<sub>2</sub> → bleaching solution.</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 1.4 -->
+                        <article id="sec-1-4" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-teal-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">1.4 Rocks, Ores, Calcium Carbonate &amp; The Lime Cycle</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-1-4" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-teal-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <p><strong>Key Ores:</strong> Haematite (Fe<sub>2</sub>O<sub>3</sub>), Bauxite (Al<sub>2</sub>O<sub>3</sub>), Galena (PbS), Zinc blende (ZnS), Cinnabar (HgS), Malachite (CuCO<sub>3</sub>), Quartz (SiO<sub>2</sub> → Si).</p>
+                                <p><strong>The Lime Cycle:</strong> CaCO<sub>3</sub>(s) (limestone/chalk/marble) —<em>heat</em>→ CaO(s) (<strong>quicklime</strong>) + CO<sub>2</sub>(g); CaO(s) + H<sub>2</sub>O(l) → Ca(OH)<sub>2</sub>(s) (<strong>slaked lime</strong>); add excess H<sub>2</sub>O &amp; filter → Ca(OH)<sub>2</sub>(aq) (<strong>limewater</strong>); bubble CO<sub>2</sub> → CaCO<sub>3</sub>(s) (milky).</p>
+                                <div class="p-3 rounded-xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 chem-eq text-xs sm:text-sm">
+                                    Ca(OH)<sub>2</sub>(aq) + CO<sub>2</sub>(g) → CaCO<sub>3</sub>(s) [milky] + H<sub>2</sub>O(l)<br>
+                                    <strong>Excess CO<sub>2</sub>:</strong> CaCO<sub>3</sub>(s) + CO<sub>2</sub>(g) + H<sub>2</sub>O(l) → Ca(HCO<sub>3</sub>)<sub>2</sub>(aq) [turns clear]
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- ========== TOPIC 2 BLOCK ========== -->
+                    <div id="topic2" class="topic-block space-y-4">
+                        <div class="rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 p-5 text-white shadow-sm">
+                            <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">Topic 2</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold mt-1">The Microscopic World I</h2>
+                        </div>
+
+                        <!-- 2.1 -->
+                        <article id="sec-2-1" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">2.1 Atomic Structure, Isotopes, R.A.M. &amp; Electronic Arrangements</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-2-1" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Subatomic Particles:</strong> Proton p<sup>+</sup> (+1, mass 1, nucleus); Neutron n (0, mass 1, nucleus; <sup>1</sup>H has 0 n); Electron e<sup>−</sup> (−1, mass 1/1840 ≈ 0, shells).</li>
+                                    <li><strong>Isotopes:</strong> Same atomic number (p<sup>+</sup>), different mass number (n). <strong>Same chemical properties</strong> (same electronic arrangement), <strong>different physical properties</strong> (different mass).</li>
+                                    <li><strong>R.A.M.:</strong> Weighted average isotopic mass on <sup>12</sup>C = 12.00 scale: <span class="chem-eq font-bold">R.A.M. = Σ(abundance% × isotopic mass)</span> (no unit).</li>
+                                    <li><strong>Electronic Arrangement Trap:</strong> K (Z=19) is <strong>2,8,8,1</strong> (NOT 2,8,9); Ca (Z=20) is <strong>2,8,8,2</strong> (NOT 2,8,10).</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 2.2 -->
+                        <article id="sec-2-2" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">2.2 Periodic Table: Group I, II, VII, 0 &amp; Period Trends</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-2-2" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li>Arranged by increasing <strong>atomic number</strong> (NOT R.A.M.). Hydrogen does not belong to any group.</li>
+                                    <li><strong>Group I (Alkali metals):</strong> 1 outer e<sup>−</sup>; soft, tarnish in air, Li/Na/K float on water. Down group: <strong>m.p./b.p. ↓</strong> (weaker metallic bond), <strong>reactivity ↑</strong> (outer e<sup>−</sup> lost more easily).</li>
+                                    <li><strong>Group II (Alkaline earth metals):</strong> 2 outer e<sup>−</sup>; harder &amp; less reactive than Group I; reactivity ↑ down group.</li>
+                                    <li><strong>Group VII (Halogens):</strong> 7 outer e<sup>−</sup>; F<sub>2</sub> (pale yellow gas), Cl<sub>2</sub> (yellowish-green gas), Br<sub>2</sub> (dark red/brown liquid), I<sub>2</sub> (black/purple solid). Down group: <strong>m.p./b.p. ↑</strong> (larger molecular size → stronger v.d.w.), <strong>reactivity ↓</strong>.</li>
+                                    <li><strong>Group 0 (Noble gases):</strong> Octet (8 e<sup>−</sup>) or duplet (He: 2 e<sup>−</sup>); unreactive, monatomic; density &amp; b.p. ↑ down group.</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 2.3 -->
+                        <article id="sec-2-3" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">2.3 Chemical Bonds (Ionic, Covalent, Dative, Metallic) &amp; Ion Colours</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-2-3" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Ionic Bond:</strong> Transfer of e<sup>−</sup> (metal → non-metal); non-directional electrostatic attraction. <em>Exception:</em> NH<sub>4</sub>Cl is an ionic compound with no metal (contains both covalent &amp; ionic bonds).</li>
+                                    <li><strong>Dative Covalent Bond (→):</strong> Both shared electrons donated by the same atom. Memorize: <strong>NH<sub>4</sub><sup>+</sup>, H<sub>3</sub>O<sup>+</sup>, H<sub>3</sub>N→BF<sub>3</sub>, BF<sub>4</sub><sup>−</sup>, CO, O<sub>3</sub>, HNO<sub>3</sub>, Al<sub>2</sub>Cl<sub>6</sub></strong>.</li>
+                                    <li><strong>Aqueous Ion Colours:</strong> Fe<sup>2+</sup> / Ni<sup>2+</sup> / Cr<sup>3+</sup> (<strong>Green</strong>), Fe<sup>3+</sup> (<strong>Yellow/Brown</strong>), Cu<sup>2+</sup> (<strong>Blue</strong>), CrO<sub>4</sub><sup>2−</sup> (<strong>Yellow</strong>), Cr<sub>2</sub>O<sub>7</sub><sup>2−</sup> (<strong>Orange</strong>), MnO<sub>4</sub><sup>−</sup> (<strong>Purple</strong>).</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 2.4 -->
+                        <article id="sec-2-4" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-indigo-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">2.4 Structures &amp; Properties + HKDSE Answering Frameworks</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-2-4" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-3 text-slate-700 dark:text-slate-300">
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-xs border-collapse">
+                                        <thead>
+                                            <tr class="bg-slate-100 dark:bg-slate-800 text-left">
+                                                <th class="p-2 border border-slate-200 dark:border-slate-700">Structure</th>
+                                                <th class="p-2 border border-slate-200 dark:border-slate-700">Particles &amp; Force Overcome</th>
+                                                <th class="p-2 border border-slate-200 dark:border-slate-700">m.p./b.p. &amp; Conductivity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td class="p-2 border border-slate-200 dark:border-slate-700 font-bold">Giant Metallic</td><td class="p-2 border border-slate-200 dark:border-slate-700">Cations + delocalized e<sup>−</sup> (strong metallic bond)</td><td class="p-2 border border-slate-200 dark:border-slate-700">High; conducts in (s) &amp; (l); malleable &amp; ductile</td></tr>
+                                            <tr><td class="p-2 border border-slate-200 dark:border-slate-700 font-bold">Giant Ionic</td><td class="p-2 border border-slate-200 dark:border-slate-700">Cations &amp; anions (strong ionic bond)</td><td class="p-2 border border-slate-200 dark:border-slate-700">High; conducts in (l) &amp; (aq) ONLY; brittle</td></tr>
+                                            <tr><td class="p-2 border border-slate-200 dark:border-slate-700 font-bold">Giant Covalent</td><td class="p-2 border border-slate-200 dark:border-slate-700">Atoms (Diamond, Graphite, Si, SiO<sub>2</sub>; strong covalent)</td><td class="p-2 border border-slate-200 dark:border-slate-700">Very high; non-conductor (except graphite)</td></tr>
+                                            <tr><td class="p-2 border border-slate-200 dark:border-slate-700 font-bold">Simple Molecular</td><td class="p-2 border border-slate-200 dark:border-slate-700">Discrete molecules (weak van der Waals' forces)</td><td class="p-2 border border-slate-200 dark:border-slate-700">Low; non-conductor (unless ionizes in H<sub>2</sub>O)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-xs space-y-1">
+                                    <p><strong>🎯 HKDSE Boiling Point Framework (2M):</strong> State <em>Structure + Bonding Strength + Exact Particles</em> for BOTH substances (e.g., NaCl has giant ionic structure with strong ionic bonds between Na<sup>+</sup> and Cl<sup>−</sup> ions, while CO<sub>2</sub> has simple molecular structure with weak van der Waals' forces between CO<sub>2</sub> molecules).</p>
+                                    <p><strong>⚡ Conductivity Golden Rule:</strong> Requires <strong>delocalized electrons</strong> (metals s/l, graphite s) OR <strong>mobile ions</strong> (ionic l/aq, acids/alkalis aq).</p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- ========== TOPIC 3 BLOCK ========== -->
+                    <div id="topic3" class="topic-block space-y-4">
+                        <div class="rounded-2xl bg-gradient-to-r from-amber-600 to-orange-600 p-5 text-white shadow-sm">
+                            <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">Topic 3</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold mt-1">Metals &amp; Mole Calculations</h2>
+                        </div>
+
+                        <!-- 3.1 -->
+                        <article id="sec-3-1" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">3.1 Metal Extraction Methods</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-3-1" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>K, Na, Ca, Mg, Al:</strong> Electrolysis of molten ore (expensive, needed for highly reactive metals).</li>
+                                    <li><strong>Zn, Fe, Sn, Pb, Cu:</strong> Heat oxide with carbon / CO (e.g., 2CuO + C → 2Cu + CO<sub>2</sub>; Fe<sub>2</sub>O<sub>3</sub> + 3CO → 2Fe + 3CO<sub>2</sub>). <strong>5** Trap: H<sub>2</sub>(g) CANNOT reduce ZnO!</strong></li>
+                                    <li><strong>Hg, Ag:</strong> Heat ore alone (2Ag<sub>2</sub>O → 4Ag + O<sub>2</sub>; 2HgO → 2Hg + O<sub>2</sub>). <strong>Pt, Au:</strong> Physical methods (found native).</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 3.2 -->
+                        <article id="sec-3-2" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">3.2 Metal Reactivity (O<sub>2</sub>, Water/Steam, Acids) &amp; Displacement</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-3-2" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>With O<sub>2</sub>:</strong> ZnO (<strong>yellow hot, white cold</strong>), PbO (<strong>orange hot, yellow cold</strong>), Fe gives <strong>black Fe<sub>3</sub>O<sub>4</sub></strong>, Cu gives black CuO, Hg gives red HgO; Ag, Pt, Au have no reaction.</li>
+                                    <li><strong>With Water/Steam:</strong> Cold water (K, Na, Ca) → hydroxide + H<sub>2</sub>. Steam (Mg, Al, Zn, Fe) → oxide + H<sub>2</sub>.</li>
+                                    <li><strong>Displacement:</strong> More reactive metal displaces less reactive metal from its aqueous/molten compound (exothermic): Mg(s) + CuSO<sub>4</sub>(aq) → MgSO<sub>4</sub>(aq) + Cu(s).</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 3.3 -->
+                        <article id="sec-3-3" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">3.3 Rusting &amp; Prevention</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-3-3" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <p>Requires <strong>BOTH O<sub>2</sub> and H<sub>2</sub>O</strong>. Overall: <span class="chem-eq font-bold">4Fe(s) + 3O<sub>2</sub>(g) + 2xH<sub>2</sub>O(l) → 2Fe<sub>2</sub>O<sub>3</sub>·xH<sub>2</sub>O(s)</span>.</p>
+                                <p><strong>Rust Indicator:</strong> K<sub>3</sub>Fe(CN)<sub>6</sub> turns <strong>blue</strong> (Fe<sup>2+</sup>); phenolphthalein turns <strong>pink</strong> (OH<sup>−</sup>).</p>
+                                <p><strong>Prevention:</strong> Coating (paint, grease, galvanising w/ Zn [sacrificial protection even when scratched], tin-plating on food cans [rusts FASTER when scratched because Fe &gt; Sn]), Sacrificial protection (Mg/Zn blocks; car body to battery − terminal), Alloying (stainless steel).</p>
+                            </div>
+                        </article>
+
+                        <!-- 3.5 -->
+                        <article id="sec-3-5" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">3.5 Mole Calculations, Empirical Formula, Limiting Reactant &amp; % Yield</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-3-5" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-amber-100 dark:hover:bg-amber-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <div class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 chem-eq text-xs sm:text-sm font-bold">
+                                    n = Particles ÷ 6.02×10<sup>23</sup> &nbsp;|&nbsp; n = Mass ÷ Molar Mass &nbsp;|&nbsp; % Yield = (Actual ÷ Theoretical) × 100%
+                                </div>
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>CuO + Town Gas (CO + H<sub>2</sub>):</strong> Tilt tube downwards (prevent condensed H<sub>2</sub>O cracking hot glass); flush air before igniting (explosive); burn excess gas (CO toxic, H<sub>2</sub> flammable); cool in gas stream (prevent Cu re-oxidation).</li>
+                                    <li><strong>Combustion Analysis (C<sub>x</sub>H<sub>y</sub>O<sub>z</sub>):</strong> U-tube 1 (anhydrous CaCl<sub>2</sub>, absorbs H<sub>2</sub>O) MUST precede U-tube 2 (KOH, absorbs CO<sub>2</sub> + H<sub>2</sub>O). Find O by subtraction: m(O) = sample − m(C) − m(H).</li>
+                                    <li><strong>Limiting Reactant:</strong> Divide each reactant's moles by its equation coefficient; smaller value is limiting.</li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- ========== TOPIC 4 BLOCK ========== -->
+                    <div id="topic4" class="topic-block space-y-4">
+                        <div class="rounded-2xl bg-gradient-to-r from-rose-600 to-pink-600 p-5 text-white shadow-sm">
+                            <span class="text-[11px] font-bold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">Topic 4</span>
+                            <h2 class="text-xl sm:text-2xl font-extrabold mt-1">Acids and Alkalis (Parts 1, 2 &amp; 3)</h2>
+                        </div>
+
+                        <!-- 4.1 -->
+                        <article id="sec-4-1" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">4.1 Acids, Role of Water, Basicity, Conc. Acids &amp; Drying Agents</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-4-1" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-rose-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Role of Water:</strong> Acids (H-containing covalent compounds) must ionize in water to give H<sup>+</sup>(aq). HCl in methylbenzene exists as molecules (no conductivity, no reaction with Mg/CaCO<sub>3</sub>, but forms white ppt NH<sub>4</sub>Cl(s) with NH<sub>3</sub>(g)).</li>
+                                    <li><strong>Basicity:</strong> Max H<sup>+</sup> per acid molecule. CH<sub>3</sub>COOH = 1 (monobasic); H<sub>2</sub>SO<sub>4</sub> / H<sub>2</sub>C<sub>2</sub>O<sub>4</sub> = 2 (dibasic); H<sub>3</sub>PO<sub>4</sub> / citric acid = 3 (tribasic).</li>
+                                    <li><strong>Conc. Acids:</strong> Conc. HCl (corrosive: high [H<sup>+</sup>], non-oxidizing); Conc. HNO<sub>3</sub> (oxidizing + high [H<sup>+</sup>], gives brown NO<sub>2</sub>); Conc. H<sub>2</sub>SO<sub>4</sub> (dehydrating + oxidizing, gives SO<sub>2</sub>). <strong>Diluting conc. H<sub>2</sub>SO<sub>4</sub>:</strong> add acid slowly to large volume of water with stirring!</li>
+                                    <li><strong>Drying Agents:</strong> Anhydrous CaCl<sub>2</sub> (all gases except NH<sub>3</sub>); CaO (neutral &amp; alkaline NH<sub>3</sub>); Conc. H<sub>2</sub>SO<sub>4</sub> (neutral &amp; acidic gases). Use inverted funnel for very soluble HCl, NH<sub>3</sub>, SO<sub>2</sub> to prevent sucking back.</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 4.2 -->
+                        <article id="sec-4-2" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">4.2 Alkalis, Cation Precipitation (NaOH vs. NH<sub>3</sub>) &amp; NH<sub>4</sub><sup>+</sup> Salts</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-4-2" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-rose-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Soluble in Excess NaOH(aq) (ZPA):</strong> Zn(OH)<sub>2</sub> → [Zn(OH)<sub>4</sub>]<sup>2−</sup>, Pb(OH)<sub>2</sub> → [Pb(OH)<sub>4</sub>]<sup>2−</sup>, Al(OH)<sub>3</sub> → [Al(OH)<sub>4</sub>]<sup>−</sup> (all colourless).</li>
+                                    <li><strong>Soluble in Excess NH<sub>3</sub>(aq) (ZCA):</strong> Zn(OH)<sub>2</sub> → [Zn(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup> (colourless), Cu(OH)<sub>2</sub> → [Cu(NH<sub>3</sub>)<sub>4</sub>]<sup>2+</sup> (<strong>deep blue</strong>), Ag<sub>2</sub>O → [Ag(NH<sub>3</sub>)<sub>2</sub>]<sup>+</sup> (colourless).</li>
+                                    <li><strong>Insoluble in BOTH:</strong> Mg(OH)<sub>2</sub> (white), Fe(OH)<sub>2</sub> (green → brown in air), Fe(OH)<sub>3</sub> (brown). Ca<sup>2+</sup> gives white ppt with NaOH(aq) but NO ppt with NH<sub>3</sub>(aq).</li>
+                                    <li><strong>Base + Ammonium Salt (heat):</strong> Gives salt + H<sub>2</sub>O + NH<sub>3</sub>(g) (turns moist red litmus blue; collect by upward delivery or gas syringe).</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 4.3–4.6 -->
+                        <article id="sec-4-3" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">4.3–4.6 Molarity, pH, Strength, Neutralization &amp; Salt Preparation</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-4-3" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-rose-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Molarity &amp; Dilution:</strong> M = mol ÷ V(dm<sup>3</sup>); Dilution: M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub> (NEVER use when mixing two solute solutions!).</li>
+                                    <li><strong>pH &amp; Strength:</strong> pH = −log[H<sup>+</sup>]. Factors affecting acid pH: (1) Concentration, (2) Strength (complete vs. partial ionization), (3) Basicity.</li>
+                                    <li><strong>Exothermic Neutralization:</strong> Heat released: SA+SB &gt; SA+WB ≈ WA+SB &gt; WA+WB. Temp rise ∝ (moles H<sub>2</sub>O formed ÷ total volume).</li>
+                                    <li><strong>3 Salt Prep Types:</strong> <strong>Type 1</strong> (Insoluble) → Precipitation; <strong>Type 2</strong> (Soluble non-Na/K/NH<sub>4</sub>) → Acid + EXCESS insoluble metal/oxide/hydroxide/carbonate + crystallize; <strong>Type 3</strong> (Na<sup>+</sup>/K<sup>+</sup>/NH<sub>4</sub><sup>+</sup>) → Titration + remix w/o indicator + crystallize.</li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <!-- 4.7 -->
+                        <article id="sec-4-7" class="study-card rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between gap-2 p-4 sm:p-5 bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                                <button type="button" class="acc-btn flex items-center gap-2.5 text-left flex-1" aria-expanded="true">
+                                    <svg class="acc-chevron w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                                    <h3 class="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">4.7 Volumetric Analysis, Standard Solutions &amp; Back Titration</h3>
+                                </button>
+                                <button type="button" data-done-id="sec-4-7" class="mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-100 dark:hover:bg-rose-900 transition shrink-0">Mark Done</button>
+                            </div>
+                            <div class="acc-body p-4 sm:p-5 space-y-2.5 text-slate-700 dark:text-slate-300">
+                                <ul class="list-disc pl-5 space-y-1.5">
+                                    <li><strong>Primary Standard:</strong> Pure, stable, non-hygroscopic, doesn't absorb CO<sub>2</sub>, water-soluble, large molar mass (e.g., anhydrous Na<sub>2</sub>CO<sub>3</sub>, (COOH)<sub>2</sub>·2H<sub>2</sub>O). NaOH(s) fails (absorbs H<sub>2</sub>O &amp; CO<sub>2</sub>).</li>
+                                    <li><strong>Rinsing Rules:</strong> Volumetric &amp; Conical flasks → distilled water ONLY. Pipette &amp; Burette → distilled water FIRST, THEN the solution to be transferred/filled.</li>
+                                    <li><strong>Indicators:</strong> SA+SB (MO or PP); SA+WB (NH<sub>3</sub>, Na<sub>2</sub>CO<sub>3</sub> → <strong>MO ONLY</strong>); WA+SB (CH<sub>3</sub>COOH → <strong>PP ONLY</strong>); WA+WB (none).</li>
+                                    <li><strong>Back Titration:</strong> Add known excess X to unknown Y; titrate leftover X with Z. Reacted X = Total X − Leftover X.</li>
+                                </ul>
+                            </div>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 3: INTERACTIVE LAB & CALCULATORS                         -->
+        <!-- ============================================================ -->
+        <section id="lab" class="topic-panel hidden space-y-6">
+            <div class="rounded-2xl bg-gradient-to-r from-indigo-600 via-blue-600 to-teal-600 p-5 sm:p-6 text-white shadow-md">
+                <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full">Interactive Lab</span>
+                <h2 class="text-xl sm:text-2xl font-extrabold mt-2">HKDSE Chemistry Calculators &amp; Simulators</h2>
+                <p class="text-blue-50 text-xs sm:text-sm mt-1">Verify pH, molarity/dilution, salt solubility &amp; preparation, cation precipitates, and titration indicators instantly.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <!-- Tool 1: pH & [H+] Converter -->
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧪</span> 1. pH &amp; [H<sup>+</sup>] Converter (25 °C)</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label for="phInput" class="block text-xs font-bold text-slate-500 mb-1">pH Value (0–14)</label>
+                            <input id="phInput" type="number" step="0.1" value="1.0" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                        </div>
+                        <div>
+                            <label for="hConcInput" class="block text-xs font-bold text-slate-500 mb-1">[H<sup>+</sup>(aq)] (mol dm<sup>−3</sup>)</label>
+                            <input id="hConcInput" type="text" value="0.1" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                        </div>
+                    </div>
+                    <div class="relative pt-3 pb-1">
+                        <div class="h-3 rounded-full ph-gradient"></div>
+                        <div id="phPointer" class="w-3.5 h-3.5 rounded-full bg-white border-2 border-slate-900 shadow absolute top-2.5 -translate-x-1/2 transition-all" style="left: 7%;"></div>
+                    </div>
+                    <div id="phReadout" class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-200"></div>
+                </div>
+
+                <!-- Tool 2: Molarity & Dilution Calculator -->
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>⚗️</span> 2. Dilution Calculator (M<sub>1</sub>V<sub>1</sub> = M<sub>2</sub>V<sub>2</sub>)</h3>
+                    <div class="grid grid-cols-3 gap-2.5">
+                        <div>
+                            <label for="dilM1" class="block text-[11px] font-bold text-slate-500 mb-1">Initial M<sub>1</sub> (M)</label>
+                            <input id="dilM1" type="number" step="0.01" value="1.00" class="w-full px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                        </div>
+                        <div>
+                            <label for="dilM2" class="block text-[11px] font-bold text-slate-500 mb-1">Target M<sub>2</sub> (M)</label>
+                            <input id="dilM2" type="number" step="0.01" value="0.10" class="w-full px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                        </div>
+                        <div>
+                            <label for="dilV2" class="block text-[11px] font-bold text-slate-500 mb-1">Final V<sub>2</sub> (cm<sup>3</sup>)</label>
+                            <input id="dilV2" type="number" step="1" value="250" class="w-full px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm">
+                        </div>
+                    </div>
+                    <div id="dilResult" class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-xs text-indigo-950 dark:text-indigo-200 space-y-1"></div>
+                </div>
+
+                <!-- Tool 3: Solubility & Salt Prep Checker -->
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧂</span> 3. Solubility &amp; Salt Prep Checker</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <select id="solCation" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                            <option value="Na">Na⁺ (Sodium)</option>
+                            <option value="K">K⁺ (Potassium)</option>
+                            <option value="NH4">NH₄⁺ (Ammonium)</option>
+                            <option value="Ca">Ca²⁺ (Calcium)</option>
+                            <option value="Ba">Ba²⁺ (Barium)</option>
+                            <option value="Mg">Mg²⁺ (Magnesium)</option>
+                            <option value="Zn">Zn²⁺ (Zinc)</option>
+                            <option value="Cu">Cu²⁺ (Copper(II))</option>
+                            <option value="Ag">Ag⁺ (Silver)</option>
+                            <option value="Pb">Pb²⁺ (Lead(II))</option>
+                        </select>
+                        <select id="solAnion" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                            <option value="NO3">NO₃⁻ (Nitrate)</option>
+                            <option value="Cl">Cl⁻ (Chloride)</option>
+                            <option value="SO4">SO₄²⁻ (Sulphate)</option>
+                            <option value="CO3">CO₃²⁻ (Carbonate)</option>
+                            <option value="OH">OH⁻ (Hydroxide)</option>
+                        </select>
+                    </div>
+                    <div id="solResult" class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs space-y-1.5"></div>
+                </div>
+
+                <!-- Tool 4: Cation Precipitate Simulator -->
+                <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🧫</span> 4. Cation Precipitate Test (NaOH vs. NH<sub>3</sub>)</h3>
+                    <select id="catSimSelect" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                        <option value="Ca">Ca²⁺ (Colourless)</option>
+                        <option value="Mg">Mg²⁺ (Colourless)</option>
+                        <option value="Al">Al³⁺ (Colourless)</option>
+                        <option value="Zn">Zn²⁺ (Colourless)</option>
+                        <option value="Pb">Pb²⁺ (Colourless)</option>
+                        <option value="Fe2">Fe²⁺ (Green)</option>
+                        <option value="Fe3">Fe³⁺ (Yellow/Brown)</option>
+                        <option value="Cu">Cu²⁺ (Blue)</option>
+                        <option value="Ag">Ag⁺ (Colourless)</option>
+                    </select>
+                    <div id="catSimResult" class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs space-y-1.5"></div>
+                </div>
+
+                <!-- Tool 5: Titration Indicator Selector -->
+                <div class="lg:col-span-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-2"><span>🎯</span> 5. Titration Indicator &amp; End-Point Selector</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <select id="titPairSelect" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                            <option value="SASB">Strong Acid + Strong Alkali (e.g., HCl + NaOH)</option>
+                            <option value="SAWB">Strong Acid + Weak Alkali (e.g., HCl + NH₃ / Na₂CO₃)</option>
+                            <option value="WASB">Weak Acid + Strong Alkali (e.g., CH₃COOH + NaOH)</option>
+                            <option value="WAWB">Weak Acid + Weak Alkali (e.g., CH₃COOH + NH₃)</option>
+                        </select>
+                        <select id="titBuretteSelect" class="px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-semibold">
+                            <option value="acid">Burette = Acid | Conical Flask = Alkali</option>
+                            <option value="alkali">Burette = Alkali | Conical Flask = Acid</option>
+                        </select>
+                    </div>
+                    <div id="titResult" class="p-4 rounded-xl bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 text-xs sm:text-sm space-y-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 6: LUXURY HKDSE EXAM & QUIZ SUITE                        -->
+        <!-- ============================================================ -->
+        <section id="quiz" class="topic-panel hidden space-y-6">
+            <!-- Luxury Obsidian & Champagne-Gold Hero -->
+            <div class="lux-quiz-hero rounded-3xl p-6 sm:p-8 text-white shadow-2xl border border-amber-400/20 relative overflow-hidden">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+                    <div class="space-y-2.5 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-300/30 text-[11px] font-bold uppercase tracking-[0.16em] text-amber-200">
+                            <span>✦</span> HKDSE Premier Exam Studio
+                        </div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+                            <span class="lux-gold-text">Mastery Assessment Suite</span>
+                        </h2>
+                        <p id="quizHeroSubtitle" class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                            Select a single topic below to practice focused <strong>Multiple Choice</strong>, <strong>Short Structured</strong>, and <strong>Long Questions</strong> — topics are kept strictly separate.
+                        </p>
+                    </div>
+
+                    <!-- Glassmorphic Telemetry Strip (shown during active session) -->
+                    <div id="quizTelemetryStrip" class="hidden grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
+                        <div class="px-3.5 py-3 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-center min-w-[88px]">
+                            <div class="text-[10px] uppercase tracking-wider font-bold text-amber-200/80">Score</div>
+                            <div id="quizScoreStat" class="text-lg sm:text-xl font-extrabold mt-0.5 text-white">0/0</div>
+                        </div>
+                        <div class="px-3.5 py-3 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-center min-w-[88px]">
+                            <div class="text-[10px] uppercase tracking-wider font-bold text-amber-200/80">Streak</div>
+                            <div id="quizStreakStat" class="text-lg sm:text-xl font-extrabold mt-0.5 text-amber-300">✦ 0</div>
+                        </div>
+                        <div class="px-3.5 py-3 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-center min-w-[88px]">
+                            <div class="text-[10px] uppercase tracking-wider font-bold text-amber-200/80">Timer</div>
+                            <div id="quizTimerStat" class="text-lg sm:text-xl font-extrabold font-mono mt-0.5 text-teal-300">00:00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 1: CLEARLY SEPARATED TOPIC SELECTION LOBBY -->
+            <div id="quizTopicLobby" class="space-y-5">
+                <div class="flex flex-wrap items-center justify-between gap-2 px-1">
+                    <div>
+                        <span class="text-[11px] font-extrabold uppercase tracking-widest text-amber-600 dark:text-amber-400">Step 1 of 2</span>
+                        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white">Choose Your Topic</h3>
+                    </div>
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Questions are strictly separated by topic — never mixed.</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Topic 1 Card -->
+                    <div class="rounded-3xl bg-white dark:bg-slate-900 border-2 border-teal-200 dark:border-teal-900/70 hover:border-teal-500 dark:hover:border-teal-500 p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between gap-5">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 text-xs font-extrabold uppercase tracking-wider">🌍 Topic 1</span>
+                                <span class="text-xs font-bold text-teal-600 dark:text-teal-400">12 Questions Total</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">Planet Earth &amp; Fundamentals</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Elements, compounds &amp; mixtures, air fractional distillation, sea water extraction, ion tests, brine electrolysis &amp; lime cycle.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <button type="button" onclick="selectQuizTopic(1, 'mc')" class="py-2.5 px-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs shadow-sm transition">✦ MC (8)</button>
+                            <button type="button" onclick="selectQuizTopic(1, 'short')" class="py-2.5 px-2 rounded-xl bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800 font-bold text-xs transition">✍️ Short (3)</button>
+                            <button type="button" onclick="selectQuizTopic(1, 'long')" class="py-2.5 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition">📜 Long (1)</button>
+                        </div>
+                    </div>
+
+                    <!-- Topic 2 Card -->
+                    <div class="rounded-3xl bg-white dark:bg-slate-900 border-2 border-indigo-200 dark:border-indigo-900/70 hover:border-indigo-500 dark:hover:border-indigo-500 p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between gap-5">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 text-xs font-extrabold uppercase tracking-wider">⚛️ Topic 2</span>
+                                <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">12 Questions Total</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">The Microscopic World I</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Atomic structure, isotopes, R.A.M., Periodic Table trends, ionic/covalent/dative/metallic bonds &amp; structure-property frameworks.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <button type="button" onclick="selectQuizTopic(2, 'mc')" class="py-2.5 px-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition">✦ MC (8)</button>
+                            <button type="button" onclick="selectQuizTopic(2, 'short')" class="py-2.5 px-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900 text-indigo-800 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 font-bold text-xs transition">✍️ Short (3)</button>
+                            <button type="button" onclick="selectQuizTopic(2, 'long')" class="py-2.5 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition">📜 Long (1)</button>
+                        </div>
+                    </div>
+
+                    <!-- Topic 3 Card -->
+                    <div class="rounded-3xl bg-white dark:bg-slate-900 border-2 border-amber-200 dark:border-amber-900/70 hover:border-amber-500 dark:hover:border-amber-500 p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between gap-5">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-xs font-extrabold uppercase tracking-wider">⚙️ Topic 3</span>
+                                <span class="text-xs font-bold text-amber-600 dark:text-amber-400">13 Questions Total</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">Metals &amp; Mole Calculations</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Metal extraction, reactivity series, displacement, rusting &amp; prevention, empirical formula, combustion analysis, limiting reactant &amp; % yield.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <button type="button" onclick="selectQuizTopic(3, 'mc')" class="py-2.5 px-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-sm transition">✦ MC (8)</button>
+                            <button type="button" onclick="selectQuizTopic(3, 'short')" class="py-2.5 px-2 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-800 font-bold text-xs transition">✍️ Short (3)</button>
+                            <button type="button" onclick="selectQuizTopic(3, 'long')" class="py-2.5 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition">📜 Long (2)</button>
+                        </div>
+                    </div>
+
+                    <!-- Topic 4 Card -->
+                    <div class="rounded-3xl bg-white dark:bg-slate-900 border-2 border-rose-200 dark:border-rose-900/70 hover:border-rose-500 dark:hover:border-rose-500 p-6 shadow-sm hover:shadow-xl transition flex flex-col justify-between gap-5">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between gap-2">
+                                <span class="px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 text-xs font-extrabold uppercase tracking-wider">🧪 Topic 4</span>
+                                <span class="text-xs font-bold text-rose-600 dark:text-rose-400">15 Questions Total</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-extrabold text-slate-900 dark:text-white">Acids and Alkalis (Parts 1–3)</h4>
+                                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Role of water, basicity, conc. acids, cation precipitation, molarity, pH scale, strength, salt preparation, titration &amp; back titration.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                            <button type="button" onclick="selectQuizTopic(4, 'mc')" class="py-2.5 px-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-sm transition">✦ MC (8)</button>
+                            <button type="button" onclick="selectQuizTopic(4, 'short')" class="py-2.5 px-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900 text-rose-800 dark:text-rose-200 border border-rose-200 dark:border-rose-800 font-bold text-xs transition">✍️ Short (3)</button>
+                            <button type="button" onclick="selectQuizTopic(4, 'long')" class="py-2.5 px-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs transition">📜 Long (4)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: ACTIVE SINGLE-TOPIC QUIZ SESSION (HIDDEN UNTIL TOPIC CHOSEN) -->
+            <div id="quizActiveSession" class="hidden space-y-5">
+                <!-- Session Top Console -->
+                <div class="rounded-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <button type="button" id="backToTopicsBtn" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs sm:text-sm transition">
+                                ← Choose Another Topic
+                            </button>
+                            <div>
+                                <span class="text-[10px] font-extrabold uppercase tracking-widest text-amber-600 dark:text-amber-400">Active Topic</span>
+                                <h3 id="activeTopicTitle" class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white leading-tight">Topic 1: Planet Earth &amp; Fundamentals</h3>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3">
+                            <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
+                                <input id="quizShuffleToggle" type="checkbox" checked class="w-4 h-4 accent-amber-500 rounded cursor-pointer">
+                                <span>Shuffle</span>
+                            </label>
+                            <label class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
+                                <input id="quizTimerToggle" type="checkbox" checked class="w-4 h-4 accent-amber-500 rounded cursor-pointer">
+                                <span>Timer</span>
+                            </label>
+                            <button id="startQuizBtn" type="button" class="px-4 py-2 rounded-xl bg-slate-900 dark:bg-gradient-to-r dark:from-amber-400 dark:to-yellow-500 hover:opacity-95 text-white dark:text-slate-950 font-extrabold text-xs shadow-sm transition">
+                                ↺ Restart Topic
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mode Switcher (Strictly for the Selected Topic) -->
+                    <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                        <div class="inline-flex flex-wrap gap-2" id="quizModePills">
+                            <button type="button" data-qmode="mc" id="qmodeMcBtn" class="qmode-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-300 to-yellow-500 text-slate-950 shadow-sm transition">
+                                ✦ Multiple Choice
+                            </button>
+                            <button type="button" data-qmode="short" id="qmodeShortBtn" class="qmode-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                                ✍️ Short Questions
+                            </button>
+                            <button type="button" data-qmode="long" id="qmodeLongBtn" class="qmode-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                                📜 Long Questions
+                            </button>
+                        </div>
+                        <span class="text-[11px] text-slate-400 hidden sm:inline">Keyboard: <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono">A–D</kbd> answer • <kbd class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-mono">Enter</kbd> next</span>
+                    </div>
+                </div>
+
+                <!-- Active Luxury Question Stage -->
+                <div id="quizCard" class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden">
+                    <!-- Subtle Top Gold Accent Line -->
+                    <div class="h-1.5 w-full bg-slate-100 dark:bg-slate-800">
+                        <div id="quizProgressBar" class="h-full bg-gradient-to-r from-amber-400 via-yellow-500 to-teal-500 transition-all duration-500" style="width: 10%;"></div>
+                    </div>
+
+                    <div class="p-5 sm:p-8 space-y-6">
+                        <!-- Top Metadata + Stepper Dots -->
+                        <div class="space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span id="quizMetaBadge" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-900 dark:bg-amber-400/15 text-amber-300 border border-amber-400/30">Topic 1</span>
+                                    <span id="quizMarksBadge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">1 Mark</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span id="quizProgressText" class="text-xs font-bold tracking-wide text-slate-500 dark:text-slate-400">Question 1 of 8</span>
+                                    <button id="quizAskAiBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-violet-100 dark:bg-violet-950/70 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-800 hover:bg-violet-200 dark:hover:bg-violet-900 transition" title="Ask AI Tutor about this question">
+                                        ✨ Ask AI
+                                    </button>
+                                    <button id="quizFlagBtn" type="button" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-300 transition" title="Bookmark question for review">
+                                        ☆ Flag
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Visual Question Stepper Dots -->
+                            <div id="quizStepperDots" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+
+                        <!-- Question Prompt -->
+                        <div class="space-y-2">
+                            <h3 id="quizQuestionText" class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white leading-relaxed"></h3>
+                            <p id="quizSubPrompt" class="hidden text-xs sm:text-sm text-slate-500 dark:text-slate-400 whitespace-pre-line bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-xl border border-slate-200 dark:border-slate-700"></p>
+                        </div>
+
+                        <!-- MC Options Container -->
+                        <div id="quizOptions" class="grid grid-cols-1 gap-3"></div>
+
+                        <!-- Structured (Short / Long) Answer Studio -->
+                        <div id="quizStructuredArea" class="hidden space-y-4">
+                            <div>
+                                <label for="quizUserAnswer" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">Your Written Response (Draft before revealing marking scheme)</label>
+                                <textarea id="quizUserAnswer" rows="4" placeholder="Write your chemical equations, reasoning, or step-by-step calculation here..."
+                                          class="w-full p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-sm text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-amber-400 outline-none leading-relaxed"></textarea>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <button id="revealSchemeBtn" type="button" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:opacity-95 text-slate-950 font-extrabold text-sm shadow-md transition">
+                                    ✦ Reveal Official Marking Scheme
+                                </button>
+                                <span class="text-xs text-slate-400">Self-mark each criterion to record your score accurately.</span>
+                            </div>
+                        </div>
+
+                        <!-- Feedback & Marking Scheme Box -->
+                        <div id="quizFeedback" class="hidden p-5 rounded-2xl border text-xs sm:text-sm space-y-3"></div>
+
+                        <!-- Action Footer -->
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                            <span id="quizFooterHint" class="text-xs text-slate-400">Select an option to check immediately</span>
+                            <button id="quizNextBtn" type="button" class="hidden px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-extrabold text-sm shadow-md hover:opacity-90 transition">
+                                Next Question →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Luxury Results & Diagnostics Summary Card -->
+                <div id="quizSummaryCard" class="hidden rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-10 shadow-xl space-y-6">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                        <!-- Animated Circular Score Ring -->
+                        <div class="relative w-40 h-40 shrink-0">
+                            <svg class="w-40 h-40 -rotate-90" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="10" class="text-slate-100 dark:text-slate-800"/>
+                                <circle id="quizScoreRing" cx="60" cy="60" r="52" fill="none" stroke="url(#luxRingGrad)" stroke-width="10" stroke-linecap="round"
+                                        stroke-dasharray="326.73" stroke-dashoffset="326.73" class="lux-ring-progress"/>
+                                <defs>
+                                    <linearGradient id="luxRingGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#f59e0b"/>
+                                        <stop offset="100%" stop-color="#14b8a6"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span id="quizSummaryPct" class="text-3xl font-extrabold text-slate-900 dark:text-white">0%</span>
+                                <span id="quizGradeBadge" class="text-xs font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400">Level 5**</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center md:text-left space-y-2 max-w-md">
+                            <span id="quizSummaryTopicTag" class="inline-block text-[11px] font-bold uppercase tracking-widest text-amber-600 dark:text-amber-400">Topic Complete</span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white" id="quizSummaryHeadline">Outstanding Performance</h3>
+                            <p id="quizSummaryScore" class="text-sm sm:text-base font-bold text-teal-600 dark:text-teal-400"></p>
+                            <p id="quizSummaryMsg" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+                        <button type="button" onclick="showQuizTopicLobby()" class="px-6 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-extrabold text-sm transition">
+                            ← Choose Another Topic
+                        </button>
+                        <button id="reviewMistakesBtn" type="button" class="hidden px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 hover:opacity-95 text-slate-950 font-extrabold text-sm shadow-md transition">
+                            Review Flagged &amp; Missed
+                        </button>
+                        <button id="retakeQuizBtn" type="button" class="px-6 py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-extrabold text-sm shadow-md hover:opacity-90 transition">
+                            Retake This Topic
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- TAB 7: INTERACTIVE FLASHCARDS DECK (3D FLIP)                 -->
+        <!-- ============================================================ -->
+        <section id="flashcards" class="topic-panel hidden space-y-5">
+            <!-- Hero Banner -->
+            <div class="rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 p-5 sm:p-6 text-white shadow-md">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full">Active Recall</span>
+                        <h2 class="text-xl sm:text-2xl font-extrabold mt-2">Interactive Flashcards Deck</h2>
+                        <p class="text-amber-50 text-xs sm:text-sm mt-1">48 high-yield HKDSE flashcards covering definitions, ion &amp; flame colours, solubility, equations &amp; answering frameworks.</p>
+                    </div>
+                    <div class="px-3.5 py-2 rounded-xl bg-white/15 text-right">
+                        <div class="text-[10px] uppercase font-bold text-amber-100">Mastered</div>
+                        <div id="fcMasteryStat" class="text-lg font-extrabold">0 / 48</div>
+                    </div>
+                </div>
+                <div class="w-full h-2 rounded-full bg-white/25 mt-4 overflow-hidden">
+                    <div id="fcMasteryBar" class="h-full bg-white transition-all duration-300" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Category Filters & Deck Actions -->
+            <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 shadow-sm space-y-3">
+                <div id="fcCategoryPills" class="flex flex-wrap gap-1.5"></div>
+                <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                    <label class="inline-flex items-center gap-2 font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">
+                        <input id="fcStudyAgainOnly" type="checkbox" class="w-4 h-4 accent-amber-500 rounded">
+                        <span>Study Again Only</span>
+                    </label>
+                    <div class="flex items-center gap-2">
+                        <button id="fcShuffleBtn" type="button" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-semibold text-slate-700 dark:text-slate-200 transition">🔀 Shuffle</button>
+                        <button id="fcResetBtn" type="button" class="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900 font-semibold text-rose-700 dark:text-rose-300 transition">↺ Reset Progress</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Flip Card Stage -->
+            <div id="fcStageWrap" class="max-w-2xl mx-auto space-y-4">
+                <div class="flip-scene">
+                    <div id="fcCard" class="flip-card" role="button" tabindex="0" aria-label="Flip flashcard">
+                        <!-- Front Face -->
+                        <div class="flip-face rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 p-5 sm:p-7 shadow-md">
+                            <div class="flex items-center justify-between gap-2 text-xs font-bold">
+                                <span id="fcFrontCat" class="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300">Category</span>
+                                <span id="fcCounter" class="text-slate-400">1 / 48</span>
+                            </div>
+                            <div class="my-auto py-5 text-center">
+                                <p id="fcFrontText" class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white leading-snug"></p>
+                            </div>
+                            <div class="flex items-center justify-between text-xs text-slate-400">
+                                <span id="fcStatusTag" class="font-semibold"></span>
+                                <span>Tap card or press Space to flip ↻</span>
+                            </div>
+                        </div>
+                        <!-- Back Face -->
+                        <div class="flip-face flip-back rounded-2xl bg-gradient-to-br from-teal-50 to-emerald-50 dark:from-slate-900 dark:to-teal-950/60 border-2 border-teal-400 dark:border-teal-600 p-5 sm:p-7 shadow-md">
+                            <div class="flex items-center justify-between gap-2 text-xs font-bold">
+                                <span class="px-2.5 py-1 rounded-full bg-teal-600 text-white">Answer</span>
+                                <span id="fcBackCounter" class="text-teal-700 dark:text-teal-300">1 / 48</span>
+                            </div>
+                            <div class="my-auto py-4 text-center space-y-2.5">
+                                <p id="fcBackText" class="text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-100 leading-relaxed"></p>
+                                <p id="fcBackTip" class="text-xs text-teal-800 dark:text-teal-300 bg-white/70 dark:bg-slate-900/60 p-2.5 rounded-xl border border-teal-200 dark:border-teal-800"></p>
+                            </div>
+                            <div class="text-center text-[11px] text-slate-500 dark:text-slate-400">
+                                Mark your mastery below • ← / → to navigate
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashcard Controls -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                    <button id="fcPrevBtn" type="button" class="py-3 px-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">← Prev</button>
+                    <button id="fcAgainBtn" type="button" class="py-3 px-4 rounded-xl bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700 font-bold text-sm text-amber-900 dark:text-amber-200 hover:bg-amber-200 dark:hover:bg-amber-900 transition">Study Again ↻</button>
+                    <button id="fcGotItBtn" type="button" class="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-bold text-sm text-white shadow-sm transition">Got It ✓</button>
+                    <button id="fcNextBtn" type="button" class="py-3 px-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 font-bold text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition">Next →</button>
+                </div>
+            </div>
+
+            <!-- Empty Deck Message (when Study Again Only has 0 cards) -->
+            <div id="fcEmptyMsg" class="hidden max-w-xl mx-auto rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 p-6 text-center space-y-3">
+                <div class="text-3xl">🌟</div>
+                <p class="font-bold text-emerald-900 dark:text-emerald-200">No cards left in "Study Again" for this category!</p>
+                <button type="button" onclick="document.getElementById('fcStudyAgainOnly').click()" class="px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition">Show All Cards</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 py-8 text-center text-xs text-slate-400 dark:text-slate-500 border-t border-slate-200 dark:border-slate-800 mt-8">
+        HKDSE Form 4 Chemistry Complete Study Hub • Topics 1–4 Comprehensive Revision, Interactive Lab &amp; AI Chemistry Tutor
+    </footer>
+
+    <!-- Floating Back-to-Top Button (Positioned above AI FAB so they never overlap) -->
+    <button id="backToTopBtn" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})"
+            class="hidden fixed bottom-24 right-5 z-40 p-3 rounded-full bg-slate-800/90 dark:bg-slate-700/90 hover:bg-slate-900 text-white shadow-lg transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+    </button>
+
+    <!-- ==================== FLOATING AI CHEMISTRY TUTOR ==================== -->
+    <!-- Floating Launch Button -->
+    <button id="aiFabBtn" type="button" onclick="toggleAiTutor()" aria-label="Open AI Chemistry Tutor"
+            class="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-teal-500 hover:scale-105 active:scale-95 text-white font-extrabold text-xs sm:text-sm shadow-2xl border border-white/20 transition">
+        <span class="text-base leading-none">✨</span>
+        <span>Ask AI Tutor</span>
+    </button>
+
+    <!-- AI Chat Panel -->
+    <aside id="aiTutorPanel" aria-label="HKDSE Chemistry AI Assistant"
+           class="hidden fixed bottom-20 right-3 left-3 sm:left-auto sm:right-5 sm:w-[410px] h-[72vh] max-h-[600px] z-50 flex flex-col rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden ai-panel-anim">
+        
+        <!-- AI Header -->
+        <div class="p-4 bg-gradient-to-r from-slate-900 via-indigo-950 to-teal-900 text-white flex items-center justify-between gap-2 shrink-0">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-lg shrink-0">🧪</div>
+                <div>
+                    <h3 class="text-sm font-extrabold leading-tight flex items-center gap-1.5">
+                        HKDSE Chem AI Tutor
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                    </h3>
+                    <p class="text-[11px] text-teal-200">Topics 1–4 • English &amp; 中文</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-1">
+                <button id="aiClearBtn" type="button" title="Clear conversation"
+                        class="p-2 rounded-xl hover:bg-white/15 text-slate-200 hover:text-white transition text-xs font-semibold">
+                    ↺ Reset
+                </button>
+                <button type="button" onclick="closeAiTutor()" aria-label="Close AI Tutor"
+                        class="p-2 rounded-xl hover:bg-white/15 text-slate-200 hover:text-white transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Message Stream -->
+        <div id="aiMessages" class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/70 dark:bg-slate-950/60 text-xs sm:text-sm">
+            <!-- Messages dynamically rendered here -->
+        </div>
+
+        <!-- Quick Starter Prompt Chips -->
+        <div id="aiQuickPrompts" class="px-3.5 py-2 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0">
+            <button type="button" class="ai-chip px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-teal-50 dark:hover:bg-teal-950/60 text-slate-700 dark:text-slate-200 text-[11px] font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-700 transition">
+                Why can't H₂ reduce ZnO?
+            </button>
+            <button type="button" class="ai-chip px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-teal-50 dark:hover:bg-teal-950/60 text-slate-700 dark:text-slate-200 text-[11px] font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-700 transition">
+                Explain dative covalent bond
+            </button>
+            <button type="button" class="ai-chip px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-teal-50 dark:hover:bg-teal-950/60 text-slate-700 dark:text-slate-200 text-[11px] font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-700 transition">
+                Back titration steps
+            </button>
+            <button type="button" class="ai-chip px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-teal-50 dark:hover:bg-teal-950/60 text-slate-700 dark:text-slate-200 text-[11px] font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-700 transition">
+                Strong vs concentrated acid
+            </button>
+        </div>
+
+        <!-- Input Composer -->
+        <form id="aiChatForm" class="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-end gap-2 shrink-0">
+            <textarea id="aiInput" rows="1" placeholder="Ask any F.4 Chemistry question..."
+                      class="flex-1 resize-none max-h-28 px-3.5 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+            <button id="aiSendBtn" type="submit" aria-label="Send message"
+                    class="p-2.5 rounded-2xl bg-gradient-to-r from-violet-600 to-teal-500 hover:opacity-95 disabled:opacity-40 text-white shadow-sm transition shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>
+            </button>
+        </form>
+    </aside>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // ============================================================
+        // 1. GLOBAL STATE, THEME & NAVIGATION
+        // ============================================================
+        let currentTab = 'home';
+
+        const themeToggle = document.getElementById('themeToggle');
+        if (localStorage.getItem('hkdseChemTheme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            try {
+                localStorage.setItem('hkdseChemTheme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            } catch (e) {}
+        });
+
+        function activateTab(tabId, scrollTop = true) {
+            currentTab = tabId;
+            document.querySelectorAll('.topic-panel').forEach(p => {
+                p.classList.toggle('hidden', p.id !== tabId);
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                const isActive = btn.dataset.tab === tabId;
+                if (isActive) {
+                    btn.className = 'tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-teal-600 text-white shadow-sm';
+                } else {
+                    btn.className = 'tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700';
+                }
+            });
+            if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+        });
+
+        // ============================================================
+        // 2. STUDY NOTES CONTROLS, PROGRESS & ACCORDIONS
+        // ============================================================
+        let notesDone = {};
+        try {
+            const savedDone = localStorage.getItem('hkdseChemNotesDone');
+            if (savedDone) notesDone = JSON.parse(savedDone);
+        } catch (e) { notesDone = {}; }
+
+        function setNotesFilter(filterVal) {
+            document.querySelectorAll('.nfilter-btn').forEach(btn => {
+                const active = btn.dataset.nfilter === filterVal;
+                btn.className = active
+                    ? 'nfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 text-white shadow-sm transition'
+                    : 'nfilter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+            });
+            document.querySelectorAll('.topic-block').forEach(block => {
+                block.classList.toggle('hidden', filterVal !== 'all' && block.id !== filterVal);
+            });
+        }
+
+        document.querySelectorAll('.nfilter-btn').forEach(btn => {
+            btn.addEventListener('click', () => setNotesFilter(btn.dataset.nfilter));
+        });
+
+        function openNotesAt(topicFilter = 'all', sectionId = null) {
+            activateTab('notes', !sectionId);
+            setNotesFilter(topicFilter);
+            if (sectionId) {
+                setTimeout(() => jumpToSection(sectionId), 60);
+            }
+        }
+
+        function openNotesTopic(topicFilter) {
+            const norm = typeof topicFilter === 'number' || /^[1-4]$/.test(String(topicFilter))
+                ? `topic${topicFilter}`
+                : (topicFilter || 'all');
+            openNotesAt(norm);
+        }
+
+        function setActiveTocItem(sectionId) {
+            const tocScrollArea = document.getElementById('tocScrollArea');
+            document.querySelectorAll('.toc-item').forEach(btn => {
+                const isMatch = btn.dataset.tocId === sectionId;
+                btn.classList.toggle('is-active', isMatch);
+                if (isMatch && tocScrollArea) {
+                    const itemTop = btn.offsetTop;
+                    const itemBottom = itemTop + btn.offsetHeight;
+                    const viewTop = tocScrollArea.scrollTop;
+                    const viewBottom = viewTop + tocScrollArea.clientHeight;
+                    if (itemTop < viewTop + 12 || itemBottom > viewBottom - 12) {
+                        tocScrollArea.scrollTo({
+                            top: Math.max(0, itemTop - tocScrollArea.clientHeight / 2 + btn.offsetHeight / 2),
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        }
+// ... existing code ... -->
