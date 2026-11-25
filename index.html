@@ -6,10 +6,10 @@
     <title>HKDSE Form 4 Chemistry Complete Study Hub (Topics 1–4 + AI Tutor)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
+    <!-- Inter & JetBrains Mono Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -17,6 +17,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
                     }
                 }
             }
@@ -26,14 +27,14 @@
         /* Custom subtle scrollbar for mobile horizontal nav & tables */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
+
         /* Chemical equation typography */
         .chem-eq {
             font-family: 'Cambria Math', Georgia, 'Times New Roman', serif;
             letter-spacing: 0.01em;
         }
         sub, sup { font-size: 0.72em; line-height: 0; }
-        
+
         /* Search highlight */
         mark.search-hl {
             background-color: #fde047;
@@ -57,8 +58,8 @@
 
         /* pH gradient bar */
         .ph-gradient {
-            background: linear-gradient(90deg, 
-                #dc2626 0%, #ea580c 14%, #f59e0b 28%, #eab308 38%, 
+            background: linear-gradient(90deg,
+                #dc2626 0%, #ea580c 14%, #f59e0b 28%, #eab308 38%,
                 #22c55e 50%, #14b8a6 62%, #0ea5e9 74%, #3b82f6 86%, #7e22ce 100%);
         }
 
@@ -140,36 +141,39 @@
             animation: aiSlideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
 
-        /* Luxury Technical TOC Sidebar */
+        /* Luxury Technical Syllabus Index Console */
         .lux-toc-panel {
             background:
-                radial-gradient(circle at 100% 0%, rgba(212, 175, 55, 0.14), transparent 42%),
-                radial-gradient(circle at 0% 100%, rgba(20, 184, 166, 0.12), transparent 46%),
+                radial-gradient(circle at 100% 0%, rgba(212, 175, 55, 0.15), transparent 44%),
+                radial-gradient(circle at 0% 100%, rgba(20, 184, 166, 0.14), transparent 48%),
                 linear-gradient(165deg, #0b1120 0%, #0f172a 58%, #131c31 100%);
             box-shadow: 0 22px 44px -20px rgba(2, 6, 23, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
         .lux-toc-grid {
             background-image:
-                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+                linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
             background-size: 18px 18px;
         }
-        .lux-toc-scroll::-webkit-scrollbar { width: 4px; }
-        .lux-toc-scroll::-webkit-scrollbar-track { background: transparent; }
+        .lux-toc-scroll::-webkit-scrollbar { width: 5px; }
+        .lux-toc-scroll::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.4); }
         .lux-toc-scroll::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.28);
+            background: rgba(212, 175, 55, 0.38);
             border-radius: 9999px;
         }
+        .lux-toc-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.65);
+        }
         .toc-item.is-active {
-            background: linear-gradient(90deg, rgba(212, 175, 55, 0.16), rgba(20, 184, 166, 0.06));
-            border-color: rgba(212, 175, 55, 0.45);
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.18), rgba(20, 184, 166, 0.08));
+            border-color: rgba(212, 175, 55, 0.48);
             color: #fef3c7;
-            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.16);
         }
         .toc-item.is-active .toc-code {
             color: #fbbf24;
-            border-color: rgba(251, 191, 36, 0.45);
-            background: rgba(251, 191, 36, 0.12);
+            border-color: rgba(251, 191, 36, 0.48);
+            background: rgba(251, 191, 36, 0.14);
         }
     </style>
 </head>
@@ -199,7 +203,7 @@
                         <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
                         </svg>
-                        <input id="globalSearch" type="text" placeholder="Search notes: equations, ions, traps, tests..." 
+                        <input id="globalSearch" type="text" placeholder="Search notes: equations, ions, traps, tests..."
                                class="w-full pl-9 pr-16 py-2 text-xs sm:text-sm rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-800 dark:text-slate-100 placeholder-slate-400">
                         <span id="searchCount" class="hidden absolute right-8 top-1/2 -translate-y-1/2 text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-300"></span>
                         <button id="clearSearchBtn" type="button" aria-label="Clear search" class="hidden absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -386,10 +390,10 @@
                 </div>
             </div>
 
-            <!-- 2-Column Layout: Sticky TOC + Comfortable Reading Stream -->
+            <!-- 2-Column Layout: Luxury Technical Syllabus Index + Comfortable Reading Stream -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 <!-- Compact Mobile/Tablet Syllabus Index Drawer (< lg) -->
-                <details class="lg:hidden rounded-2xl lux-toc-panel border border-amber-400/20 overflow-hidden text-xs">
+                <details class="lg:hidden rounded-2xl lux-toc-panel border border-amber-400/25 overflow-hidden text-xs">
                     <summary class="px-4 py-3 cursor-pointer flex items-center justify-between text-amber-200 font-extrabold uppercase tracking-wider select-none">
                         <span class="flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -418,12 +422,12 @@
                 </details>
 
                 <!-- Sticky Desktop Sidebar TOC (Luxury Technical Console) -->
-                <aside id="notesTocSidebar" class="hidden lg:flex lg:col-span-3 sticky top-32 rounded-2xl lux-toc-panel border border-amber-400/20 overflow-hidden max-h-[calc(100vh-9rem)] flex-col">
+                <aside id="notesTocSidebar" class="hidden lg:flex lg:col-span-3 sticky top-28 rounded-2xl lux-toc-panel border border-amber-400/25 overflow-hidden max-h-[calc(100vh-8rem)] flex-col">
                     <!-- Top Champagne-Gold to Teal Precision Accent Line -->
                     <div class="h-1 w-full bg-gradient-to-r from-amber-300 via-yellow-500 to-teal-400 shrink-0"></div>
 
                     <!-- Technical Telemetry Header -->
-                    <div class="p-4 border-b border-white/10 lux-toc-grid space-y-2.5 shrink-0">
+                    <div class="p-3.5 border-b border-white/10 lux-toc-grid space-y-2 shrink-0">
                         <div class="flex items-center justify-between gap-2">
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse"></span>
@@ -440,41 +444,41 @@
                         </div>
                     </div>
 
-                    <!-- Scrollable Module Tree -->
-                    <div id="tocScrollArea" class="p-3.5 flex-1 min-h-0 overflow-y-auto lux-toc-scroll space-y-4 text-xs">
+                    <!-- Scrollable Module Tree (All 16 Sections 1.1 -> 4.7) -->
+                    <div id="tocScrollArea" class="p-3 flex-1 min-h-0 overflow-y-auto lux-toc-scroll space-y-3 text-xs">
                         <!-- Module 01 -->
-                        <div class="space-y-1.5">
+                        <div id="toc-mod-1" class="space-y-1">
                             <div class="flex items-center justify-between px-1">
                                 <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-teal-300">
-                                    <span class="font-mono text-teal-400/80">MOD 01</span>
+                                    <span class="font-mono text-teal-400/90">MOD 01</span>
                                     <span class="text-slate-600">•</span>
                                     <span>Planet Earth</span>
                                 </span>
                                 <span id="tocModCount1" class="font-mono text-[10px] text-slate-400">0/4</span>
                             </div>
-                            <div class="pl-2.5 ml-1 border-l border-teal-500/30 space-y-1">
-                                <button type="button" data-toc-id="sec-1-1" onclick="jumpToSection('sec-1-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                            <div class="pl-2 ml-1 border-l border-teal-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-1-1" onclick="jumpToSection('sec-1-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.1</span>
                                         <span class="truncate font-medium">Matter &amp; Lab Safety</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-1-2" onclick="jumpToSection('sec-1-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-1-2" onclick="jumpToSection('sec-1-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.2</span>
                                         <span class="truncate font-medium">Atmosphere &amp; Air</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-1-3" onclick="jumpToSection('sec-1-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-1-3" onclick="jumpToSection('sec-1-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.3</span>
                                         <span class="truncate font-medium">Ocean, Tests &amp; Brine</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-1-4" onclick="jumpToSection('sec-1-4')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-1-4" onclick="jumpToSection('sec-1-4')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-teal-300 shrink-0">1.4</span>
                                         <span class="truncate font-medium">Rocks &amp; Lime Cycle</span>
@@ -485,38 +489,38 @@
                         </div>
 
                         <!-- Module 02 -->
-                        <div class="space-y-1.5">
+                        <div id="toc-mod-2" class="space-y-1">
                             <div class="flex items-center justify-between px-1">
                                 <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-indigo-300">
-                                    <span class="font-mono text-indigo-400/80">MOD 02</span>
+                                    <span class="font-mono text-indigo-400/90">MOD 02</span>
                                     <span class="text-slate-600">•</span>
                                     <span>Microscopic I</span>
                                 </span>
                                 <span id="tocModCount2" class="font-mono text-[10px] text-slate-400">0/4</span>
                             </div>
-                            <div class="pl-2.5 ml-1 border-l border-indigo-500/30 space-y-1">
-                                <button type="button" data-toc-id="sec-2-1" onclick="jumpToSection('sec-2-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                            <div class="pl-2 ml-1 border-l border-indigo-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-2-1" onclick="jumpToSection('sec-2-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.1</span>
                                         <span class="truncate font-medium">Atoms, Isotopes &amp; R.A.M.</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-2-2" onclick="jumpToSection('sec-2-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-2-2" onclick="jumpToSection('sec-2-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.2</span>
                                         <span class="truncate font-medium">Periodic Table Trends</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-2-3" onclick="jumpToSection('sec-2-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-2-3" onclick="jumpToSection('sec-2-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.3</span>
                                         <span class="truncate font-medium">Chemical Bonding &amp; Ions</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-2-4" onclick="jumpToSection('sec-2-4')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-2-4" onclick="jumpToSection('sec-2-4')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-indigo-300 shrink-0">2.4</span>
                                         <span class="truncate font-medium">Structures &amp; Frameworks</span>
@@ -527,38 +531,38 @@
                         </div>
 
                         <!-- Module 03 -->
-                        <div class="space-y-1.5">
+                        <div id="toc-mod-3" class="space-y-1">
                             <div class="flex items-center justify-between px-1">
                                 <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-300">
-                                    <span class="font-mono text-amber-400/80">MOD 03</span>
+                                    <span class="font-mono text-amber-400/90">MOD 03</span>
                                     <span class="text-slate-600">•</span>
                                     <span>Metals &amp; Moles</span>
                                 </span>
                                 <span id="tocModCount3" class="font-mono text-[10px] text-slate-400">0/4</span>
                             </div>
-                            <div class="pl-2.5 ml-1 border-l border-amber-500/30 space-y-1">
-                                <button type="button" data-toc-id="sec-3-1" onclick="jumpToSection('sec-3-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                            <div class="pl-2 ml-1 border-l border-amber-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-3-1" onclick="jumpToSection('sec-3-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.1</span>
                                         <span class="truncate font-medium">Metal Extraction</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-3-2" onclick="jumpToSection('sec-3-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-3-2" onclick="jumpToSection('sec-3-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.2</span>
                                         <span class="truncate font-medium">Reactivity &amp; Displacement</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-3-3" onclick="jumpToSection('sec-3-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-3-3" onclick="jumpToSection('sec-3-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.3</span>
                                         <span class="truncate font-medium">Rusting &amp; Prevention</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-3-5" onclick="jumpToSection('sec-3-5')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-3-5" onclick="jumpToSection('sec-3-5')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-amber-300 shrink-0">3.5</span>
                                         <span class="truncate font-medium">Mole Calculations</span>
@@ -569,38 +573,38 @@
                         </div>
 
                         <!-- Module 04 -->
-                        <div class="space-y-1.5">
+                        <div id="toc-mod-4" class="space-y-1">
                             <div class="flex items-center justify-between px-1">
                                 <span class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-rose-300">
-                                    <span class="font-mono text-rose-400/80">MOD 04</span>
+                                    <span class="font-mono text-rose-400/90">MOD 04</span>
                                     <span class="text-slate-600">•</span>
                                     <span>Acids &amp; Alkalis</span>
                                 </span>
                                 <span id="tocModCount4" class="font-mono text-[10px] text-slate-400">0/4</span>
                             </div>
-                            <div class="pl-2.5 ml-1 border-l border-rose-500/30 space-y-1">
-                                <button type="button" data-toc-id="sec-4-1" onclick="jumpToSection('sec-4-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                            <div class="pl-2 ml-1 border-l border-rose-500/30 space-y-1">
+                                <button type="button" data-toc-id="sec-4-1" onclick="jumpToSection('sec-4-1')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.1</span>
                                         <span class="truncate font-medium">Acids, Basicity &amp; Conc.</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-4-2" onclick="jumpToSection('sec-4-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-4-2" onclick="jumpToSection('sec-4-2')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.2</span>
                                         <span class="truncate font-medium">Alkalis &amp; Precipitates</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-4-3" onclick="jumpToSection('sec-4-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-4-3" onclick="jumpToSection('sec-4-3')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.3</span>
                                         <span class="truncate font-medium">Molarity, pH &amp; Salts</span>
                                     </span>
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
-                                <button type="button" data-toc-id="sec-4-7" onclick="jumpToSection('sec-4-7')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2.5 py-2 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
+                                <button type="button" data-toc-id="sec-4-7" onclick="jumpToSection('sec-4-7')" class="toc-item group w-full flex items-center justify-between gap-2 text-left px-2 py-1.5 rounded-xl border border-transparent hover:border-white/10 hover:bg-white/5 text-slate-300 hover:text-white transition">
                                     <span class="flex items-center gap-2 min-w-0">
                                         <span class="toc-code font-mono text-[10px] px-1.5 py-0.5 rounded-md bg-white/5 border border-white/10 text-rose-300 shrink-0">4.7</span>
                                         <span class="truncate font-medium">Volumetric &amp; Back Titration</span>
@@ -608,6 +612,17 @@
                                     <span class="toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition">✓</span>
                                 </button>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Pinned Module Quick-Jump Dock (Instant access to M1-M4 / 4.2+) -->
+                    <div class="px-3 py-2 border-t border-white/10 bg-slate-950/60 flex items-center justify-between gap-1 shrink-0 font-mono text-[10px]">
+                        <span class="text-slate-400">JUMP:</span>
+                        <div class="flex items-center gap-1">
+                            <button type="button" onclick="jumpToSection('sec-1-1')" class="px-2 py-0.5 rounded bg-teal-500/15 hover:bg-teal-500/30 text-teal-300 border border-teal-500/30 font-bold transition">M1</button>
+                            <button type="button" onclick="jumpToSection('sec-2-1')" class="px-2 py-0.5 rounded bg-indigo-500/15 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/30 font-bold transition">M2</button>
+                            <button type="button" onclick="jumpToSection('sec-3-1')" class="px-2 py-0.5 rounded bg-amber-500/15 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 font-bold transition">M3</button>
+                            <button type="button" onclick="jumpToSection('sec-4-1')" class="px-2 py-0.5 rounded bg-rose-500/15 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 font-bold transition">M4</button>
                         </div>
                     </div>
                 </aside>
@@ -1088,7 +1103,7 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- TAB 6: LUXURY HKDSE EXAM & QUIZ SUITE                        -->
+        <!-- TAB 4: LUXURY HKDSE EXAM & QUIZ SUITE                        -->
         <!-- ============================================================ -->
         <section id="quiz" class="topic-panel hidden space-y-6">
             <!-- Luxury Obsidian & Champagne-Gold Hero -->
@@ -1371,7 +1386,7 @@
         </section>
 
         <!-- ============================================================ -->
-        <!-- TAB 7: INTERACTIVE FLASHCARDS DECK (3D FLIP)                 -->
+        <!-- TAB 5: INTERACTIVE FLASHCARDS DECK (3D FLIP)                 -->
         <!-- ============================================================ -->
         <section id="flashcards" class="topic-panel hidden space-y-5">
             <!-- Hero Banner -->
@@ -1466,25 +1481,21 @@
         HKDSE Form 4 Chemistry Complete Study Hub • Topics 1–4 Comprehensive Revision, Interactive Lab &amp; AI Chemistry Tutor
     </footer>
 
-    <!-- Floating Back-to-Top Button (Positioned above AI FAB so they never overlap) -->
+    <!-- Floating Back-to-Top Button -->
     <button id="backToTopBtn" type="button" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})"
             class="hidden fixed bottom-24 right-5 z-40 p-3 rounded-full bg-slate-800/90 dark:bg-slate-700/90 hover:bg-slate-900 text-white shadow-lg transition">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
     </button>
 
     <!-- ==================== FLOATING AI CHEMISTRY TUTOR ==================== -->
-    <!-- Floating Launch Button -->
     <button id="aiFabBtn" type="button" onclick="toggleAiTutor()" aria-label="Open AI Chemistry Tutor"
             class="fixed bottom-5 right-5 z-50 flex items-center gap-2 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-violet-600 via-indigo-600 to-teal-500 hover:scale-105 active:scale-95 text-white font-extrabold text-xs sm:text-sm shadow-2xl border border-white/20 transition">
         <span class="text-base leading-none">✨</span>
         <span>Ask AI Tutor</span>
     </button>
 
-    <!-- AI Chat Panel -->
     <aside id="aiTutorPanel" aria-label="HKDSE Chemistry AI Assistant"
            class="hidden fixed bottom-20 right-3 left-3 sm:left-auto sm:right-5 sm:w-[410px] h-[72vh] max-h-[600px] z-50 flex flex-col rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden ai-panel-anim">
-        
-        <!-- AI Header -->
         <div class="p-4 bg-gradient-to-r from-slate-900 via-indigo-950 to-teal-900 text-white flex items-center justify-between gap-2 shrink-0">
             <div class="flex items-center gap-2.5">
                 <div class="w-9 h-9 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-lg shrink-0">🧪</div>
@@ -1508,12 +1519,8 @@
             </div>
         </div>
 
-        <!-- Chat Message Stream -->
-        <div id="aiMessages" class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/70 dark:bg-slate-950/60 text-xs sm:text-sm">
-            <!-- Messages dynamically rendered here -->
-        </div>
+        <div id="aiMessages" class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/70 dark:bg-slate-950/60 text-xs sm:text-sm"></div>
 
-        <!-- Quick Starter Prompt Chips -->
         <div id="aiQuickPrompts" class="px-3.5 py-2 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0">
             <button type="button" class="ai-chip px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-teal-50 dark:hover:bg-teal-950/60 text-slate-700 dark:text-slate-200 text-[11px] font-semibold whitespace-nowrap border border-slate-200 dark:border-slate-700 transition">
                 Why can't H₂ reduce ZnO?
@@ -1529,7 +1536,6 @@
             </button>
         </div>
 
-        <!-- Input Composer -->
         <form id="aiChatForm" class="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-end gap-2 shrink-0">
             <textarea id="aiInput" rows="1" placeholder="Ask any F.4 Chemistry question..."
                       class="flex-1 resize-none max-h-28 px-3.5 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
@@ -1579,7 +1585,7 @@
         });
 
         // ============================================================
-        // 2. STUDY NOTES CONTROLS, PROGRESS & ACCORDIONS
+        // 2. STUDY NOTES CONTROLS, SYLLABUS INDEX & ACCORDIONS
         // ============================================================
         let notesDone = {};
         try {
@@ -1637,4 +1643,1232 @@
                 }
             });
         }
-// ... existing code ... -->
+
+        function jumpToSection(sectionId) {
+            const target = document.getElementById(sectionId);
+            if (!target) return;
+            // Ensure parent topic-block is visible even if user had filtered to a single topic pill
+            const parentTopic = target.closest('.topic-block');
+            if (parentTopic && parentTopic.classList.contains('hidden')) {
+                setNotesFilter('all');
+            }
+            target.classList.remove('hidden');
+            const btn = target.querySelector('.acc-btn');
+            const body = target.querySelector('.acc-body');
+            if (btn && body) {
+                btn.setAttribute('aria-expanded', 'true');
+                body.classList.remove('hidden');
+            }
+            setActiveTocItem(sectionId);
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function setNotesSize(sizeClass) {
+            const nc = document.getElementById('notesContent');
+            nc.classList.remove('notes-sm', 'notes-md', 'notes-lg');
+            nc.classList.add(sizeClass);
+        }
+
+        function toggleAllAccordions(expand) {
+            document.querySelectorAll('#notesContent .study-card').forEach(card => {
+                const btn = card.querySelector('.acc-btn');
+                const body = card.querySelector('.acc-body');
+                if (btn && body) {
+                    btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
+                    body.classList.toggle('hidden', !expand);
+                }
+            });
+        }
+
+        document.querySelectorAll('.acc-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+                const body = btn.closest('.study-card').querySelector('.acc-body');
+                if (body) body.classList.toggle('hidden', expanded);
+            });
+        });
+
+        function updateNotesProgressUI() {
+            const allCards = document.querySelectorAll('#notesContent .study-card');
+            const total = allCards.length || 16;
+            const doneCount = Object.values(notesDone).filter(Boolean).length;
+            const pct = Math.round((doneCount / total) * 100);
+
+            document.getElementById('notesProgressLabel').textContent = `${doneCount} / ${total}`;
+            document.getElementById('notesProgressBar').style.width = `${pct}%`;
+            document.getElementById('homeNotesStat').textContent = `${doneCount} / ${total}`;
+
+            // Sync Luxury Technical Syllabus Index telemetry
+            const tocCountEl = document.getElementById('tocProgressCount');
+            const tocPctEl = document.getElementById('tocProgressPct');
+            const tocBarEl = document.getElementById('tocProgressBar');
+            if (tocCountEl) tocCountEl.textContent = `${String(doneCount).padStart(2, '0')}/${total}`;
+            if (tocPctEl) tocPctEl.textContent = `${pct}% SYNCED`;
+            if (tocBarEl) tocBarEl.style.width = `${pct}%`;
+
+            // Update per-module counts
+            const modules = {
+                1: ['sec-1-1', 'sec-1-2', 'sec-1-3', 'sec-1-4'],
+                2: ['sec-2-1', 'sec-2-2', 'sec-2-3', 'sec-2-4'],
+                3: ['sec-3-1', 'sec-3-2', 'sec-3-3', 'sec-3-5'],
+                4: ['sec-4-1', 'sec-4-2', 'sec-4-3', 'sec-4-7']
+            };
+            Object.entries(modules).forEach(([mIdx, ids]) => {
+                const mDone = ids.filter(id => Boolean(notesDone[id])).length;
+                const el = document.getElementById(`tocModCount${mIdx}`);
+                if (el) el.textContent = `${mDone}/${ids.length}`;
+            });
+
+            // Update Mark Done buttons & TOC status checkmarks
+            document.querySelectorAll('.mark-done-btn').forEach(btn => {
+                const id = btn.dataset.doneId;
+                const isDone = Boolean(notesDone[id]);
+                btn.textContent = isDone ? '✓ Done' : 'Mark Done';
+                btn.className = isDone
+                    ? 'mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-sm transition shrink-0'
+                    : 'mark-done-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-teal-100 dark:hover:bg-teal-900 transition shrink-0';
+            });
+
+            document.querySelectorAll('.toc-item').forEach(item => {
+                const id = item.dataset.tocId;
+                const isDone = Boolean(notesDone[id]);
+                const badge = item.querySelector('.toc-status');
+                if (badge) {
+                    if (isDone) {
+                        badge.className = 'toc-status w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-[9px] text-emerald-300 shrink-0 transition shadow-[0_0_8px_rgba(52,211,153,0.45)]';
+                    } else {
+                        badge.className = 'toc-status w-4 h-4 rounded-full border border-slate-600 flex items-center justify-center text-[9px] text-transparent shrink-0 transition';
+                    }
+                }
+            });
+        }
+
+        document.querySelectorAll('.mark-done-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.doneId;
+                notesDone[id] = !notesDone[id];
+                try { localStorage.setItem('hkdseChemNotesDone', JSON.stringify(notesDone)); } catch (e) {}
+                updateNotesProgressUI();
+            });
+        });
+
+        // Scroll spy for Syllabus Index + Back-to-Top button
+        window.addEventListener('scroll', () => {
+            const backBtn = document.getElementById('backToTopBtn');
+            if (backBtn) backBtn.classList.toggle('hidden', window.scrollY < 320);
+
+            if (currentTab === 'notes') {
+                const cards = Array.from(document.querySelectorAll('#notesContent .study-card')).filter(c => !c.classList.contains('hidden'));
+                let activeId = cards[0]?.id || 'sec-1-1';
+                for (const card of cards) {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top <= 190) {
+                        activeId = card.id;
+                    }
+                }
+                setActiveTocItem(activeId);
+            }
+        }, { passive: true });
+
+        // ============================================================
+        // 3. SAFE GLOBAL SEARCH (DOM TEXT-NODE HIGHLIGHTING)
+        // ============================================================
+        const globalSearch = document.getElementById('globalSearch');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const searchCount = document.getElementById('searchCount');
+        const searchBanner = document.getElementById('searchBanner');
+        const searchBannerText = document.getElementById('searchBannerText');
+
+        function removeSearchHighlights(root) {
+            root.querySelectorAll('mark.search-hl').forEach(mark => {
+                const parent = mark.parentNode;
+                if (parent) {
+                    parent.replaceChild(document.createTextNode(mark.textContent), mark);
+                    parent.normalize();
+                }
+            });
+        }
+
+        function highlightTextNodes(root, query) {
+            if (!query) return;
+            const lowerQ = query.toLowerCase();
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                    const tag = node.parentElement?.tagName;
+                    if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK' || tag === 'BUTTON') {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return node.nodeValue.toLowerCase().includes(lowerQ)
+                        ? NodeFilter.FILTER_ACCEPT
+                        : NodeFilter.FILTER_SKIP;
+                }
+            });
+
+            const nodes = [];
+            let current;
+            while ((current = walker.nextNode())) nodes.push(current);
+
+            nodes.forEach(textNode => {
+                const text = textNode.nodeValue;
+                const lowerText = text.toLowerCase();
+                let startIdx = 0;
+                let matchIdx = lowerText.indexOf(lowerQ, startIdx);
+                if (matchIdx === -1) return;
+
+                const frag = document.createDocumentFragment();
+                while (matchIdx !== -1) {
+                    if (matchIdx > startIdx) {
+                        frag.appendChild(document.createTextNode(text.slice(startIdx, matchIdx)));
+                    }
+                    const mark = document.createElement('mark');
+                    mark.className = 'search-hl';
+                    mark.textContent = text.slice(matchIdx, matchIdx + query.length);
+                    frag.appendChild(mark);
+                    startIdx = matchIdx + query.length;
+                    matchIdx = lowerText.indexOf(lowerQ, startIdx);
+                }
+                if (startIdx < text.length) {
+                    frag.appendChild(document.createTextNode(text.slice(startIdx)));
+                }
+                textNode.parentNode.replaceChild(frag, textNode);
+            });
+        }
+
+        function clearGlobalSearch() {
+            globalSearch.value = '';
+            clearSearchBtn.classList.add('hidden');
+            searchCount.classList.add('hidden');
+            searchBanner.classList.add('hidden');
+            const notesContainer = document.getElementById('notesContent');
+            removeSearchHighlights(notesContainer);
+            document.querySelectorAll('#notesContent .study-card').forEach(c => c.classList.remove('hidden'));
+            setNotesFilter('all');
+        }
+
+        clearSearchBtn.addEventListener('click', clearGlobalSearch);
+
+        globalSearch.addEventListener('input', () => {
+            const q = globalSearch.value.trim();
+            const notesContainer = document.getElementById('notesContent');
+            removeSearchHighlights(notesContainer);
+
+            if (!q) {
+                clearGlobalSearch();
+                return;
+            }
+
+            if (currentTab !== 'notes') {
+                activateTab('notes', false);
+            }
+            setNotesFilter('all');
+            clearSearchBtn.classList.remove('hidden');
+
+            let matchedCards = 0;
+            const lowerQ = q.toLowerCase();
+            document.querySelectorAll('#notesContent .study-card').forEach(card => {
+                const isMatch = card.textContent.toLowerCase().includes(lowerQ);
+                card.classList.toggle('hidden', !isMatch);
+                if (isMatch) {
+                    matchedCards++;
+                    const body = card.querySelector('.acc-body');
+                    const btn = card.querySelector('.acc-btn');
+                    if (body && btn) {
+                        body.classList.remove('hidden');
+                        btn.setAttribute('aria-expanded', 'true');
+                    }
+                    highlightTextNodes(card, q);
+                }
+            });
+
+            searchCount.textContent = `${matchedCards}`;
+            searchCount.classList.remove('hidden');
+            searchBanner.classList.remove('hidden');
+            searchBannerText.textContent = matchedCards > 0
+                ? `Found "${q}" in ${matchedCards} study note section${matchedCards === 1 ? '' : 's'}.`
+                : `No study note sections matched "${q}". Try another keyword or ask the AI Tutor!`;
+        });
+
+        // ============================================================
+        // 4. INTERACTIVE LAB TOOLS (5 CALCULATORS & SIMULATORS)
+        // ============================================================
+        // Tool 1: pH & [H+] Converter
+        const phInput = document.getElementById('phInput');
+        const hConcInput = document.getElementById('hConcInput');
+        const phPointer = document.getElementById('phPointer');
+        const phReadout = document.getElementById('phReadout');
+
+        function updateFromPh() {
+            const ph = parseFloat(phInput.value);
+            if (isNaN(ph)) return;
+            const hConc = Math.pow(10, -ph);
+            hConcInput.value = hConc >= 0.001 && hConc <= 10 ? Number(hConc.toPrecision(3)).toString() : hConc.toExponential(2);
+            renderPhStatus(ph, hConc);
+        }
+
+        function updateFromHConc() {
+            const c = parseFloat(hConcInput.value);
+            if (isNaN(c) || c <= 0) return;
+            const ph = -Math.log10(c);
+            phInput.value = ph.toFixed(2);
+            renderPhStatus(ph, c);
+        }
+
+        function renderPhStatus(ph, c) {
+            const clamped = Math.max(0, Math.min(14, ph));
+            phPointer.style.left = `${(clamped / 14) * 100}%`;
+            let nature = 'Neutral ([H⁺] = [OH⁻] = 1.0 × 10⁻⁷ mol dm⁻³)';
+            if (ph < 6.99) nature = 'Acidic ([H⁺(aq)] > [OH⁻(aq)]) — turns blue litmus red & methyl orange red/orange';
+            else if (ph > 7.01) nature = 'Alkaline ([OH⁻(aq)] > [H⁺(aq)]) — turns red litmus blue & phenolphthalein pink (if pH > 8.3)';
+            phReadout.innerHTML = `<strong>pH = ${ph.toFixed(2)}</strong> &nbsp;|&nbsp; [H⁺] = <strong>${c.toExponential(2)} mol dm⁻³</strong><br><span class="text-slate-500 dark:text-slate-400">${nature}</span>`;
+        }
+
+        phInput.addEventListener('input', updateFromPh);
+        hConcInput.addEventListener('input', updateFromHConc);
+        updateFromPh();
+
+        // Tool 2: Dilution Calculator
+        const dilM1 = document.getElementById('dilM1');
+        const dilM2 = document.getElementById('dilM2');
+        const dilV2 = document.getElementById('dilV2');
+        const dilResult = document.getElementById('dilResult');
+
+        function updateDilution() {
+            const m1 = parseFloat(dilM1.value);
+            const m2 = parseFloat(dilM2.value);
+            const v2 = parseFloat(dilV2.value);
+            if (isNaN(m1) || isNaN(m2) || isNaN(v2) || m1 <= 0 || m2 <= 0 || v2 <= 0) {
+                dilResult.innerHTML = 'Enter positive values for M₁, M₂, and V₂.';
+                return;
+            }
+            if (m2 >= m1) {
+                dilResult.innerHTML = '<strong>⚠️ Trap:</strong> Target M₂ must be smaller than stock M₁ for dilution!';
+                return;
+            }
+            const v1 = (m2 * v2) / m1;
+            const waterAdd = v2 - v1;
+            const moles = (m2 * v2) / 1000;
+            dilResult.innerHTML = `
+                <div>Pipette <strong>${v1.toFixed(2)} cm³</strong> of ${m1} M stock solution into a <strong>${v2} cm³ volumetric flask</strong>.</div>
+                <div>Add <strong>${waterAdd.toFixed(2)} cm³</strong> of distilled water up to the graduation mark (Moles solute = <strong>${moles.toFixed(4)} mol</strong>).</div>
+            `;
+        }
+        [dilM1, dilM2, dilV2].forEach(el => el.addEventListener('input', updateDilution));
+        updateDilution();
+
+        // Tool 3: Solubility & Salt Prep Checker
+        const solCation = document.getElementById('solCation');
+        const solAnion = document.getElementById('solAnion');
+        const solResult = document.getElementById('solResult');
+
+        function updateSolubility() {
+            const cat = solCation.value;
+            const an = solAnion.value;
+            let soluble = true;
+            let note = '';
+
+            if (an === 'NO3' || cat === 'Na' || cat === 'K' || cat === 'NH4') {
+                soluble = true;
+                note = 'All nitrates and all Na⁺, K⁺, NH₄⁺ compounds are soluble in water.';
+            } else if (an === 'Cl') {
+                soluble = !(cat === 'Ag' || cat === 'Pb');
+                note = soluble ? 'All chlorides are soluble except AgCl and PbCl₂ (PbCl₂ dissolves in hot water).' : 'Insoluble white precipitate! Prepare by mixing two aqueous solutions (precipitation).';
+            } else if (an === 'SO4') {
+                soluble = !(cat === 'Ba' || cat === 'Pb' || cat === 'Ca');
+                note = cat === 'Ca'
+                    ? 'CaSO₄ is only slightly soluble (forms white ppt from concentrated solutions).'
+                    : (soluble ? 'All sulphates are soluble except BaSO₄, PbSO₄, and CaSO₄ (slightly soluble).' : 'Insoluble white precipitate! Prepare via precipitation.');
+            } else if (an === 'CO3') {
+                soluble = false;
+                note = 'All carbonates are insoluble except Na₂CO₃, K₂CO₃, and (NH₄)₂CO₃.';
+            } else if (an === 'OH') {
+                soluble = (cat === 'Ba' || cat === 'Ca');
+                note = cat === 'Ca'
+                    ? 'Ca(OH)₂ is slightly soluble (limewater).'
+                    : (cat === 'Ba' ? 'Ba(OH)₂ is soluble in water.' : (cat === 'Ag' ? 'AgOH is unstable and decomposes immediately to brown Ag₂O(s).' : 'Insoluble metal hydroxide precipitate.'));
+            }
+
+            let prepMethod = '';
+            if (!soluble) {
+                prepMethod = '<strong>Type 1 (Precipitation):</strong> Mix two soluble salt solutions containing the required cation and anion → filter → wash residue with distilled water → dry.';
+            } else if (cat === 'Na' || cat === 'K' || cat === 'NH4') {
+                prepMethod = '<strong>Type 3 (Titration):</strong> Titrate acid with alkali/carbonate using indicator → note exact titre → repeat WITHOUT indicator → heat to saturate, cool to crystallize, filter &amp; dry.';
+            } else {
+                prepMethod = '<strong>Type 2 (Action of Acid on Excess Insoluble Solid):</strong> Add EXCESS insoluble metal / oxide / hydroxide / carbonate to warm dilute acid → filter off excess solid → heat filtrate to saturate, cool to crystallize, wash with cold distilled water &amp; dry.';
+            }
+
+            solResult.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded-md font-extrabold ${soluble ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'}">${soluble ? 'SOLUBLE IN WATER' : 'INSOLUBLE PRECIPITATE'}</span>
+                    <span class="text-slate-500 dark:text-slate-400">${note}</span>
+                </div>
+                <div class="text-slate-700 dark:text-slate-200 pt-1">${prepMethod}</div>
+            `;
+        }
+        [solCation, solAnion].forEach(el => el.addEventListener('change', updateSolubility));
+        updateSolubility();
+
+        // Tool 4: Cation Precipitate Simulator
+        const catSimData = {
+            Ca: { naohDrop: 'White precipitate of Ca(OH)₂(s) (with concentrated Ca²⁺)', naohEx: 'Precipitate remains insoluble', nh3Drop: 'No observable change (NH₃ is too weak; [OH⁻] too low)', nh3Ex: 'No precipitate', eq: 'Ca²⁺(aq) + 2OH⁻(aq) → Ca(OH)₂(s)' },
+            Mg: { naohDrop: 'White precipitate of Mg(OH)₂(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'White precipitate of Mg(OH)₂(s)', nh3Ex: 'Insoluble in excess NH₃(aq)', eq: 'Mg²⁺(aq) + 2OH⁻(aq) → Mg(OH)₂(s)' },
+            Al: { naohDrop: 'White precipitate of Al(OH)₃(s)', naohEx: 'Dissolves to give a colourless solution: [Al(OH)₄]⁻(aq)', nh3Drop: 'White precipitate of Al(OH)₃(s)', nh3Ex: 'Insoluble in excess NH₃(aq) (distinguishes Al³⁺ from Zn²⁺!)', eq: 'Al(OH)₃(s) + OH⁻(aq) → [Al(OH)₄]⁻(aq)' },
+            Zn: { naohDrop: 'White precipitate of Zn(OH)₂(s)', naohEx: 'Dissolves to give a colourless solution: [Zn(OH)₄]²⁻(aq)', nh3Drop: 'White precipitate of Zn(OH)₂(s)', nh3Ex: 'Dissolves to give a colourless solution: [Zn(NH₃)₄]²⁺(aq)', eq: 'Zn(OH)₂(s) + 4NH₃(aq) → [Zn(NH₃)₄]²⁺(aq) + 2OH⁻(aq)' },
+            Pb: { naohDrop: 'White precipitate of Pb(OH)₂(s)', naohEx: 'Dissolves to give a colourless solution: [Pb(OH)₄]²⁻(aq)', nh3Drop: 'White precipitate of Pb(OH)₂(s)', nh3Ex: 'Insoluble in excess NH₃(aq)', eq: 'Pb(OH)₂(s) + 2OH⁻(aq) → [Pb(OH)₄]²⁻(aq)' },
+            Fe2: { naohDrop: 'Dirty green precipitate of Fe(OH)₂(s) (turns brown at surface on standing)', naohEx: 'Insoluble in excess', nh3Drop: 'Dirty green precipitate of Fe(OH)₂(s)', nh3Ex: 'Insoluble in excess', eq: 'Fe²⁺(aq) + 2OH⁻(aq) → Fe(OH)₂(s)' },
+            Fe3: { naohDrop: 'Reddish-brown precipitate of Fe(OH)₃(s)', naohEx: 'Insoluble in excess', nh3Drop: 'Reddish-brown precipitate of Fe(OH)₃(s)', nh3Ex: 'Insoluble in excess', eq: 'Fe³⁺(aq) + 3OH⁻(aq) → Fe(OH)₃(s)' },
+            Cu: { naohDrop: 'Pale blue precipitate of Cu(OH)₂(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'Pale blue precipitate of Cu(OH)₂(s)', nh3Ex: 'Dissolves to give a DEEP BLUE solution: [Cu(NH₃)₄]²⁺(aq)', eq: 'Cu(OH)₂(s) + 4NH₃(aq) → [Cu(NH₃)₄]²⁺(aq) + 2OH⁻(aq)' },
+            Ag: { naohDrop: 'Dark brown precipitate of Ag₂O(s)', naohEx: 'Insoluble in excess NaOH(aq)', nh3Drop: 'Dark brown precipitate of Ag₂O(s)', nh3Ex: 'Dissolves to give a colourless solution: [Ag(NH₃)₂]⁺(aq)', eq: '2Ag⁺(aq) + 2OH⁻(aq) → Ag₂O(s) + H₂O(l)' }
+        };
+
+        const catSimSelect = document.getElementById('catSimSelect');
+        const catSimResult = document.getElementById('catSimResult');
+
+        function updateCatSim() {
+            const d = catSimData[catSimSelect.value];
+            catSimResult.innerHTML = `
+                <div><strong>+ NaOH(aq):</strong> ${d.naohDrop} → <em>${d.naohEx}</em></div>
+                <div><strong>+ NH₃(aq):</strong> ${d.nh3Drop} → <em>${d.nh3Ex}</em></div>
+                <div class="chem-eq pt-1 text-teal-700 dark:text-teal-300 font-bold">Key Equation: ${d.eq}</div>
+            `;
+        }
+        catSimSelect.addEventListener('change', updateCatSim);
+        updateCatSim();
+
+        // Tool 5: Titration Indicator Selector
+        const titPairSelect = document.getElementById('titPairSelect');
+        const titBuretteSelect = document.getElementById('titBuretteSelect');
+        const titResult = document.getElementById('titResult');
+
+        function updateTitrationSim() {
+            const pair = titPairSelect.value;
+            const bur = titBuretteSelect.value;
+            if (pair === 'WAWB') {
+                titResult.innerHTML = `<strong>⚠️ No Suitable Indicator:</strong> Weak acid + weak alkali shows a gradual pH change with no sharp vertical jump at equivalence point. Use a pH meter / conductivity sensor instead.`;
+                return;
+            }
+            let ind = '';
+            let colour = '';
+            if (pair === 'SASB') {
+                ind = 'Methyl Orange (pH 3.1–4.4) OR Phenolphthalein (pH 8.3–10.0) — both lie within the large vertical pH jump (pH 3–11).';
+                colour = bur === 'acid'
+                    ? 'MO: Yellow → Orange (end-point) | PP: Pink → Colourless (end-point)'
+                    : 'MO: Red → Orange (end-point) | PP: Colourless → Pale Pink (end-point)';
+            } else if (pair === 'SAWB') {
+                ind = 'Methyl Orange ONLY (equivalence point is acidic, pH ≈ 4–5; phenolphthalein changes too early at pH 8.3–10).';
+                colour = bur === 'acid' ? 'Yellow → Orange (end-point)' : 'Red → Orange (end-point)';
+            } else if (pair === 'WASB') {
+                ind = 'Phenolphthalein ONLY (equivalence point is alkaline, pH ≈ 8–9; methyl orange changes too early at pH 3.1–4.4).';
+                colour = bur === 'acid' ? 'Pink → Colourless (end-point)' : 'Colourless → Pale Pink (end-point)';
+            }
+            titResult.innerHTML = `
+                <div><strong>Suitable Indicator:</strong> ${ind}</div>
+                <div><strong>Exact End-Point Colour Change:</strong> <span class="font-bold text-teal-800 dark:text-teal-200">${colour}</span></div>
+            `;
+        }
+        [titPairSelect, titBuretteSelect].forEach(el => el.addEventListener('change', updateTitrationSim));
+        updateTitrationSim();
+
+        // ============================================================
+        // 5. LUXURY HKDSE EXAM & QUIZ ENGINE (52 QUESTIONS)
+        // ============================================================
+        const quizQuestions = [
+            // --- TOPIC 1: MC (8) ---
+            { id: 't1-mc1', topic: 1, type: 'mc', marks: 1, q: 'Which of the following substances is a pure element at room temperature and pressure?', options: ['Distilled water (H₂O)', 'Silver oxide (Ag₂O)', 'Liquid bromine (Br₂)', 'Dry air'], ans: 2, exp: 'Bromine (Br₂) consists of only one type of atom and is one of the only two liquid elements at r.t.p. (along with Hg). H₂O and Ag₂O are compounds; air is a mixture.' },
+            { id: 't1-mc2', topic: 1, type: 'mc', marks: 1, q: 'During the fractional distillation of liquefied air, which gas boils off FIRST as the temperature is raised slowly from −200 °C?', options: ['Oxygen (b.p. −183 °C)', 'Argon (b.p. −186 °C)', 'Nitrogen (b.p. −196 °C)', 'Carbon dioxide (sublimes −78.5 °C)'], ans: 2, exp: 'CO₂ is removed before liquefaction so it does not solidify and block pipes. Among N₂ (−196 °C), Ar (−186 °C), and O₂ (−183 °C), N₂ has the lowest boiling point and distils off first.' },
+            { id: 't1-mc3', topic: 1, type: 'mc', marks: 1, q: 'Why is excess dilute nitric acid added before silver nitrate solution when testing for chloride ions in a sample?', options: ['To oxidize Cl⁻ to Cl₂', 'To remove carbonate ions (CO₃²⁻) that would also form a white precipitate with Ag⁺', 'To increase the pH of the solution', 'To dissolve AgCl precipitate'], ans: 1, exp: 'Ag₂CO₃(s) is also a white precipitate. Adding excess dilute HNO₃ reacts with any CO₃²⁻ (producing CO₂ and H₂O), preventing a false positive test for Cl⁻.' },
+            { id: 't1-mc4', topic: 1, type: 'mc', marks: 1, q: 'Which flame colour is produced when a clean nichrome wire dipped in potassium chloride solution is heated in a non-luminous Bunsen flame?', options: ['Golden yellow', 'Brick-red', 'Lilac', 'Bluish green'], ans: 2, exp: 'K⁺ gives a lilac flame; Na⁺ gives golden yellow; Ca²⁺ gives brick-red; Cu²⁺ gives bluish green.' },
+            { id: 't1-mc5', topic: 1, type: 'mc', marks: 1, q: 'Why is helium used instead of hydrogen to fill weather balloons and airships?', options: ['Helium is denser than hydrogen and air', 'Helium is unreactive (inert) and non-flammable, whereas hydrogen is explosive', 'Helium is more abundant in the atmosphere than nitrogen', 'Helium dissolves easily in water'], ans: 1, exp: 'Although H₂ has slightly lower density, it forms an explosive mixture with air. Helium is chemically inert (duplet structure) and still much less dense than air.' },
+            { id: 't1-mc6', topic: 1, type: 'mc', marks: 1, q: 'In the simple distillation of sea water, why are anti-bumping granules added to the distillation flask?', options: ['To lower the boiling point of water', 'To absorb dissolved salts', 'To ensure smooth boiling and prevent vigorous bumping of the liquid', 'To condense water vapour faster'], ans: 2, exp: 'Anti-bumping granules provide nucleation sites for small gas bubbles to form, ensuring smooth, even boiling.' },
+            { id: 't1-mc7', topic: 1, type: 'mc', marks: 1, q: 'What happens when carbon dioxide is bubbled continuously into limewater until in excess?', options: ['A white precipitate forms and remains unchanged', 'The solution turns milky first, then turns clear again due to soluble Ca(HCO₃)₂', 'No observable change occurs', 'A yellow precipitate forms'], ans: 1, exp: 'Initially Ca(OH)₂(aq) + CO₂(g) → CaCO₃(s) + H₂O(l) (milky). With excess CO₂, CaCO₃(s) + CO₂(g) + H₂O(l) → Ca(HCO₃)₂(aq), which is soluble (clear).' },
+            { id: 't1-mc8', topic: 1, type: 'mc', marks: 1, q: 'Which of the following is NOT one of the three main industrial products obtained from the electrolysis of concentrated brine?', options: ['Hydrogen gas at the cathode', 'Chlorine gas at the anode', 'Sodium hydroxide solution', 'Oxygen gas at the cathode'], ans: 3, exp: 'Electrolysis of brine produces H₂(g) at the cathode (−), Cl₂(g) at the anode (+), and NaOH(aq) in the remaining solution.' },
+            // --- TOPIC 1: SHORT (3) ---
+            { id: 't1-s1', topic: 1, type: 'short', marks: 3, q: 'Describe how to obtain pure, dry sodium chloride crystals from a filtered sea water sample by crystallization.', scheme: ['Heat the filtrate gently to evaporate some water until a saturated solution is obtained (check by dipping a glass rod to see tiny crystals form). [1]', 'Allow the hot saturated solution to cool slowly at room temperature so pure NaCl crystals form. [1]', 'Filter off the crystals, wash them with a small amount of cold distilled water, and dry them between filter papers. [1]'] },
+            { id: 't1-s2', topic: 1, type: 'short', marks: 3, q: 'State TWO differences between a compound and a mixture, and explain why sea water is classified as a mixture.', scheme: ['A compound has a fixed composition by mass and a sharp m.p./b.p., whereas a mixture has a variable composition and boils/melts over a range of temperatures. [2]', 'Sea water has a variable salt-to-water ratio and its components can be separated by physical methods such as distillation. [1]'] },
+            { id: 't1-s3', topic: 1, type: 'short', marks: 3, q: 'Write balanced chemical equations (with state symbols) for: (a) thermal decomposition of limestone, and (b) reaction of quicklime with water.', scheme: ['(a) CaCO₃(s) → CaO(s) + CO₂(g) (with heat) [1.5]', '(b) CaO(s) + H₂O(l) → Ca(OH)₂(s) [1.5]'] },
+            // --- TOPIC 1: LONG (1) ---
+            { id: 't1-l1', topic: 1, type: 'long', marks: 6, q: 'A white solid X is suspected to be calcium chloride (CaCl₂). Describe chemical tests you would perform to confirm the presence of BOTH calcium ions and chloride ions in solid X, including expected observations and ionic equations.', scheme: ['Dissolve a sample of solid X in distilled water to form a colourless aqueous solution. [1]', 'Test for Ca²⁺ (Flame test): Dip a clean nichrome wire in concentrated HCl, then into solid X, and heat in a non-luminous Bunsen flame. A brick-red flame confirms Ca²⁺. [2]', 'Test for Cl⁻: Add excess dilute HNO₃(aq) followed by AgNO₃(aq) to the aqueous solution of X. A white precipitate confirms Cl⁻. [2]', 'Ionic equation: Ag⁺(aq) + Cl⁻(aq) → AgCl(s) [1]'] },
+
+            // --- TOPIC 2: MC (8) ---
+            { id: 't2-mc1', topic: 2, type: 'mc', marks: 1, q: 'Which of the following correctly gives the electronic arrangement of a potassium atom (atomic number = 19)?', options: ['2, 8, 9', '2, 8, 8, 1', '2, 9, 8', '2, 8, 7, 2'], ans: 1, exp: 'The 3rd shell holds 8 electrons before the 4th shell begins filling for Z = 19 (K: 2,8,8,1) and Z = 20 (Ca: 2,8,8,2).' },
+            { id: 't2-mc2', topic: 2, type: 'mc', marks: 1, q: 'Boron consists of two isotopes: ¹⁰B (19.9%) and ¹¹B (80.1%). What is the relative atomic mass of boron?', options: ['10.2', '10.5', '10.8', '11.0'], ans: 2, exp: 'R.A.M. = 10 × 0.199 + 11 × 0.801 = 1.99 + 8.811 = 10.801 ≈ 10.8.' },
+            { id: 't2-mc3', topic: 2, type: 'mc', marks: 1, q: 'Why do isotopes of chlorine (³⁵Cl and ³⁷Cl) have the same chemical properties?', options: ['They have the same number of neutrons', 'They have the same mass number', 'They have the same number of protons and the same electronic arrangement', 'They have the same density'], ans: 2, exp: 'Chemical properties depend on the electronic arrangement (number of electrons in shells), which is identical for isotopes of the same element.' },
+            { id: 't2-mc4', topic: 2, type: 'mc', marks: 1, q: 'Which of the following species contains a dative covalent bond?', options: ['CH₄', 'NH₄⁺', 'NaCl', 'O₂'], ans: 1, exp: 'In NH₄⁺, the nitrogen atom of NH₃ donates its lone pair of electrons to an H⁺ ion to form a dative covalent bond (N → H).' },
+            { id: 't2-mc5', topic: 2, type: 'mc', marks: 1, q: 'Which trend occurs down Group VII (from F₂ to I₂)?', options: ['Melting point decreases', 'Reactivity increases', 'Colour intensity becomes lighter', 'Melting point increases due to stronger van der Waals’ forces between larger molecules'], ans: 3, exp: 'Down Group VII, molecular size and number of electrons increase, leading to stronger intermolecular van der Waals’ forces and higher m.p./b.p.' },
+            { id: 't2-mc6', topic: 2, type: 'mc', marks: 1, q: 'Solid sodium chloride does NOT conduct electricity, whereas molten sodium chloride conducts electricity well. Why?', options: ['Solid NaCl contains no ions', 'Molten NaCl contains delocalized electrons', 'In solid NaCl, Na⁺ and Cl⁻ ions are held in fixed positions; when molten, the ions become mobile', 'Covalent bonds break upon melting'], ans: 2, exp: 'Ionic compounds conduct electricity only when molten or aqueous because their cations and anions are free to move (mobile ions).' },
+            { id: 't2-mc7', topic: 2, type: 'mc', marks: 1, q: 'Which of the following substances has a giant covalent structure and conducts electricity at room temperature?', options: ['Diamond', 'Quartz (SiO₂)', 'Graphite', 'Iodine'], ans: 2, exp: 'Graphite has a giant covalent layered structure where each C atom bonds to 3 others, leaving 1 delocalized electron per C atom to conduct electricity along layers.' },
+            { id: 't2-mc8', topic: 2, type: 'mc', marks: 1, q: 'What is the colour of an aqueous solution containing Cr₂O₇²⁻ ions?', options: ['Yellow', 'Orange', 'Green', 'Purple'], ans: 1, exp: 'Cr₂O₇²⁻(aq) is orange, CrO₄²⁻(aq) is yellow, Cr³⁺(aq) is green, and MnO₄⁻(aq) is purple.' },
+            // --- TOPIC 2: SHORT (3) ---
+            { id: 't2-s1', topic: 2, type: 'short', marks: 3, q: 'Explain why sodium chloride (NaCl) has a much higher boiling point than carbon dioxide (CO₂).', scheme: ['NaCl has a giant ionic structure with strong ionic bonds between Na⁺ and Cl⁻ ions. [1]', 'CO₂ has a simple molecular structure with weak van der Waals’ forces between CO₂ molecules. [1]', 'Much more heat energy is required to overcome the strong ionic bonds in NaCl than the weak van der Waals’ forces in CO₂. [1]'] },
+            { id: 't2-s2', topic: 2, type: 'short', marks: 3, q: 'Explain why potassium (Group I) is more reactive than sodium (Group I).', scheme: ['A potassium atom has more occupied electron shells (4 shells: 2,8,8,1) than a sodium atom (3 shells: 2,8,1), so its atomic radius is larger. [1]', 'The outermost shell electron in potassium is further from the positively charged nucleus and experiences weaker electrostatic attraction. [1]', 'Therefore, potassium loses its outermost electron more easily to form K⁺ ions. [1]'] },
+            { id: 't2-s3', topic: 2, type: 'short', marks: 3, q: 'Explain why metals are malleable and ductile in terms of their structure and bonding.', scheme: ['Metals have a giant metallic structure consisting of layers of metal cations surrounded by a sea of delocalized electrons. [1]', 'When a force is applied, layers of metal cations can slide over one another into new positions. [1]', 'The non-directional metallic bond (electrostatic attraction between cations and delocalized electrons) still holds the metal together without breaking. [1]'] },
+            // --- TOPIC 2: LONG (1) ---
+            { id: 't2-l1', topic: 2, type: 'long', marks: 6, q: 'Compare diamond and graphite in terms of: (a) structure and bonding, (b) electrical conductivity, and (c) hardness / use as a lubricant.', scheme: ['(a) Both have giant covalent structures. In diamond, each C atom forms 4 strong covalent bonds tetrahedrally; in graphite, each C atom forms 3 covalent bonds in flat hexagonal layers held together by weak van der Waals’ forces. [2]', '(b) Diamond has no delocalized electrons or mobile ions, so it is a non-conductor. Graphite has 1 delocalized electron per C atom that can move freely along the layers, so it conducts electricity. [2]', '(c) Diamond has a rigid 3D network of strong covalent bonds, making it extremely hard. In graphite, weak van der Waals’ forces between layers allow layers to slide over each other easily, making it soft and suitable as a lubricant. [2]'] },
+
+            // --- TOPIC 3: MC (8) ---
+            { id: 't3-mc1', topic: 3, type: 'mc', marks: 1, q: 'Which of the following metal oxides CANNOT be reduced to the metal by heating with hydrogen gas?', options: ['Copper(II) oxide (CuO)', 'Lead(II) oxide (PbO)', 'Iron(III) oxide (Fe₂O₃)', 'Zinc oxide (ZnO)'], ans: 3, exp: '5** HKDSE Trap: Hydrogen can reduce oxides of metals below zinc in the reactivity series (Fe, Pb, Cu, Ag), but H₂ CANNOT reduce ZnO!' },
+            { id: 't3-mc2', topic: 3, type: 'mc', marks: 1, q: 'Which of the following metals reacts with steam to produce hydrogen gas, but does NOT react with cold water?', options: ['Sodium', 'Calcium', 'Magnesium', 'Copper'], ans: 2, exp: 'K, Na, Ca react with cold water; Mg, Al, Zn, Fe react with steam (not cold water) to form the metal oxide and H₂; Cu does not react with water or steam.' },
+            { id: 't3-mc3', topic: 3, type: 'mc', marks: 1, q: 'A scratched tin-plated iron food can rusts FASTER than an unscratched iron nail exposed to the same damp air. Why?', options: ['Tin reacts violently with water', 'Iron is more reactive than tin, so iron loses electrons more readily and corrodes sacrificially', 'Tin forms an acidic oxide', 'Tin absorbs oxygen from air'], ans: 1, exp: 'Fe is higher than Sn in the reactivity series. Once the tin layer is scratched, Fe loses electrons preferentially over Sn, accelerating rusting.' },
+            { id: 't3-mc4', topic: 3, type: 'mc', marks: 1, q: 'How many ions are present in 0.20 mol of aluminium sulphate, Al₂(SO₄)₃? (L = 6.02 × 10²³ mol⁻¹)', options: ['1.204 × 10²³', '3.01 × 10²³', '6.02 × 10²³', '3.01 × 10²⁴'], ans: 2, exp: '1 formula unit of Al₂(SO₄)₃ contains 2 Al³⁺ + 3 SO₄²⁻ = 5 ions. Total ions = 0.20 × 5 × 6.02 × 10²³ = 6.02 × 10²³.' },
+            { id: 't3-mc5', topic: 3, type: 'mc', marks: 1, q: 'A hydrocarbon contains 80.0% carbon and 20.0% hydrogen by mass. Its relative molecular mass is 30.0. What is its molecular formula? (C = 12.0, H = 1.0)', options: ['CH₃', 'C₂H₄', 'C₂H₆', 'C₃H₈'], ans: 2, exp: 'Mole ratio C : H = (80/12) : (20/1) = 6.67 : 20 = 1 : 3 → Empirical formula = CH₃ (mass = 15). n = 30 / 15 = 2 → Molecular formula = C₂H₆.' },
+            { id: 't3-mc6', topic: 3, type: 'mc', marks: 1, q: 'In the reduction of hot copper(II) oxide using town gas (CO + H₂), why must the town gas flow continue while the reduced copper cools down?', options: ['To prevent the glass tube from melting', 'To prevent the hot copper from being re-oxidized back to black CuO by oxygen in air', 'To dissolve impurities in copper', 'To absorb water vapour'], ans: 1, exp: 'Hot copper reacts rapidly with O₂ in air to reform black CuO if exposed before cooling to room temperature.' },
+            { id: 't3-mc7', topic: 3, type: 'mc', marks: 1, q: 'Which indicator mixture turns blue in the presence of Fe²⁺ ions and pink in the presence of OH⁻ ions during rusting experiments?', options: ['Universal indicator', 'Potassium hexacyanoferrate(III) and phenolphthalein', 'Methyl orange and starch', 'Cobalt(II) chloride and litmus'], ans: 1, exp: 'K₃Fe(CN)₆ turns blue with Fe²⁺(aq), while phenolphthalein turns pink with OH⁻(aq) produced at the cathodic region.' },
+            { id: 't3-mc8', topic: 3, type: 'mc', marks: 1, q: 'When 4.0 g of Mg (molar mass = 24.3 g mol⁻¹) reacts with 3.2 g of O₂ (molar mass = 32.0 g mol⁻¹) according to 2Mg + O₂ → 2MgO, which reactant is in excess?', options: ['Mg is in excess', 'O₂ is in excess', 'Both react completely', 'Neither reacts'], ans: 1, exp: 'n(Mg) = 4.0 / 24.3 = 0.165 mol (needs 0.0823 mol O₂). n(O₂) = 3.2 / 32.0 = 0.100 mol > 0.0823 mol, so O₂ is in excess and Mg is limiting.' },
+            // --- TOPIC 3: SHORT (3) ---
+            { id: 't3-s1', topic: 3, type: 'short', marks: 3, q: 'State the two essential conditions for rusting of iron to occur, and explain how galvanising protects an iron object even when the zinc layer is scratched.', scheme: ['Essential conditions: Presence of BOTH oxygen (air) and water. [1]', 'Zinc is more reactive than iron. [1]', 'When scratched, zinc loses electrons more readily than iron (sacrificial protection), preventing iron from forming Fe²⁺ ions. [1]'] },
+            { id: 't3-s2', topic: 3, type: 'short', marks: 3, q: 'Calculate the mass of iron obtained when 16.0 g of iron(III) oxide (Fe₂O₃) is completely reduced by carbon monoxide. (Relative atomic masses: Fe = 55.8, O = 16.0)', scheme: ['Equation: Fe₂O₃(s) + 3CO(g) → 2Fe(s) + 3CO₂(g) [1]', 'Moles of Fe₂O₃ = 16.0 / (55.8×2 + 16.0×3) = 16.0 / 159.6 = 0.1003 mol [1]', 'Moles of Fe = 2 × 0.1003 = 0.2005 mol → Mass of Fe = 0.2005 × 55.8 = 11.2 g [1]'] },
+            { id: 't3-s3', topic: 3, type: 'short', marks: 3, q: 'In combustion analysis of an organic compound containing C, H, and O, explain why the U-tube containing anhydrous CaCl₂ must be placed BEFORE the U-tube containing KOH solution.', scheme: ['Anhydrous CaCl₂ absorbs water vapour only, whereas KOH solution absorbs BOTH carbon dioxide and water vapour. [1]', 'If KOH were placed first, it would absorb both H₂O and CO₂ together, making it impossible to determine their individual masses. [1]', 'Placing anhydrous CaCl₂ first removes all H₂O so only CO₂ reaches the KOH U-tube. [1]'] },
+            // --- TOPIC 3: LONG (2) ---
+            { id: 't3-l1', topic: 3, type: 'long', marks: 6, q: 'Complete combustion of 1.80 g of an organic compound X (containing C, H, and O only) gave 2.64 g of CO₂ and 1.08 g of H₂O. The relative molecular mass of X is 180.0. Determine the empirical formula and molecular formula of X. (C = 12.0, H = 1.0, O = 16.0)', scheme: ['Mass of C = 2.64 × (12.0 / 44.0) = 0.720 g → n(C) = 0.720 / 12.0 = 0.0600 mol [1.5]', 'Mass of H = 1.08 × (2.0 / 18.0) = 0.120 g → n(H) = 0.120 / 1.0 = 0.120 mol [1.5]', 'Mass of O = 1.80 − 0.720 − 0.120 = 0.960 g → n(O) = 0.960 / 16.0 = 0.0600 mol [1]', 'Mole ratio C : H : O = 0.06 : 0.12 : 0.06 = 1 : 2 : 1 → Empirical formula = CH₂O [1]', 'Empirical formula mass = 30.0; n = 180.0 / 30.0 = 6 → Molecular formula = C₆H₁₂O₆ [1]'] },
+            { id: 't3-l2', topic: 3, type: 'long', marks: 5, q: 'A student places a piece of magnesium ribbon into aqueous copper(II) sulphate. State THREE expected observations and write the ionic equation for the reaction.', scheme: ['1. The magnesium ribbon dissolves. [1]', '2. A reddish-brown solid (copper) deposits on the magnesium surface / at the bottom. [1]', '3. The blue colour of the copper(II) sulphate solution fades (becomes colourless) and the solution becomes warm. [2]', 'Ionic equation: Mg(s) + Cu²⁺(aq) → Mg²⁺(aq) + Cu(s) [1]'] },
+
+            // --- TOPIC 4: MC (8) ---
+            { id: 't4-mc1', topic: 4, type: 'mc', marks: 1, q: 'What is the basicity of ethanoic acid (CH₃COOH)?', options: ['1 (monobasic)', '2 (dibasic)', '3 (tribasic)', '4 (tetrabasic)'], ans: 0, exp: 'Only the hydrogen atom in the −COOH group ionizes in water: CH₃COOH(aq) ⇌ CH₃COO⁻(aq) + H⁺(aq). Thus its basicity is 1.' },
+            { id: 't4-mc2', topic: 4, type: 'mc', marks: 1, q: 'Dry hydrogen chloride gas is dissolved in dry methylbenzene. Which observation is expected when dry magnesium ribbon is added to this solution?', options: ['Vigorous effervescence occurs', 'No observable change occurs', 'A white precipitate forms', 'The solution turns green'], ans: 1, exp: 'Without water, HCl does not ionize into H⁺(aq) ions in methylbenzene; it remains as covalent HCl molecules and shows no acidic properties.' },
+            { id: 't4-mc3', topic: 4, type: 'mc', marks: 1, q: 'Which drying agent is suitable for drying ammonia gas, NH₃(g)?', options: ['Concentrated sulphuric acid', 'Anhydrous calcium chloride', 'Calcium oxide (quicklime)', 'Dilute nitric acid'], ans: 2, exp: 'NH₃ is alkaline and reacts with conc. H₂SO₄ and forms a complex with CaCl₂ (CaCl₂·8NH₃). Calcium oxide (CaO) is basic and dries NH₃ safely.' },
+            { id: 't4-mc4', topic: 4, type: 'mc', marks: 1, q: 'An aqueous solution gives a white precipitate with NaOH(aq) that dissolves in excess NaOH(aq), AND gives a white precipitate with NH₃(aq) that ALSO dissolves in excess NH₃(aq). Which cation is present?', options: ['Al³⁺', 'Pb²⁺', 'Zn²⁺', 'Mg²⁺'], ans: 2, exp: 'Zn(OH)₂ dissolves in BOTH excess NaOH(aq) (forming [Zn(OH)₄]²⁻) and excess NH₃(aq) (forming [Zn(NH₃)₄]²⁺). Al(OH)₃ and Pb(OH)₂ dissolve only in excess NaOH(aq).' },
+            { id: 't4-mc5', topic: 4, type: 'mc', marks: 1, q: 'What is the pH of a 0.0050 mol dm⁻³ sulphuric acid solution, assuming complete ionization?', options: ['1.70', '2.00', '2.30', '5.00'], ans: 1, exp: 'H₂SO₄ is dibasic: [H⁺] = 2 × 0.0050 = 0.010 mol dm⁻³. pH = −log(0.010) = 2.00.' },
+            { id: 't4-mc6', topic: 4, type: 'mc', marks: 1, q: 'Which indicator is suitable for titrating aqueous ammonia (weak alkali) against dilute hydrochloric acid (strong acid)?', options: ['Phenolphthalein only', 'Methyl orange only', 'Both methyl orange and phenolphthalein', 'Neither methyl orange nor phenolphthalein'], ans: 1, exp: 'For SA + WB, the equivalence point pH is around 4–5, matching methyl orange’s working range (pH 3.1–4.4). Phenolphthalein (8.3–10.0) changes too early.' },
+            { id: 't4-mc7', topic: 4, type: 'mc', marks: 1, q: 'In volumetric analysis, how should a pipette and a conical flask be rinsed before titration?', options: ['Both with distilled water only', 'Both with the solution they will contain', 'Pipette: distilled water then solution to be transferred; Conical flask: distilled water only', 'Pipette: distilled water only; Conical flask: solution to be titrated'], ans: 2, exp: 'Rinsing the conical flask with the solution adds extra moles of solute and causes error; rinsing it with distilled water only does not change the moles pipetted into it.' },
+            { id: 't4-mc8', topic: 4, type: 'mc', marks: 1, q: 'Why is solid sodium hydroxide NOT suitable as a primary standard?', options: ['It is insoluble in water', 'It is hygroscopic (absorbs moisture) and absorbs CO₂ from the air', 'It has a very high molar mass', 'It does not react with acids'], ans: 1, exp: 'NaOH(s) absorbs water vapour and CO₂ from the atmosphere, so its exact mass of pure NaOH cannot be weighed accurately.' },
+            // --- TOPIC 4: SHORT (3) ---
+            { id: 't4-s1', topic: 4, type: 'short', marks: 3, q: 'Compare the pH and electrical conductivity of 0.10 mol dm⁻³ HCl(aq) and 0.10 mol dm⁻³ CH₃COOH(aq), and explain the difference.', scheme: ['0.10 M HCl(aq) has a lower pH (pH = 1) and higher electrical conductivity than 0.10 M CH₃COOH(aq). [1]', 'HCl is a strong acid that ionizes completely in water, whereas CH₃COOH is a weak acid that ionizes only partially. [1]', 'Therefore, 0.10 M HCl(aq) has a higher concentration of mobile H⁺(aq) ions. [1]'] },
+            { id: 't4-s2', topic: 4, type: 'short', marks: 3, q: 'Describe a chemical test (with expected observations) to distinguish between solid ammonium chloride (NH₄Cl) and solid potassium chloride (KCl).', scheme: ['Warm each solid separately with aqueous sodium hydroxide (NaOH(aq)). [1]', 'NH₄Cl produces a colourless pungent gas (NH₃) that turns moist red litmus paper blue. [1]', 'KCl shows no observable change (or perform a flame test: KCl gives a lilac flame whereas NH₄Cl gives no characteristic flame colour). [1]'] },
+            { id: 't4-s3', topic: 4, type: 'short', marks: 3, q: 'Outline the steps to prepare pure, dry crystals of copper(II) sulphate from dilute sulphuric acid and copper(II) oxide.', scheme: ['Add excess black copper(II) oxide powder to warm dilute sulphuric acid with stirring until no more dissolves. [1]', 'Filter the mixture to remove unreacted excess CuO, collecting the blue CuSO₄(aq) filtrate. [1]', 'Heat the filtrate to evaporate some water until saturated, cool slowly to crystallize, filter, wash with a little cold distilled water, and dry on filter paper. [1]'] },
+            // --- TOPIC 4: LONG (4) ---
+            { id: 't4-l1', topic: 4, type: 'long', marks: 6, q: '25.0 cm³ of 0.200 mol dm⁻³ sodium carbonate solution required 22.50 cm³ of dilute hydrochloric acid for complete reaction using methyl orange indicator.\n(a) State the colour change at the end-point.\n(b) Calculate the molarity of the hydrochloric acid.', scheme: ['(a) Colour change: From yellow to orange (or persistent red-orange). [1]', '(b) Equation: Na₂CO₃(aq) + 2HCl(aq) → 2NaCl(aq) + CO₂(g) + H₂O(l) [1]', 'Moles of Na₂CO₃ = 0.200 × (25.0 / 1000) = 0.00500 mol [1.5]', 'Moles of HCl = 2 × 0.00500 = 0.0100 mol [1]', 'Molarity of HCl = 0.0100 / (22.50 / 1000) = 0.444 mol dm⁻³ [1.5]'] },
+            { id: 't4-l2', topic: 4, type: 'long', marks: 6, q: 'Back Titration: 1.50 g of an impure calcium carbonate sample was added to 50.0 cm³ of 1.00 mol dm⁻³ HCl(aq) (in excess). After effervescence stopped, the excess acid required 24.00 cm³ of 1.00 mol dm⁻³ NaOH(aq) for complete neutralization. Calculate the percentage purity of CaCO₃ in the sample. (CaCO₃ = 100.1)', scheme: ['Total moles of HCl added = 1.00 × (50.0 / 1000) = 0.0500 mol [1]', 'Moles of excess HCl = moles of NaOH = 1.00 × (24.00 / 1000) = 0.0240 mol [1]', 'Moles of HCl reacted with CaCO₃ = 0.0500 − 0.0240 = 0.0260 mol [1]', 'CaCO₃ + 2HCl → CaCl₂ + CO₂ + H₂O ⇒ Moles of CaCO₃ = 0.0260 / 2 = 0.0130 mol [1]', 'Mass of CaCO₃ = 0.0130 × 100.1 = 1.3013 g → % purity = (1.3013 / 1.50) × 100% = 86.8% [2]'] },
+            { id: 't4-l3', topic: 4, type: 'long', marks: 5, q: 'Explain why: (a) an inverted funnel is used when dissolving hydrogen chloride gas in water, and (b) concentrated sulphuric acid is diluted by adding the acid slowly to a large amount of water rather than adding water to the acid.', scheme: ['(a) HCl gas is extremely soluble in water, dissolving faster than it is supplied and creating a partial vacuum that sucks water back into the hot delivery tube. An inverted funnel provides a large surface area and breaks contact when water rises, preventing sucking back. [2.5]', '(b) Diluting concentrated H₂SO₄ is highly exothermic. Water has a lower density than conc. H₂SO₄; if water is added to the acid, it floats on top and boils violently, splashing corrosive acid out. Adding acid slowly to water with stirring disperses the heat safely. [2.5]'] },
+            { id: 't4-l4', topic: 4, type: 'long', marks: 6, q: 'Design a sequence of chemical tests to distinguish among four unlabelled aqueous solutions: Na₂CO₃(aq), NH₄Cl(aq), ZnSO₄(aq), and Cu(NO₃)₂(aq).', scheme: ['1. Observe colour: Cu(NO₃)₂(aq) is blue; the other three solutions are colourless. [1.5]', '2. Add dilute HCl(aq) to the three colourless solutions: Na₂CO₃(aq) gives effervescence of a colourless gas (CO₂) that turns limewater milky. [1.5]', '3. Add NaOH(aq) dropwise to the remaining two solutions: ZnSO₄(aq) gives a white precipitate (Zn(OH)₂) that dissolves in excess NaOH(aq). [1.5]', '4. Warm the last solution with NaOH(aq): NH₄Cl(aq) evolves a pungent gas (NH₃) that turns moist red litmus paper blue. [1.5]'] }
+        ];
+
+        const topicTitles = {
+            1: 'Topic 1: Planet Earth & Fundamentals',
+            2: 'Topic 2: The Microscopic World I',
+            3: 'Topic 3: Metals & Mole Calculations',
+            4: 'Topic 4: Acids and Alkalis (Parts 1–3)'
+        };
+
+        let activeQuizTopic = 1;
+        let activeQuizMode = 'mc';
+        let activeDeck = [];
+        let qIndex = 0;
+        let qScore = 0;
+        let qMaxPossible = 0;
+        let qStreak = 0;
+        let qAnswered = false;
+        let qFlagged = new Set();
+        let qMissedIds = new Set();
+        let quizTimerInterval = null;
+        let quizSeconds = 0;
+        let bestQuizPct = parseInt(localStorage.getItem('hkdseChemBestQuiz') || '0', 10);
+
+        function updateHomeQuizStat() {
+            const el = document.getElementById('homeQuizStat');
+            if (el) el.textContent = bestQuizPct > 0 ? `${bestQuizPct}%` : '—';
+        }
+        updateHomeQuizStat();
+
+        function showQuizTopicLobby() {
+            clearInterval(quizTimerInterval);
+            document.getElementById('quizTopicLobby').classList.remove('hidden');
+            document.getElementById('quizActiveSession').classList.add('hidden');
+            document.getElementById('quizTelemetryStrip').classList.add('hidden');
+            document.getElementById('quizHeroSubtitle').innerHTML = 'Select a single topic below to practice focused <strong>Multiple Choice</strong>, <strong>Short Structured</strong>, and <strong>Long Questions</strong> — topics are kept strictly separate.';
+        }
+
+        function selectQuizTopic(topicNum, mode = 'mc') {
+            activeQuizTopic = topicNum;
+            activeQuizMode = mode;
+            document.getElementById('quizTopicLobby').classList.add('hidden');
+            document.getElementById('quizActiveSession').classList.remove('hidden');
+            document.getElementById('quizTelemetryStrip').classList.remove('hidden');
+            document.getElementById('activeTopicTitle').textContent = topicTitles[topicNum];
+            document.getElementById('quizHeroSubtitle').textContent = `Practicing ${topicTitles[topicNum]} exclusively.`;
+            updateQuizModePills();
+            startQuizSession();
+        }
+
+        function updateQuizModePills() {
+            document.querySelectorAll('.qmode-btn').forEach(btn => {
+                const isMatch = btn.dataset.qmode === activeQuizMode;
+                btn.className = isMatch
+                    ? 'qmode-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-300 to-yellow-500 text-slate-950 shadow-sm transition'
+                    : 'qmode-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+            });
+        }
+
+        document.querySelectorAll('.qmode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                activeQuizMode = btn.dataset.qmode;
+                updateQuizModePills();
+                startQuizSession();
+            });
+        });
+
+        document.getElementById('backToTopicsBtn').addEventListener('click', showQuizTopicLobby);
+        document.getElementById('startQuizBtn').addEventListener('click', () => startQuizSession());
+        document.getElementById('retakeQuizBtn').addEventListener('click', () => startQuizSession());
+        document.getElementById('reviewMistakesBtn').addEventListener('click', () => {
+            const ids = new Set([...qFlagged, ...qMissedIds]);
+            const subset = quizQuestions.filter(q => q.topic === activeQuizTopic && ids.has(q.id));
+            if (subset.length > 0) startQuizSession(subset);
+        });
+
+        function startQuizSession(customDeck = null) {
+            clearInterval(quizTimerInterval);
+            quizSeconds = 0;
+            updateTimerUI();
+
+            const pool = customDeck || quizQuestions.filter(q => q.topic === activeQuizTopic && q.type === activeQuizMode);
+            activeDeck = [...pool];
+            if (!customDeck && document.getElementById('quizShuffleToggle').checked) {
+                for (let i = activeDeck.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [activeDeck[i], activeDeck[j]] = [activeDeck[j], activeDeck[i]];
+                }
+            }
+
+            qIndex = 0;
+            qScore = 0;
+            qMaxPossible = activeDeck.reduce((sum, item) => sum + item.marks, 0);
+            qStreak = 0;
+            qMissedIds.clear();
+
+            document.getElementById('quizCard').classList.remove('hidden');
+            document.getElementById('quizSummaryCard').classList.add('hidden');
+            updateQuizTelemetry();
+            renderQuizQuestion();
+
+            if (document.getElementById('quizTimerToggle').checked) {
+                quizTimerInterval = setInterval(() => {
+                    quizSeconds++;
+                    updateTimerUI();
+                }, 1000);
+            }
+        }
+
+        function updateTimerUI() {
+            const m = String(Math.floor(quizSeconds / 60)).padStart(2, '0');
+            const s = String(quizSeconds % 60).padStart(2, '0');
+            document.getElementById('quizTimerStat').textContent = `${m}:${s}`;
+        }
+
+        function updateQuizTelemetry() {
+            document.getElementById('quizScoreStat').textContent = `${qScore}/${qMaxPossible}`;
+            document.getElementById('quizStreakStat').textContent = `✦ ${qStreak}`;
+        }
+
+        function renderQuizQuestion() {
+            const q = activeDeck[qIndex];
+            if (!q) return;
+            qAnswered = false;
+
+            const pct = ((qIndex + 1) / activeDeck.length) * 100;
+            document.getElementById('quizProgressBar').style.width = `${pct}%`;
+            document.getElementById('quizMetaBadge').textContent = `Topic ${q.topic} • ${q.type.toUpperCase()}`;
+            document.getElementById('quizMarksBadge').textContent = `${q.marks} Mark${q.marks > 1 ? 's' : ''}`;
+            document.getElementById('quizProgressText').textContent = `Question ${qIndex + 1} of ${activeDeck.length}`;
+
+            const flagBtn = document.getElementById('quizFlagBtn');
+            const isFlagged = qFlagged.has(q.id);
+            flagBtn.textContent = isFlagged ? '★ Flagged' : '☆ Flag';
+            flagBtn.className = isFlagged
+                ? 'px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700 transition'
+                : 'px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-300 transition';
+
+            // Stepper dots
+            const dotsEl = document.getElementById('quizStepperDots');
+            dotsEl.innerHTML = activeDeck.map((item, idx) => {
+                let cls = 'h-2 rounded-full transition-all ';
+                if (idx === qIndex) cls += 'w-6 bg-amber-400';
+                else if (idx < qIndex) cls += 'w-2.5 bg-teal-500';
+                else cls += 'w-2.5 bg-slate-200 dark:bg-slate-700';
+                return `<span class="${cls}"></span>`;
+            }).join('');
+
+            // Prompt
+            const lines = q.q.split('\n');
+            document.getElementById('quizQuestionText').textContent = lines[0];
+            const subPrompt = document.getElementById('quizSubPrompt');
+            if (lines.length > 1) {
+                subPrompt.textContent = lines.slice(1).join('\n');
+                subPrompt.classList.remove('hidden');
+            } else {
+                subPrompt.classList.add('hidden');
+            }
+
+            const optionsEl = document.getElementById('quizOptions');
+            const structEl = document.getElementById('quizStructuredArea');
+            const feedbackEl = document.getElementById('quizFeedback');
+            const nextBtn = document.getElementById('quizNextBtn');
+
+            feedbackEl.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            nextBtn.textContent = qIndex === activeDeck.length - 1 ? 'Finish & View Results ✦' : 'Next Question →';
+
+            if (q.type === 'mc') {
+                optionsEl.classList.remove('hidden');
+                structEl.classList.add('hidden');
+                document.getElementById('quizFooterHint').textContent = 'Select an option (or press A–D) to check immediately';
+                const letters = ['A', 'B', 'C', 'D'];
+                optionsEl.innerHTML = q.options.map((opt, idx) => `
+                    <button type="button" data-opt-idx="${idx}"
+                            class="lux-option-btn w-full text-left p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border-2 border-slate-200 dark:border-slate-700 hover:border-amber-400 flex items-center gap-3.5 text-sm font-semibold text-slate-800 dark:text-slate-100">
+                        <span class="w-8 h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-center font-extrabold text-xs text-slate-600 dark:text-slate-300 shrink-0">${letters[idx]}</span>
+                        <span>${opt}</span>
+                    </button>
+                `).join('');
+
+                optionsEl.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', () => handleMcAnswer(parseInt(btn.dataset.optIdx, 10)));
+                });
+            } else {
+                optionsEl.classList.add('hidden');
+                structEl.classList.remove('hidden');
+                document.getElementById('quizUserAnswer').value = '';
+                document.getElementById('quizFooterHint').textContent = 'Draft your response, then reveal the marking scheme';
+            }
+        }
+
+        function handleMcAnswer(chosenIdx) {
+            if (qAnswered) return;
+            qAnswered = true;
+            const q = activeDeck[qIndex];
+            const isCorrect = chosenIdx === q.ans;
+
+            if (isCorrect) {
+                qScore += q.marks;
+                qStreak++;
+            } else {
+                qStreak = 0;
+                qMissedIds.add(q.id);
+            }
+            updateQuizTelemetry();
+
+            document.querySelectorAll('#quizOptions button').forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.ans) {
+                    btn.className = 'w-full text-left p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 border-2 border-emerald-500 flex items-center gap-3.5 text-sm font-bold text-emerald-900 dark:text-emerald-200';
+                } else if (idx === chosenIdx) {
+                    btn.className = 'w-full text-left p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border-2 border-rose-500 flex items-center gap-3.5 text-sm font-bold text-rose-900 dark:text-rose-200';
+                } else {
+                    btn.className = 'w-full text-left p-4 rounded-2xl bg-slate-50/50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 opacity-55 flex items-center gap-3.5 text-sm text-slate-500';
+                }
+            });
+
+            const feedbackEl = document.getElementById('quizFeedback');
+            feedbackEl.className = isCorrect
+                ? 'p-5 rounded-2xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/80 dark:bg-emerald-950/40 text-emerald-950 dark:text-emerald-100 text-xs sm:text-sm space-y-1.5'
+                : 'p-5 rounded-2xl border border-rose-300 dark:border-rose-800 bg-rose-50/80 dark:bg-rose-950/40 text-rose-950 dark:text-rose-100 text-xs sm:text-sm space-y-1.5';
+            feedbackEl.innerHTML = `
+                <div class="font-extrabold">${isCorrect ? '✓ Correct! (+1 Mark)' : '✗ Incorrect — Review Explanation'}</div>
+                <p class="leading-relaxed">${q.exp}</p>
+            `;
+            feedbackEl.classList.remove('hidden');
+            document.getElementById('quizNextBtn').classList.remove('hidden');
+        }
+
+        document.getElementById('revealSchemeBtn').addEventListener('click', () => {
+            if (qAnswered) return;
+            qAnswered = true;
+            const q = activeDeck[qIndex];
+            const feedbackEl = document.getElementById('quizFeedback');
+            feedbackEl.className = 'p-5 rounded-2xl border border-amber-300 dark:border-amber-800 bg-amber-50/70 dark:bg-amber-950/30 text-slate-800 dark:text-slate-100 text-xs sm:text-sm space-y-3';
+            feedbackEl.innerHTML = `
+                <div class="font-extrabold text-amber-900 dark:text-amber-300">Official HKDSE Marking Scheme (${q.marks} Marks):</div>
+                <ul class="list-disc pl-5 space-y-1.5">
+                    ${q.scheme.map(line => `<li>${line}</li>`).join('')}
+                </ul>
+                <div class="pt-2 border-t border-amber-200 dark:border-amber-800/60 flex flex-wrap items-center gap-2">
+                    <span class="font-bold text-xs">Self-Award Marks:</span>
+                    ${Array.from({ length: q.marks + 1 }, (_, m) => `
+                        <button type="button" data-award="${m}" class="award-btn px-3 py-1 rounded-lg text-xs font-extrabold border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-teal-600 hover:text-white transition">${m}/${q.marks}</button>
+                    `).join('')}
+                </div>
+            `;
+            feedbackEl.classList.remove('hidden');
+
+            let awardedForThisQ = 0;
+            feedbackEl.querySelectorAll('.award-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const val = parseInt(btn.dataset.award, 10);
+                    qScore = qScore - awardedForThisQ + val;
+                    awardedForThisQ = val;
+                    if (val < q.marks) qMissedIds.add(q.id);
+                    else qMissedIds.delete(q.id);
+                    updateQuizTelemetry();
+                    feedbackEl.querySelectorAll('.award-btn').forEach(b => {
+                        b.className = b === btn
+                            ? 'award-btn px-3 py-1 rounded-lg text-xs font-extrabold bg-teal-600 text-white shadow-sm'
+                            : 'award-btn px-3 py-1 rounded-lg text-xs font-extrabold border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800';
+                    });
+                });
+            });
+
+            document.getElementById('quizNextBtn').classList.remove('hidden');
+        });
+
+        document.getElementById('quizFlagBtn').addEventListener('click', () => {
+            const q = activeDeck[qIndex];
+            if (!q) return;
+            if (qFlagged.has(q.id)) qFlagged.delete(q.id);
+            else qFlagged.add(q.id);
+            renderQuizQuestion();
+        });
+
+        document.getElementById('quizNextBtn').addEventListener('click', () => {
+            if (qIndex < activeDeck.length - 1) {
+                qIndex++;
+                renderQuizQuestion();
+            } else {
+                finishQuizSession();
+            }
+        });
+
+        function finishQuizSession() {
+            clearInterval(quizTimerInterval);
+            document.getElementById('quizCard').classList.add('hidden');
+            document.getElementById('quizSummaryCard').classList.remove('hidden');
+
+            const pct = qMaxPossible > 0 ? Math.round((qScore / qMaxPossible) * 100) : 0;
+            if (pct > bestQuizPct) {
+                bestQuizPct = pct;
+                try { localStorage.setItem('hkdseChemBestQuiz', String(bestQuizPct)); } catch (e) {}
+                updateHomeQuizStat();
+            }
+
+            const circumference = 326.73;
+            const offset = circumference - (pct / 100) * circumference;
+            document.getElementById('quizScoreRing').style.strokeDashoffset = String(offset);
+            document.getElementById('quizSummaryPct').textContent = `${pct}%`;
+
+            let grade = 'Level 5**';
+            let headline = 'Mastery Achieved!';
+            if (pct < 50) { grade = 'Keep Practicing'; headline = 'Solid Effort — Review Key Traps'; }
+            else if (pct < 70) { grade = 'Level 4'; headline = 'Good Foundation!'; }
+            else if (pct < 85) { grade = 'Level 5'; headline = 'Strong HKDSE Command!'; }
+            else if (pct < 95) { grade = 'Level 5*'; headline = 'Distinction-Calibre Work!'; }
+
+            document.getElementById('quizGradeBadge').textContent = grade;
+            document.getElementById('quizSummaryHeadline').textContent = headline;
+            document.getElementById('quizSummaryTopicTag').textContent = `${topicTitles[activeQuizTopic]} • ${activeQuizMode.toUpperCase()}`;
+            document.getElementById('quizSummaryScore').textContent = `Scored ${qScore} out of ${qMaxPossible} marks in ${document.getElementById('quizTimerStat').textContent}`;
+            document.getElementById('quizSummaryMsg').textContent = pct >= 80
+                ? 'Your command of HKDSE terminology, equations, and exam traps is sharp. Try another mode or topic!'
+                : 'Use "Review Flagged & Missed" or ask the AI Tutor to break down any tricky questions.';
+
+            const reviewBtn = document.getElementById('reviewMistakesBtn');
+            const hasReview = [...qFlagged, ...qMissedIds].some(id => quizQuestions.some(q => q.topic === activeQuizTopic && q.id === id));
+            reviewBtn.classList.toggle('hidden', !hasReview);
+        }
+
+        // Keyboard shortcuts for Quiz & Flashcards
+        document.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+            if (currentTab === 'quiz' && !document.getElementById('quizActiveSession').classList.contains('hidden')) {
+                const key = e.key.toUpperCase();
+                if (['A', 'B', 'C', 'D'].includes(key) && !qAnswered && activeDeck[qIndex]?.type === 'mc') {
+                    handleMcAnswer(['A', 'B', 'C', 'D'].indexOf(key));
+                } else if (e.key === 'Enter' && !document.getElementById('quizNextBtn').classList.contains('hidden')) {
+                    e.preventDefault();
+                    document.getElementById('quizNextBtn').click();
+                }
+            } else if (currentTab === 'flashcards') {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    document.getElementById('fcCard').classList.toggle('is-flipped');
+                } else if (e.key === 'ArrowRight') {
+                    document.getElementById('fcNextBtn').click();
+                } else if (e.key === 'ArrowLeft') {
+                    document.getElementById('fcPrevBtn').click();
+                }
+            }
+        });
+
+        // ============================================================
+        // 6. INTERACTIVE FLASHCARDS DECK (48 HIGH-YIELD CARDS)
+        // ============================================================
+        const flashcardsData = [
+            { id: 'f1', cat: 'Topic 1', front: 'Define an "Element" in HKDSE Chemistry.', back: 'A pure substance that cannot be broken down into anything simpler by chemical methods (contains only one kind of atom).', tip: 'Trap: H₂O and Ag₂O are compounds, NOT elements!' },
+            { id: 'f2', cat: 'Topic 1', front: 'List the 4 most abundant elements in the Earth’s crust by mass.', back: 'Oxygen (50%) > Silicon (26%) > Aluminium (7%) > Iron (4%).', tip: 'Memorize: O > Si > Al > Fe.' },
+            { id: 'f3', cat: 'Topic 1', front: 'Name the ONLY two liquid elements at r.t.p. (25 °C, 1 atm).', back: 'Mercury (Hg, metal) and Bromine (Br₂, non-metal).', tip: '11 elements are gases; all remaining elements are solids.' },
+            { id: 'f4', cat: 'Topic 1', front: 'Order of gases distilling off during fractional distillation of liquefied air (from −200 °C).', back: '1st: Nitrogen (−196 °C) → 2nd: Argon (−186 °C) → 3rd: Oxygen (−183 °C).', tip: 'CO₂ and H₂O vapour are removed beforehand so they don’t solidify and block pipes.' },
+            { id: 'f5', cat: 'Topic 1', front: 'Give the flame test colours for Na⁺, K⁺, Ca²⁺, and Cu²⁺.', back: 'Na⁺: Golden yellow | K⁺: Lilac | Ca²⁺: Brick-red | Cu²⁺: Bluish green.', tip: 'Dip clean nichrome wire in conc. HCl first to convert chlorides to volatile salts.' },
+            { id: 'f6', cat: 'Topic 1', front: 'How do you test for chloride ions (Cl⁻) in aqueous solution?', back: 'Add excess dilute HNO₃(aq) followed by AgNO₃(aq) → white precipitate of AgCl(s).', tip: 'Dilute HNO₃ removes CO₃²⁻ so white Ag₂CO₃ cannot give a false positive.' },
+            { id: 'f7', cat: 'Topic 1', front: 'Give two chemical tests for the presence of water.', back: '1. Dry cobalt(II) chloride paper turns from blue to pink.\n2. Anhydrous copper(II) sulphate turns from white to blue.', tip: 'These test for water presence, NOT purity (use sharp b.p. 100 °C for purity).' },
+            { id: 'f8', cat: 'Topic 1', front: 'State the three products of brine electrolysis and their electrodes/locations.', back: 'Cathode (−): H₂(g) | Anode (+): Cl₂(g) | Solution: NaOH(aq).', tip: 'NaOH(aq) + Cl₂(g) → NaCl(aq) + NaOCl(aq) + H₂O(l) (household bleach).' },
+            { id: 'f9', cat: 'Topic 1', front: 'Write the equations for limewater turning milky and then clear with excess CO₂.', back: '1. Ca(OH)₂(aq) + CO₂(g) → CaCO₃(s) + H₂O(l)\n2. CaCO₃(s) + CO₂(g) + H₂O(l) → Ca(HCO₃)₂(aq)', tip: 'Ca(HCO₃)₂ is soluble in water.' },
+            { id: 'f10', cat: 'Topic 1', front: 'Why should the air hole of a Bunsen burner be closed before lighting?', back: 'To prevent "striking back" (flame burning inside the chimney).', tip: 'Opening the air hole gives a hotter, non-luminous blue flame.' },
+            { id: 'f11', cat: 'Topic 1', front: 'State the chemical formulae of Haematite, Bauxite, Galena, and Cinnabar.', back: 'Haematite: Fe₂O₃ | Bauxite: Al₂O₃ | Galena: PbS | Cinnabar: HgS.', tip: 'Malachite is CuCO₃; Zinc blende is ZnS.' },
+            { id: 'f12', cat: 'Topic 1', front: 'Why does cooling water enter a Liebig condenser from the bottom and leave from the top?', back: 'To ensure the condenser jacket is completely filled with cold water for maximum cooling efficiency.', tip: 'Also keep the receiver open to the atmosphere to avoid pressure build-up.' },
+
+            { id: 'f13', cat: 'Topic 2', front: 'Define "Isotopes" and compare their chemical & physical properties.', back: 'Atoms of the same element with the same number of protons but different numbers of neutrons. Same chemical properties; different physical properties.', tip: 'Same electronic arrangement = same chemical properties.' },
+            { id: 'f14', cat: 'Topic 2', front: 'Give the electronic arrangements of Potassium (Z = 19) and Calcium (Z = 20).', back: 'K: 2, 8, 8, 1 | Ca: 2, 8, 8, 2.', tip: 'Never write 2,8,9 or 2,8,10!' },
+            { id: 'f15', cat: 'Topic 2', front: 'How are elements arranged in the modern Periodic Table?', back: 'In order of increasing atomic number (number of protons).', tip: 'Group number = number of outermost shell electrons (except He).' },
+            { id: 'f16', cat: 'Topic 2', front: 'State the trend in melting point and reactivity down Group I (Alkali metals).', back: 'Melting point decreases (weaker metallic bond as atomic size increases); Reactivity increases (outer electron lost more easily).', tip: 'Li, Na, and K all have densities less than water (float).' },
+            { id: 'f17', cat: 'Topic 2', front: 'State the colours & states of F₂, Cl₂, Br₂, and I₂ at r.t.p.', back: 'F₂: pale yellow gas | Cl₂: yellowish-green gas | Br₂: dark red/brown liquid | I₂: black/purplish-black solid.', tip: 'Boiling point increases down Group VII due to stronger van der Waals’ forces.' },
+            { id: 'f18', cat: 'Topic 2', front: 'What is a dative covalent bond? Give 5 common examples.', back: 'A covalent bond in which both shared electrons are donated by the same atom. Examples: NH₄⁺, H₃O⁺, H₃N→BF₃, CO, Al₂Cl₆.', tip: 'Represented by an arrow (→) from donor atom to acceptor atom.' },
+            { id: 'f19', cat: 'Topic 2', front: 'Give an example of an ionic compound that contains NO metal atoms.', back: 'Ammonium chloride (NH₄Cl) or ammonium nitrate (NH₄NO₃).', tip: 'Contains covalent & dative covalent bonds inside NH₄⁺, plus ionic bonds between NH₄⁺ and Cl⁻.' },
+            { id: 'f20', cat: 'Topic 2', front: 'List the aqueous colours of Fe²⁺, Fe³⁺, Cu²⁺, CrO₄²⁻, Cr₂O₇²⁻, and MnO₄⁻.', back: 'Fe²⁺: green | Fe³⁺: yellow/brown | Cu²⁺: blue | CrO₄²⁻: yellow | Cr₂O₇²⁻: orange | MnO₄⁻: purple.', tip: 'Group I, II, Al³⁺, Zn²⁺, Pb²⁺, Ag⁺, NH₄⁺ ions are colourless in solution.' },
+            { id: 'f21', cat: 'Topic 2', front: 'HKDSE 2M Framework: Why does NaCl have a higher melting point than I₂?', back: 'NaCl has a giant ionic structure with strong ionic bonds between Na⁺ and Cl⁻ ions, while I₂ has a simple molecular structure with weak van der Waals’ forces between I₂ molecules.', tip: 'Always state: (1) Structure, (2) Force type & strength, (3) Exact particles.' },
+            { id: 'f22', cat: 'Topic 2', front: 'Why are ionic crystals brittle when hammered?', back: 'Hammering shifts layers of ions so ions of the SAME charge come next to each other, causing strong electrostatic repulsion that shatters the crystal.', tip: 'Contrast with metals, where non-directional metallic bonds hold sliding cation layers.' },
+            { id: 'f23', cat: 'Topic 2', front: 'Name the 4 giant covalent substances you must know for HKDSE.', back: 'Diamond, Graphite, Silicon (Si), and Quartz / Silicon dioxide (SiO₂).', tip: 'Only graphite conducts electricity among these four.' },
+            { id: 'f24', cat: 'Topic 2', front: 'Why does aqueous HCl conduct electricity even though pure HCl is a simple molecular gas?', back: 'HCl molecules ionize in water to form mobile H⁺(aq) and Cl⁻(aq) ions.', tip: 'HCl in dry methylbenzene does NOT ionize and does NOT conduct.' },
+
+            { id: 'f25', cat: 'Topic 3', front: 'How are K–Al, Zn–Cu, Hg–Ag, and Pt–Au extracted from their ores?', back: 'K–Al: Electrolysis of molten ore | Zn–Cu: Reduction with C/CO | Hg–Ag: Heating ore alone | Pt–Au: Physical methods (found native).', tip: '5** Trap: H₂(g) CANNOT reduce ZnO!' },
+            { id: 'f26', cat: 'Topic 3', front: 'State the colour changes of ZnO and PbO on heating and cooling.', back: 'ZnO: Yellow when hot, white when cold.\nPbO: Orange/reddish-brown when hot, yellow when cold.', tip: 'Iron burns in O₂ to form black Fe₃O₄.' },
+            { id: 'f27', cat: 'Topic 3', front: 'Write the equations for Sodium with cold water and Magnesium with steam.', back: '1. 2Na(s) + 2H₂O(l) → 2NaOH(aq) + H₂(g)\n2. Mg(s) + H₂O(g) → MgO(s) + H₂(g)', tip: 'Cold water gives metal hydroxide; steam gives metal oxide.' },
+            { id: 'f28', cat: 'Topic 3', front: 'Write the overall chemical equation for the rusting of iron.', back: '4Fe(s) + 3O₂(g) + 2xH₂O(l) → 2Fe₂O₃·xH₂O(s) (hydrated iron(III) oxide).', tip: 'Requires BOTH O₂ and H₂O; sped up by acidic pollutants and ionic salts (NaCl).' },
+            { id: 'f29', cat: 'Topic 3', front: 'Why does galvanised iron still resist rusting when scratched, unlike tin-plated iron?', back: 'Zinc is more reactive than iron and corrodes sacrificially (loses electrons preferentially), whereas tin is less reactive than iron and accelerates iron rusting when scratched.', tip: 'Galvanising = coating with Zn.' },
+            { id: 'f30', cat: 'Topic 3', front: 'State 4 safety/procedural precautions when reducing CuO with town gas (CO + H₂).', back: '1. Tilt combustion tube downwards (prevent condensed H₂O cracking hot glass).\n2. Flush air out before lighting (prevent explosion).\n3. Burn excess gas at outlet (CO is toxic, H₂ is flammable).\n4. Cool Cu in gas stream (prevent re-oxidation).', tip: 'Classic 4-mark HKDSE experimental question!' },
+            { id: 'f31', cat: 'Topic 3', front: 'Define "Empirical Formula" vs. "Molecular Formula".', back: 'Empirical formula shows the simplest whole-number ratio of atoms of each element; Molecular formula shows the actual number of each atom in one molecule.', tip: 'Molecular formula = (Empirical formula)ₙ.' },
+            { id: 'f32', cat: 'Topic 3', front: 'How do you identify the limiting reactant in a stoichiometry calculation?', back: 'Calculate the number of moles of each reactant and divide by its stoichiometric coefficient in the balanced equation; the reactant with the smaller ratio is limiting.', tip: 'Always base product yield on the limiting reactant.' },
+            { id: 'f33', cat: 'Topic 3', front: 'Give the formula for Percentage Yield and 2 reasons why it is usually < 100%.', back: '% Yield = (Actual yield ÷ Theoretical yield) × 100%. Reasons: reversible/incomplete reaction, side reactions, or loss of product during filtration/transfer.', tip: 'Never > 100% unless product is still wet/impure!' },
+            { id: 'f34', cat: 'Topic 3', front: 'Why is aluminium corrosion-resistant despite being higher than iron in the reactivity series?', back: 'Aluminium reacts with oxygen in air to form a tough, impermeable layer of aluminium oxide (Al₂O₃) on its surface, preventing further reaction.', tip: 'Anodization thickens this protective Al₂O₃ layer.' },
+            { id: 'f35', cat: 'Topic 3', front: 'What is Avogadro’s constant (L)?', back: '6.02 × 10²³ mol⁻¹ (number of particles in 1 mole of a substance).', tip: 'Number of particles = n × L.' },
+            { id: 'f36', cat: 'Topic 3', front: 'How is the car body protected from rusting using its battery?', back: 'The car body is connected to the negative (−) terminal of the car battery, which supplies electrons to iron and prevents it from losing electrons to form Fe²⁺.', tip: 'Known as cathodic protection / impressed current.' },
+
+            { id: 'f37', cat: 'Topic 4', front: 'Define an "Acid" and state the role of water in acidic properties.', back: 'A hydrogen-containing covalent compound that ionizes in water to produce H⁺(aq) ions as the only positive ions. Water is essential for ionization.', tip: 'Solid citric acid crystals do not turn dry blue litmus red.' },
+            { id: 'f38', cat: 'Topic 4', front: 'Give the basicity of HCl, HNO₃, CH₃COOH, H₂SO₄, H₂C₂O₄, and H₃PO₄.', back: 'Monobasic (1): HCl, HNO₃, CH₃COOH | Dibasic (2): H₂SO₄, H₂C₂O₄ | Tribasic (3): H₃PO₄, citric acid.', tip: 'Basicity = max moles of H⁺ ionized per mole of acid.' },
+            { id: 'f39', cat: 'Topic 4', front: 'State the gas evolved when Copper reacts with: (a) conc. HNO₃, (b) dilute HNO₃, (c) hot conc. H₂SO₄.', back: '(a) Brown NO₂(g)\n(b) Colourless NO(g) (turns brown NO₂ at mouth of tube)\n(c) Colourless choking SO₂(g).', tip: 'Copper has NO reaction with dilute HCl or dilute H₂SO₄.' },
+            { id: 'f40', cat: 'Topic 4', front: 'Which metal hydroxides dissolve in excess NaOH(aq), and which dissolve in excess NH₃(aq)?', back: 'Excess NaOH(aq): Zn(OH)₂, Pb(OH)₂, Al(OH)₃ (ZPA — all colourless).\nExcess NH₃(aq): Zn(OH)₂ (colourless), Cu(OH)₂ (deep blue), Ag₂O (colourless).', tip: 'Mg(OH)₂, Fe(OH)₂, Fe(OH)₃ are insoluble in BOTH.' },
+            { id: 'f41', cat: 'Topic 4', front: 'How do you distinguish Al³⁺(aq) from Zn²⁺(aq) using a single reagent?', back: 'Add aqueous ammonia (NH₃(aq)) dropwise until in excess: both give a white precipitate initially, but ONLY Zn(OH)₂ dissolves in excess NH₃(aq) to form a colourless solution.', tip: 'Both dissolve in excess NaOH(aq), so NaOH cannot distinguish them!' },
+            { id: 'f42', cat: 'Topic 4', front: 'Distinguish between a "Strong Acid" and a "Concentrated Acid".', back: 'Strength refers to the extent of ionization in water (strong = complete ionization); Concentration refers to the amount (moles) of acid per unit volume of solution.', tip: '0.01 M HCl is strong & dilute; 10 M CH₃COOH is weak & concentrated.' },
+            { id: 'f43', cat: 'Topic 4', front: 'Why does neutralizing 25 cm³ of 1 M CH₃COOH with 25 cm³ of 1 M NaOH release slightly less heat than 1 M HCl + 1 M NaOH?', back: 'CH₃COOH is a weak acid that is only partially ionized; some energy is absorbed to complete the ionization of CH₃COOH molecules during neutralization.', tip: 'Standard enthalpy of neutralization for SA + SB is −57.3 kJ mol⁻¹.' },
+            { id: 'f44', cat: 'Topic 4', front: 'Summarize the 3 salt preparation methods in HKDSE.', back: 'Type 1 (Insoluble salt): Precipitation.\nType 2 (Soluble non-Na/K/NH₄ salt): Acid + excess insoluble metal/oxide/hydroxide/carbonate + crystallize.\nType 3 (Na⁺/K⁺/NH₄⁺ salt): Titration + repeat without indicator + crystallize.', tip: 'Never add Na, K, or Ca metal directly to acid (explosive!).' },
+            { id: 'f45', cat: 'Topic 4', front: 'List 5 properties required for a Primary Standard in volumetric analysis.', back: '1. High purity\n2. Stable in air (not hygroscopic / deliquescent / efflorescent)\n3. Does not absorb CO₂ from air\n4. Readily soluble in water\n5. High molar mass (minimizes weighing error).', tip: 'Examples: anhydrous Na₂CO₃, ethanedioic acid crystals (COOH)₂·2H₂O.' },
+            { id: 'f46', cat: 'Topic 4', front: 'State the rinsing rules for: Volumetric flask, Conical flask, Pipette, and Burette.', back: 'Volumetric & Conical flasks: Distilled water ONLY.\nPipette & Burette: Distilled water first, THEN rinse with the solution they will transfer/contain.', tip: 'Also remove the funnel from the top of the burette before taking readings!' },
+            { id: 'f47', cat: 'Topic 4', front: 'Which indicator is used for: (a) SA + WB, and (b) WA + SB?', back: '(a) Strong Acid + Weak Base (e.g., HCl + NH₃): Methyl orange ONLY (yellow ↔ red/orange).\n(b) Weak Acid + Strong Base (e.g., CH₃COOH + NaOH): Phenolphthalein ONLY (colourless ↔ pink).', tip: 'SA + SB can use either MO or PP; WA + WB has no sharp pH change.' },
+            { id: 'f48', cat: 'Topic 4', front: 'Outline the core calculation formula for a Back Titration.', back: 'Moles of excess reagent reacted with unknown = (Total moles of excess reagent initially added) − (Moles of leftover excess reagent found by titration).', tip: 'Used for insoluble solids (e.g., CaCO₃ in eggshell, Mg(OH)₂ in antacid).' }
+        ];
+
+        let fcCategory = 'All';
+        let fcIndex = 0;
+        let fcDeck = [...flashcardsData];
+        let fcMastery = {};
+        try {
+            const savedFc = localStorage.getItem('hkdseChemFcMastery');
+            if (savedFc) fcMastery = JSON.parse(savedFc);
+        } catch (e) { fcMastery = {}; }
+
+        function updateFcMasteryUI() {
+            const total = flashcardsData.length;
+            const masteredCount = flashcardsData.filter(c => fcMastery[c.id] === 'gotit').length;
+            const pct = Math.round((masteredCount / total) * 100);
+            document.getElementById('fcMasteryStat').textContent = `${masteredCount} / ${total}`;
+            document.getElementById('fcMasteryBar').style.width = `${pct}%`;
+            document.getElementById('homeFcStat').textContent = `${masteredCount} / ${total}`;
+        }
+
+        function renderFcCategoryPills() {
+            const cats = ['All', 'Topic 1', 'Topic 2', 'Topic 3', 'Topic 4'];
+            const container = document.getElementById('fcCategoryPills');
+            container.innerHTML = cats.map(c => {
+                const active = fcCategory === c;
+                const cls = active
+                    ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 shadow-sm transition'
+                    : 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition';
+                return `<button type="button" data-fccat="${c}" class="${cls}">${c}</button>`;
+            }).join('');
+
+            container.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    fcCategory = btn.dataset.fccat;
+                    renderFcCategoryPills();
+                    rebuildFcDeck();
+                });
+            });
+        }
+
+        function rebuildFcDeck(shuffle = false) {
+            const againOnly = document.getElementById('fcStudyAgainOnly').checked;
+            fcDeck = flashcardsData.filter(c => {
+                const catMatch = fcCategory === 'All' || c.cat === fcCategory;
+                const statusMatch = !againOnly || fcMastery[c.id] !== 'gotit';
+                return catMatch && statusMatch;
+            });
+            if (shuffle) {
+                for (let i = fcDeck.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [fcDeck[i], fcDeck[j]] = [fcDeck[j], fcDeck[i]];
+                }
+            }
+            fcIndex = 0;
+            renderFlashcard();
+        }
+
+        function renderFlashcard() {
+            const stageWrap = document.getElementById('fcStageWrap');
+            const emptyMsg = document.getElementById('fcEmptyMsg');
+            const cardEl = document.getElementById('fcCard');
+            cardEl.classList.remove('is-flipped');
+
+            if (fcDeck.length === 0) {
+                stageWrap.classList.add('hidden');
+                emptyMsg.classList.remove('hidden');
+                return;
+            }
+            stageWrap.classList.remove('hidden');
+            emptyMsg.classList.add('hidden');
+
+            const card = fcDeck[fcIndex];
+            document.getElementById('fcFrontCat').textContent = card.cat;
+            document.getElementById('fcCounter').textContent = `${fcIndex + 1} / ${fcDeck.length}`;
+            document.getElementById('fcBackCounter').textContent = `${fcIndex + 1} / ${fcDeck.length}`;
+            document.getElementById('fcFrontText').textContent = card.front;
+            document.getElementById('fcBackText').innerHTML = card.back.replace(/\n/g, '<br>');
+            document.getElementById('fcBackTip').textContent = `💡 Exam Tip: ${card.tip}`;
+
+            const st = fcMastery[card.id];
+            const stEl = document.getElementById('fcStatusTag');
+            if (st === 'gotit') {
+                stEl.textContent = '✓ Mastered';
+                stEl.className = 'font-bold text-emerald-600 dark:text-emerald-400';
+            } else if (st === 'again') {
+                stEl.textContent = '↻ Marked for Review';
+                stEl.className = 'font-bold text-amber-600 dark:text-amber-400';
+            } else {
+                stEl.textContent = 'New Card';
+                stEl.className = 'font-semibold text-slate-400';
+            }
+        }
+
+        document.getElementById('fcCard').addEventListener('click', () => {
+            document.getElementById('fcCard').classList.toggle('is-flipped');
+        });
+        document.getElementById('fcPrevBtn').addEventListener('click', () => {
+            if (fcDeck.length === 0) return;
+            fcIndex = (fcIndex - 1 + fcDeck.length) % fcDeck.length;
+            renderFlashcard();
+        });
+        document.getElementById('fcNextBtn').addEventListener('click', () => {
+            if (fcDeck.length === 0) return;
+            fcIndex = (fcIndex + 1) % fcDeck.length;
+            renderFlashcard();
+        });
+        document.getElementById('fcGotItBtn').addEventListener('click', () => {
+            if (fcDeck.length === 0) return;
+            fcMastery[fcDeck[fcIndex].id] = 'gotit';
+            try { localStorage.setItem('hkdseChemFcMastery', JSON.stringify(fcMastery)); } catch (e) {}
+            updateFcMasteryUI();
+            if (document.getElementById('fcStudyAgainOnly').checked) {
+                rebuildFcDeck();
+            } else {
+                fcIndex = (fcIndex + 1) % fcDeck.length;
+                renderFlashcard();
+            }
+        });
+        document.getElementById('fcAgainBtn').addEventListener('click', () => {
+            if (fcDeck.length === 0) return;
+            fcMastery[fcDeck[fcIndex].id] = 'again';
+            try { localStorage.setItem('hkdseChemFcMastery', JSON.stringify(fcMastery)); } catch (e) {}
+            updateFcMasteryUI();
+            fcIndex = (fcIndex + 1) % fcDeck.length;
+            renderFlashcard();
+        });
+        document.getElementById('fcStudyAgainOnly').addEventListener('change', () => rebuildFcDeck());
+        document.getElementById('fcShuffleBtn').addEventListener('click', () => rebuildFcDeck(true));
+
+        // 2-step inline reset button (avoids forbidden confirm() dialog)
+        let fcResetConfirmTimer = null;
+        const fcResetBtn = document.getElementById('fcResetBtn');
+        fcResetBtn.addEventListener('click', () => {
+            if (fcResetBtn.dataset.armed !== 'true') {
+                fcResetBtn.dataset.armed = 'true';
+                fcResetBtn.textContent = '⚠️ Click Again to Confirm';
+                fcResetBtn.className = 'px-3 py-1.5 rounded-lg bg-rose-600 text-white font-bold transition';
+                clearTimeout(fcResetConfirmTimer);
+                fcResetConfirmTimer = setTimeout(() => {
+                    fcResetBtn.dataset.armed = 'false';
+                    fcResetBtn.textContent = '↺ Reset Progress';
+                    fcResetBtn.className = 'px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900 font-semibold text-rose-700 dark:text-rose-300 transition';
+                }, 3000);
+            } else {
+                clearTimeout(fcResetConfirmTimer);
+                fcResetBtn.dataset.armed = 'false';
+                fcResetBtn.textContent = '↺ Reset Progress';
+                fcResetBtn.className = 'px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/50 hover:bg-rose-100 dark:hover:bg-rose-900 font-semibold text-rose-700 dark:text-rose-300 transition';
+                fcMastery = {};
+                try { localStorage.removeItem('hkdseChemFcMastery'); } catch (e) {}
+                updateFcMasteryUI();
+                rebuildFcDeck();
+            }
+        });
+
+        renderFcCategoryPills();
+        updateFcMasteryUI();
+        rebuildFcDeck();
+
+        // ============================================================
+        // 7. AI CHEMISTRY TUTOR (GEMINI 3 FLASH PREVIEW)
+        // ============================================================
+        const aiTutorPanel = document.getElementById('aiTutorPanel');
+        const aiMessages = document.getElementById('aiMessages');
+        const aiChatForm = document.getElementById('aiChatForm');
+        const aiInput = document.getElementById('aiInput');
+        const aiSendBtn = document.getElementById('aiSendBtn');
+
+        const AI_SYSTEM_INSTRUCTION = `You are an expert, encouraging HKDSE Form 4 Chemistry Tutor (covering Topics 1–4: Planet Earth, Microscopic World I, Metals & Mole Calculations, and Acids & Alkalis).
+Follow these rules strictly:
+1. Give concise, exam-focused answers tailored to the Hong Kong Diploma of Secondary Education (HKDSE) marking scheme.
+2. Always include balanced chemical or ionic equations with state symbols where relevant, and highlight common 5** exam traps (e.g., H2 cannot reduce ZnO; K is 2,8,8,1; Al(OH)3 dissolves in excess NaOH but not NH3; M1V1=M2V2 is only for dilution).
+3. Support both English and Traditional Chinese (繁體中文) seamlessly based on the student's language.
+4. Format responses cleanly using short bullet points and bold key terms.`;
+
+        let aiHistory = [];
+        let aiBusy = false;
+
+        function openAiTutor() {
+            aiTutorPanel.classList.remove('hidden');
+            aiInput.focus();
+        }
+        function closeAiTutor() {
+            aiTutorPanel.classList.add('hidden');
+        }
+        function toggleAiTutor() {
+            if (aiTutorPanel.classList.contains('hidden')) openAiTutor();
+            else closeAiTutor();
+        }
+
+        function formatAiText(raw) {
+            const escaped = raw
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+            return escaped
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-slate-800 font-mono text-xs">$1</code>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function appendAiBubble(role, text) {
+            const wrap = document.createElement('div');
+            if (role === 'user') {
+                wrap.className = 'flex justify-end';
+                wrap.innerHTML = `<div class="max-w-[85%] px-3.5 py-2.5 rounded-2xl rounded-br-md bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-sm leading-relaxed">${formatAiText(text)}</div>`;
+            } else {
+                wrap.className = 'flex justify-start';
+                wrap.innerHTML = `<div class="max-w-[90%] px-3.5 py-2.5 rounded-2xl rounded-bl-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-100 shadow-sm leading-relaxed">${formatAiText(text)}</div>`;
+            }
+            aiMessages.appendChild(wrap);
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+        }
+
+        function resetAiConversation() {
+            aiHistory = [];
+            aiMessages.innerHTML = '';
+            appendAiBubble('model', 'Hello! I am your **HKDSE Form 4 Chemistry Tutor**. Ask me about chemical equations, ion tests, mole calculations, titration, or any 5** exam trap (English or 中文).');
+        }
+        resetAiConversation();
+
+        document.getElementById('aiClearBtn').addEventListener('click', resetAiConversation);
+
+        document.querySelectorAll('.ai-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                sendAiMessage(chip.textContent.trim());
+            });
+        });
+
+        document.getElementById('quizAskAiBtn').addEventListener('click', () => {
+            const q = activeDeck[qIndex];
+            if (!q) return;
+            openAiTutor();
+            const prompt = q.type === 'mc'
+                ? `Explain this HKDSE Topic ${q.topic} MC question and why each distractor is wrong:\n"${q.q}"\nOptions: ${q.options.join(' | ')}`
+                : `Help me understand how to get full marks on this HKDSE Topic ${q.topic} question:\n"${q.q}"`;
+            sendAiMessage(prompt);
+        });
+
+        async function callGeminiWithBackoff(contentsPayload) {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: contentsPayload,
+                systemInstruction: {
+                    parts: [{ text: AI_SYSTEM_INSTRUCTION }]
+                }
+            };
+
+            const delays = [1000, 2000, 4000, 8000];
+            for (let attempt = 0; attempt <= delays.length; attempt++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    const result = await response.json();
+                    const reply = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!reply) throw new Error('Empty candidate');
+                    return reply;
+                } catch (err) {
+                    if (attempt === delays.length) {
+                        throw err;
+                    }
+                    await new Promise(res => setTimeout(res, delays[attempt]));
+                }
+            }
+        }
+
+        async function sendAiMessage(text) {
+            const clean = text.trim();
+            if (!clean || aiBusy) return;
+            aiBusy = true;
+            aiSendBtn.disabled = true;
+            aiInput.value = '';
+            aiInput.style.height = 'auto';
+
+            appendAiBubble('user', clean);
+            aiHistory.push({ role: 'user', parts: [{ text: clean }] });
+
+            // Typing indicator
+            const typingEl = document.createElement('div');
+            typingEl.className = 'flex justify-start';
+            typingEl.innerHTML = `
+                <div class="px-4 py-3 rounded-2xl rounded-bl-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-teal-500 ai-dot"></span>
+                    <span class="w-2 h-2 rounded-full bg-teal-500 ai-dot"></span>
+                    <span class="w-2 h-2 rounded-full bg-teal-500 ai-dot"></span>
+                </div>
+            `;
+            aiMessages.appendChild(typingEl);
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+
+            try {
+                const reply = await callGeminiWithBackoff(aiHistory);
+                typingEl.remove();
+                aiHistory.push({ role: 'model', parts: [{ text: reply }] });
+                appendAiBubble('model', reply);
+            } catch (e) {
+                typingEl.remove();
+                aiHistory.pop();
+                appendAiBubble('model', 'Sorry, I encountered a temporary connection issue. Please try sending your question again.');
+            } finally {
+                aiBusy = false;
+                aiSendBtn.disabled = false;
+                aiInput.focus();
+            }
+        }
+
+        aiChatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            sendAiMessage(aiInput.value);
+        });
+
+        aiInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendAiMessage(aiInput.value);
+            }
+        });
+
+        // Initial UI sync on load
+        updateNotesProgressUI();
+    </script>
+</body>
+</html>
